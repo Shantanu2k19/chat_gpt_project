@@ -1,73 +1,73 @@
 .global-body {
-    margin: 0;
-    font-family: "Lato", sans-serif;
-    background-color: #fcfcfd;
-    display:flex;
-    flex-direction: column;
+  margin: 0;
+  font-family: "Lato", sans-serif;
+  background-color: #fcfcfd;
+  display:flex;
+  flex-direction: column;
 
-  }
-  
+}
+
+.sidebar {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  background-color: #00040a;
+  position: fixed;
+  overflow: auto;
+  color: white;
+  width: 14.5%;
+  height:99vh;
+  flex-direction:column-reverse;
+
+}
+
+.sidebar a {
+  display: block;
+  color: white;
+  padding: 16px;
+  text-decoration: none;
+}
+
+
+.sidebar a:hover:not(.active) {
+  background-color: #555;
+  border-radius: 20px;
+  color: white;
+}
+.sidebar--content{
+  display:flex;
+  flex-direction: row;
+  padding: 14px;
+  justify-content:flex-start;
+  justify-content: space-between;
+
+}
+
+.content {
+  background-color: #31323F;
+  margin-left: 270px;
+  padding: 30px 56px;
+  height: 99vh;
+
+
+}
+.form--input{
+  max-width: 60%;
+}
+
+@media screen and (max-width: 700px) {
   .sidebar {
-    display: flex;
-    margin: 0;
-    padding: 0;
-    background-color: #00040a;
-    position: fixed;
-    overflow: auto;
-    color: white;
-    width: 14.5%;
-    height:99vh;
-    flex-direction:column-reverse;
-    
+    width: 100%;
+    height: auto;
+    position: relative;
   }
-  
-  .sidebar a {
-    display: block;
-    color: white;
-    padding: 16px;
-    text-decoration: none;
-  }
-   
-  
-  .sidebar a:hover:not(.active) {
-    background-color: #555;
-    border-radius: 20px;
-    color: white;
-  }
-  .sidebar--content{
-    display:flex;
-    flex-direction: row;
-    padding: 14px;
-    justify-content:flex-start;
-    justify-content: space-between;
-    
-  }
-  
-  .content {
-    background-color: #31323F;
-    margin-left: 270px;
-    padding: 30px 56px;
-    height: 99vh;
-    
+  .sidebar a {float: left;}
+  div.content {margin-left: 0;}
+}
 
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
   }
-  .form--input{
-    max-width: 60%;
-  }
-  
-  @media screen and (max-width: 700px) {
-    .sidebar {
-      width: 100%;
-      height: auto;
-      position: relative;
-    }
-    .sidebar a {float: left;}
-    div.content {margin-left: 0;}
-  }
-  
-  @media screen and (max-width: 400px) {
-    .sidebar a {
-      text-align: center;
-      float: none;
-    }
-  }
+}

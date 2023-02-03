@@ -5,10 +5,10 @@ import '../css/LandingPage.css'
 export default function LandingPage() {
     return (
         <div className="global-body">
-            
+
 
             <div className="sidebar">
-                
+
 
                 <hr />
                 <div className="sidebar--content">

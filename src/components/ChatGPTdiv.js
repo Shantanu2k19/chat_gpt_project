@@ -33,7 +33,7 @@ export default function LeftBox() {
             console.error(error);
         }
     };
-    
+
     const [prompt, setPrompt] = React.useState('');
 
     return (
@@ -52,7 +52,7 @@ export default function LeftBox() {
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
                 />
-              
+
                 <button type="submit" className="button-85" role="button">ask</button>
                 <br/>
                 <span>response : {response}</span>
