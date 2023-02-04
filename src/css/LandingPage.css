@@ -1,9 +1,12 @@
 .global-body {
-  margin: 0;
+  margin:  0;
   font-family: "Lato", sans-serif;
-  background-color: #fcfcfd;
+  background-color:#31323F;
   display:flex;
   flex-direction: column;
+  flex-wrap: wrap;
+  align-content: space-around;
+  height: 99vh;
 
 }
 
@@ -19,6 +22,17 @@
   height:99vh;
   flex-direction:column-reverse;
 
+}
+
+.content{
+  max-width: 50%;
+  background-color: #f4f2f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top:2%;
+  
+  
 }
 
 .sidebar a {
@@ -43,14 +57,7 @@
 
 }
 
-.content {
-  background-color: #31323F;
-  margin-left: 270px;
-  padding: 30px 56px;
-  height: 99vh;
 
-
-}
 .form--input{
   max-width: 60%;
 }
