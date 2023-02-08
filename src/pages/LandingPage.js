@@ -10,7 +10,7 @@ export default function LandingPage() {
             <div className="sidebar">
 
 
-                <hr />
+
                 <div className="sidebar--content">
                     <a href="delete">
                         <img src="images/delete.png" width="20px" style={{ marginRight: "10px" }} /><span href="#clear_conversations">Clear conversations</span>
@@ -35,9 +35,9 @@ export default function LandingPage() {
 
             </div>
 
-            <div className="content">
-                <ChatGPTdiv />
-            </div>
+
+            <ChatGPTdiv />
+
 
         </div>
     )

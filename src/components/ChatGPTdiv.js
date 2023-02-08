@@ -37,7 +37,7 @@ export default function LeftBox() {
     const [prompt, setPrompt] = React.useState('');
 
     return (
-        <div>
+        <div className="form--content">
                 <form className="form" 
                     onSubmit={(e) => {
                     e.preventDefault();
