@@ -1,5 +1,5 @@
 import React from "react"
-
+import { Link } from 'react-router-dom';
 
 export default function Signup(props) {
 
@@ -73,6 +73,8 @@ export default function Signup(props) {
                 />
                 <br></br>
                 <button className="button-85">Sign Up</button>
+                <br/>
+                <Link to="/talkgpt" className="nav-link"> DEMO LOGIN</Link>
             </form>
 
         </div>
