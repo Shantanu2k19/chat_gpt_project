@@ -93,11 +93,19 @@ router.post('/question_to_gpt', async (req, res) => {
 
 
 
-router.route('/test').post((req, res) => {
+router.route('/add').post((req, res) => {
 
-  console.log("Test api called");
+  console.log("adding 2 numbers");
+  //get paramnetr 
+  const { num1, num2  } = req.body;
 
-  res.status(200).json({ message: 'Login successful!' });
+  //do processing
+  const ans=  num1+num2;
+
+  console.log(num1,num2,ans);
+
+  //return resopoonse
+  res.status(200).json({ addition: ans });
   return;
 });
 

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route} from "react-router-dom";
 
 import App from './pages/App';
-import LandingPage from './pages/LandingPage';
+import LandingPage from './pages/LandingPage.js'
 
 
 

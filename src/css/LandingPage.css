@@ -1,38 +1,23 @@
-.global-body {
+body {
   margin: 0;
   font-family: "Lato", sans-serif;
-  background-color: #31323F;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  align-content: space-around;
-  height: 99vh;
-
+  background-color: #444654;
 }
 
 .sidebar {
-
   margin: 0;
   padding: 0;
-  background-color: #00040a;
-  position: fixed;
-  overflow: auto;
-  color: white;
-  width: 14.5%;
+  width: 210px;
+  font-family: "Lato", sans-serif;
+  background-color: #202123;
   height: 100%;
-  flex-direction: column-reverse;
-
+  overflow: auto;
+  position: fixed;
 }
 
-.content {
-  max-width: 50%;
-  background-color: #f4f2f8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 2%;
-
-
+.sidebar--content{
+  border: 1px solid #202123;
+  /* dont appply padding or margin  */
 }
 
 .sidebar a {
@@ -42,33 +27,32 @@
   text-decoration: none;
 }
 
-
 .sidebar a:hover:not(.active) {
-  background-color: #555;
-  border-radius: 20px;
+  background-color: #343541;
+  border-radius: 10px;
   color: white;
 }
 
-
-
-.form--input {
-  max-width: 70%;
+.sidebar-text{
+  font-size: 0.87em; 
 }
 
-@media screen and (max-width: 900px) {
+div.content {
+  margin-left: 200px;
+  padding: 1px 16px;
+  height: 100%;
+  /* border: 2px solid green; */
+  height:99vh;
+}
+
+@media screen and (max-width: 700px) {
   .sidebar {
     width: 100%;
     height: auto;
     position: relative;
   }
-
-  .sidebar a {
-    float: left;
-  }
-
-  div.content {
-    margin-left: 0;
-  }
+  .sidebar a {float: left;}
+  div.content {margin-left: 0;}
 }
 
 @media screen and (max-width: 400px) {
@@ -78,25 +62,61 @@
   }
 }
 
-/* Main content css */
-.form {
-  background-color: white;
-  padding-left: 80px;
-  padding-right: 80px;
-  padding-top: 30px;
-  padding-bottom: 50px;
 
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-shadow: 5px 5px 15px -1px rgba(0, 0, 0, 0.75);
-  min-height: 520px;
+
+
+/* css for chat */
+.chat-area{
+  border: 2px solid gray;
+  height: 86%;
+  margin: 20px;
 }
 
-.form--content {
-  width: 70%;
-  justify-content: center;
-  align-self: center;
-  padding: 30px;
+
+
+/* form css */
+.form-area{
+  box-shadow: 5px 5px 15px -1px rgba(0, 0, 0, 0.75);
+  border-radius: 10px;
+  border: 2px solid white;
+  height: 6%;
+  background-color: #40414F;
+  border: 1px solid #303038;
+  margin: 20px;
+}
+
+.form-area-content {
+  display: flex;
+  height: 70%;
+  padding: 10px;
+}
+
+.form-textbox{
+  /* border: 2px solid blue; */
+  width: 96%;
+}
+
+.send-icon{
+  /* border: 2px solid red; */
+  width: 35px;
+  text-align: center;
+  margin-left: 15px;
+  border-radius: 10px;
+  padding: 8px;
+}
+
+.send-icon:hover{
+  background-color: #1d1d20;
+}
+
+/* question text box  */
+.ques--input{
+  width: 99%;
+  height: 100%;
+  background: none;
+  color:white;
+  border: none;
+  outline: none;
+  font-size: 1.2em;
+  font-family: "Lato", sans-serif;
 }
