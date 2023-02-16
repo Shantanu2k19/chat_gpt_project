@@ -1,15 +1,14 @@
 import React from "react"
-
+import { useNavigate } from 'react-router-dom';
 
 export default function Login(props) {
+    const navigate = useNavigate();
 
     const displayEle = props.isLogin ? "block" : "none";
 
     const [formData, setFormData] = React.useState({
-        email: "",
+        username: "",
         password: "",
-        passwordConfirm: "",
-        joinedNewsletter: true
     })
 
 
@@ -21,15 +20,26 @@ export default function Login(props) {
         }))
     }
 
-    function handleSubmit(event) {
-        event.preventDefault()
-        // if(formData.password === formData.passwordConfirm) {
-        //     console.log("Successfully signed up")
-        // } else {
-        //     console.log("Passwords do not match")
-        //     return
-        // }
-    }
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const username = formData.username;
+        const password = formData.password;
+
+        const response = await fetch('http://localhost:5000/users/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+          });
+      
+          if (response.ok) {
+            console.log("logged in success");
+            navigate('/talkgpt');
+          } else {
+            const data = await response.json();
+            console.log("logged in FAIL");
+            console.error(data.message);
+          }
+    };
 
     return (
         <div className="form-container" style={{ display: displayEle }}>
@@ -39,12 +49,12 @@ export default function Login(props) {
                     <span className="form-switcher-disable" onClick={props.handleClick}>Sign up</span>
                 </div>
                 <input
-                    type="email"
-                    placeholder="Email address"
+                    type="username"
+                    placeholder="username"
                     className="form--input"
-                    name="email"
+                    name="username"
                     onChange={handleChange}
-                    value={formData.email}
+                    value={formData.username}
                 />
                 <input
                     type="password"

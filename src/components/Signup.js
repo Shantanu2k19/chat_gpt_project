@@ -1,12 +1,13 @@
 import React from "react"
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function Signup(props) {
+    const navigate = useNavigate();
 
     const displayEle = props.isLogin ? "none" : "block";
 
     const [formData, setFormData] = React.useState({
-        name: "",
+        username: "",
         email: "",
         password: "",
         passwordconfirm: ""
@@ -21,16 +22,33 @@ export default function Signup(props) {
         }))
     }
 
-    function handleSubmit(event) {
-        event.preventDefault()
-        if (formData.password === formData.passwordConfirm) {
-            console.log("Successfully signed up")
-        } else {
-            console.log("Passwords do not match")
-            return
-        }
-    }
+    const handleSubmit = async (event) => {
+        event.preventDefault();
 
+        if (formData.password !== formData.passwordconfirm) {
+            console.log("passwords do not match !!");
+            return;
+        }
+
+        const email = formData.email;
+        const username = formData.username;
+        const password = formData.password;
+
+        const response = await fetch('http://localhost:5000/users/signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password, email })
+          });
+      
+          if (response.ok) {
+            console.log("signup success");
+            navigate('/talkgpt');
+          } else {
+            const data = await response.json();
+            console.log("signup in FAIL");
+            console.error(data.message);
+          }
+    };
 
     return (
         <div className="form-container" style={{ display: displayEle }}>
@@ -40,12 +58,12 @@ export default function Signup(props) {
                     <span className="form-switcher-enable">Sign up</span>
                 </div>
                 <input
-                    type="name"
-                    placeholder="Name"
+                    type="username"
+                    placeholder="username"
                     className="form--input"
-                    name="name"
+                    name="username"
                     onChange={handleChange}
-                    value={formData.name}
+                    value={formData.username}
                 />
                 <input
                     type="email"
@@ -74,7 +92,6 @@ export default function Signup(props) {
                 <br></br>
                 <button className="button-85">Sign Up</button>
                 <br/>
-                <Link to="/talkgpt" className="nav-link"> DEMO LOGIN</Link>
             </form>
 
         </div>
