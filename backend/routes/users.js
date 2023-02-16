@@ -1,25 +1,104 @@
-
 const router = require('express').Router();
 let User = require('../models/user.model');
+const axios = require('axios');
 
-router.route('/').get((req, res) => {
-  console.log("Users get request");
-  User.find()
-    .then(users => res.json(users))
-    .catch(err => res.status(400).json('Error: ' + err));
-});
+//LOGIN API
+router.post('/login', async (req, res) => {
+  const { username, password } = req.body;
+  console.log(req.body);
 
-router.route('/add').post((req, res) => {
+  try {
+    const user = await User.findOne({ username, password });
+    console.log("done");
+    if (user) {
+      console.log("connecting mere bhai");
+      res.status(200).send({ message: 'Login successful!' });
+      console.log("ho gya mere bhai");
 
-  console.log("request for adding : ");
-  console.log(req.body.username);
-  const username = req.body.username;
+    } else {
+      res.status(401).send({ message: 'Invalid username or password' });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: 'Server error' });
+  }
+})
 
-  const newUser = new User({username});
+//SIGNUP API 
+router.post('/signup', async (req, res) => {
+  const { username, password, email  } = req.body;
+  console.log(req.body);
 
-  newUser.save()
+  //find for duplicate user 
+  const user = await User.findOne({username});
+  if(user) {
+    res.status(401).send({ message: 'Username not available!!' });
+    return;
+  }
+
+  //find for duplicate email 
+  const mail = await User.findOne({email});
+  if(mail) {
+    res.status(401).send({ message: 'Email not available!!' });
+    return;
+  }
+
+  try {
+    const newUser = new User({ username, password, email});
+    console.log("User added successfully");
+
+    newUser.save()
     .then(() => res.json('User added!'))
     .catch(err => res.status(400).json('Error: ' + err));
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: 'Server error' });
+  }
+})
+
+
+//EXTRA API FOR questions
+
+router.post('/question_to_gpt', async (req, res) => {
+  console.log("question asked");
+
+  try {
+    const question = req.body.question;
+    const model = 'text-davinci-003';
+    console.log(question);
+    // return;
+    const response = await axios.post('https://api.openai.com/v1/engines/' + model + '/completions', {
+      prompt: question,
+      max_tokens: 200,
+      temperature: 0.5,
+      n: 1
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
+      }
+    });
+
+    const answer = response.data.choices[0].text;
+
+    res.json({ answer });
+
+    // console.log(answer);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while processing your request.' });
+  }
+});
+
+
+
+router.route('/test').post((req, res) => {
+
+  console.log("Test api called");
+
+  res.status(200).json({ message: 'Login successful!' });
+  return;
 });
 
 module.exports = router; 
