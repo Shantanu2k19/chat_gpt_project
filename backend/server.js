@@ -20,8 +20,10 @@ connection.once('open', () => {
 })
 
 const usersRouter = require('./routes/users');
+const chatRouter = require('./routes/chat');
 
 app.use('/users', usersRouter);
+app.use('/chat', chatRouter);
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);

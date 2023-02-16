@@ -1,5 +1,6 @@
 const router = require('express').Router();
 let User = require('../models/user.model');
+let Chat = require('../models/chat.model');
 const axios = require('axios');
 
 //LOGIN API
@@ -47,11 +48,18 @@ router.post('/signup', async (req, res) => {
     const newUser = new User({ username, password, email});
     console.log("User added successfully");
 
-    newUser.save()
+    newUser.save();
+
+
+    //initialize chat as well
+    const newArray = [];
+    const newChat = new Chat({username, newArray });
+
+    newChat.save()
     .then(() => res.json('User added!'))
     .catch(err => res.status(400).json('Error: ' + err));
-
-  } catch (err) {
+  } 
+  catch (err) {
     console.error(err);
     res.status(500).send({ message: 'Server error' });
   }
