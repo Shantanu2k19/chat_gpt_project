@@ -1,7 +1,9 @@
 import React from "react"
 import { useNavigate } from 'react-router-dom';
+import Cookies from "universal-cookie"
 
 export default function Signup(props) {
+    const cookies = new Cookies();
     const navigate = useNavigate();
 
     const displayEle = props.isLogin ? "none" : "block";
@@ -40,12 +42,19 @@ export default function Signup(props) {
             body: JSON.stringify({ username, password, email })
           });
       
+
+          const data = await response.json();
           if (response.ok) {
             console.log("signup success");
+            console.log(data.accessToken);
+
+            cookies.set("accessToken", data.accessToken);
+            cookies.set("refreshToken", data.refreshToken);
+
             navigate('/talkgpt');
-          } else {
+          }  else {
             const data = await response.json();
-            console.log("signup in FAIL");
+            console.log("signup FAIL");
             console.error(data.message);
           }
     };
