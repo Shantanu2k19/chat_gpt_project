@@ -8,7 +8,7 @@ import RightBox from '../components/RightBox'
 import '../css/App.css'
 
 export default function App() {
-
+  console.log("app.js running")
   const[currentForm, setCurrentForm] = React.useState('login')
   function toggleForm(){
       setCurrentForm()

@@ -8,7 +8,7 @@ function checkMssg(){
     // console.log(this.props.location.state.mssg);    
     console.log("errr")
 }
-checkMssg();
+// checkMssg();
 
 export default function Testpage() {
     return (

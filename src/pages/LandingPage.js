@@ -4,29 +4,13 @@ import ChatHistory from '../components/ChatHistory.js'
 import '../css/LandingPage.css'
 import { Link } from 'react-router-dom';
 import Cookies from "universal-cookie"
-import { useNavigate } from 'react-router-dom';
 
 const cookies = new Cookies();
 
-
 export default function LandingPage() {
 
-    // console.log("checking authorization!")
-
-    // const navigate = useNavigate();
-    // console.log(cookies.get("accessToken"));
-    // if(!cookies.get("accessToken"))
-    // {
-    //     console.log("not logged in");
-    //     navigate('/error')
-    //     // return <Navigate to={{ 
-    //     //     pathname: '/error', 
-    //     // }} />
-    // }
-    // console.log("allowed!");
-
-
-    const logoutUser = async (event) => {
+    //LOGOUT HANDLER
+    const logoutUser = async () => {
         console.log("logging out");
 
         const token = cookies.get("refreshToken");
@@ -70,14 +54,21 @@ export default function LandingPage() {
                         <img alt="logout-img" src="images/logout.png" width="18px" style={{ marginRight: "10px" }} /><span className="sidebar-text" href="#log_out">Log Out</span>
                     </Link>
                 </div>
+                <div className="sidebar--content">
+                    <a href="#contact">
+                        <img alt="logout-img" src="images/logout.png" width="18px" style={{ marginRight: "10px" }} /><span className="sidebar-text" href="#log_out">Get Data</span>                    
+                    </a>
+                </div>
             </div>
 
             <div className="content">
                 <div className="chat-area">
-                    <ChatHistory/>
+                    <div className="chat-area-child">
+                        <ChatHistory/>
+                    </div>
                 </div>
                 <div className="form-area">
-                    <ChatGPTdiv />
+                        <ChatGPTdiv />
                 </div>
             </div>
         </div>

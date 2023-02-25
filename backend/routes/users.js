@@ -32,6 +32,7 @@ function authenticateToken(req, res, next){
     if(verifyJWTtoken)
     {
       console.log("token valid!")
+      req.usernam = verifyJWTtoken.username;
       next()
       return;
     }
@@ -63,6 +64,7 @@ function authenticateToken(req, res, next){
         // console.log(forJWTsign);
         const newAccessToken = generateAccessToken(forJWTsign);
         req.newToken = newAccessToken;
+        req.usernam = username
         next();
         return;
       }
@@ -105,6 +107,7 @@ router.post('/login', async (req, res) => {
       const refreshToken = jwt.sign(forJWTsign, process.env.REFRESH_TOKEN_SECRET)
 
       refreshTokens.push(refreshToken)
+      console.log("user login valid : ", username)
      
       return res.status(200).send({ accessToken: accessToken, refreshToken: refreshToken });
     } 
@@ -167,17 +170,17 @@ router.post('/signup', async (req, res) => {
     }
 
     //initialize chat as well
-    // const newArray = [];
-    // const newChat = new Chat({username, newArray });
+    const newChat = new Chat({username});
 
-    // try{
-    //   newChat.save()
-    //   console.log('Chat initialized!')
-    // }
-    // catch{
-    //   res.status(400).send({ message : JSON.stringify('Error: ' + err)})
-    //   return;
-    // }
+    try{
+      newChat.save()
+      console.log('Chat initialized!')
+    }
+    catch{
+      console.log("cant create chat")
+      res.status(400).send({ message : JSON.stringify('Error: ' + err)})
+      return;
+    }
     
 
     //returning refresh and access tokens 
@@ -239,9 +242,8 @@ router.post('/dataapi', authenticateToken, (req,res) => {
 });
 
 //API FOR questions
-router.post('/question_to_gpt', async (req, res) => {
+router.post('/question_to_gpt', authenticateToken, async (req, res) => {
   console.log("______QUESTION-ASK_____");
-
 
   try {
     const question = req.body.question;
@@ -261,13 +263,81 @@ router.post('/question_to_gpt', async (req, res) => {
     });
 
     const answer = response.data.choices[0].text;
+    console.log(answer);
 
-    res.json({ answer });
+    let retVal = addChatInDatabase(req.usernam, question, answer);
+
+    if(retVal===0)
+    {
+      console.log("user chat not saved")
+      return res.status(403).json({ answer });
+    }
+    else  console.log("qn added")
+
+    return res.status(200).json({ answer });
 
     // console.log(answer);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'An error occurred while processing your request.' });
+    return res.status(500).json({ error: 'An error occurred while processing your request.' });
   }
 });
 
+//function 
+const addChatInDatabase = async (username, qn, ans) => {
+  const usr = await User.findOne({username});
+
+  if(!usr) return 0;
+
+  try {
+    const userChat =  await Chat.findOne({username});
+
+    userChat.qnaData.push(qn);
+    userChat.qnaData.push(ans);
+    userChat.save();
+    return 1;
+  } catch (err) {
+    return 0;
+  }
+}
+
+router.post('/createdb', async (req, res) => {
+  console.log("new cdsd");
+  const { qn, username } = req.body;
+    console.log(username);
+    const newArray = [];
+    const newChat = new Chat({username });
+
+    try{
+      newChat.save()
+      console.log('Chat initialized!')
+    }
+    catch{
+      res.status(400).send({ message : JSON.stringify('Error: ' + err)})
+      return;
+    }
+    res.status(200).json({ result: "pass" });
+    return;
+});
+
+
+//GET HISTORY OF CHAT ON first page load 
+router.post('/getChatHistory', authenticateToken, async(req,res) => {
+  console.log("got name : ",req.usernam)
+  const userChat = await Chat.findOne({username:req.usernam});
+  if(userChat)
+  {
+    console.log( userChat.qnaData);
+    const data = 
+    {
+      newToken :req.newToken,
+      arr :  userChat.qnaData
+    }
+    return res.json(data);
+  }
+  else
+  {
+    console.log("some error occured!");
+    return res.status(403).send({ message: "user's chat not found" });
+  }
+})
