@@ -75,7 +75,7 @@ function authenticateToken(req, res, next){
       return res.status(403).send("referesh token verification failed");
     }
   }
-}
+} 
 
 
 
@@ -201,45 +201,9 @@ router.post('/signup', async (req, res) => {
 
 
 
-//******************      TEST/SAMPLE API       ******************
-///THIS FORMAT SHOULD BE FOLLOWED BY ALL THE API THAT WILL BE WRITTEN 
-router.route('/test').post(authenticateToken, (req, res) => {
-  console.log("______test api_____");
-  var d = new Date(); //data 
-
-  const data = 
-  {
-    newToken :req.newToken,
-    text : "date"+d
-  }
-  return res.status(200).json(data);
-});
-
-module.exports = router; 
-
-
-
 
 
 //******************      DATA APIS       ******************
-
-//API TO GET DATA 
-router.post('/dataapi', authenticateToken, (req,res) => {
-  console.log("______DATA-API_____");
-
-  // authenticateToken is the middleware here to check token before moving on 
-
-  //will enter this function only when reurned successfully from middleware 
-  console.log("authinticated")
-
-  // now do data work here
-
-  const data = 
-  {
-    newToken :req.newToken
-  }
-  return res.json(data);
-});
 
 //API FOR questions
 router.post('/question_to_gpt', authenticateToken, async (req, res) => {
@@ -248,11 +212,11 @@ router.post('/question_to_gpt', authenticateToken, async (req, res) => {
   try {
     const question = req.body.question;
     const model = 'text-davinci-003';
-    console.log(question);
+    // console.log(question);
     // return;
     const response = await axios.post('https://api.openai.com/v1/engines/' + model + '/completions', {
       prompt: question,
-      max_tokens: 200,
+      max_tokens: 500,
       temperature: 0.5,
       n: 1
     }, {
@@ -261,9 +225,14 @@ router.post('/question_to_gpt', authenticateToken, async (req, res) => {
         'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
       }
     });
+    console.log("...............")
+    let answer = response.data.choices[0].text;
+    // console.log(answer);
 
-    const answer = response.data.choices[0].text;
-    console.log(answer);
+    console.log("got answer");
+    answer = answer.replace(/^\n+/g, "");
+    answer = answer.replace(/\n/g, "<br>");
+    // console.log(answer);
 
     let retVal = addChatInDatabase(req.usernam, question, answer);
 
@@ -278,7 +247,8 @@ router.post('/question_to_gpt', authenticateToken, async (req, res) => {
 
     // console.log(answer);
   } catch (error) {
-    console.error(error);
+    console.log("api to ask question failed ");
+    console.log(error)
     return res.status(500).json({ error: 'An error occurred while processing your request.' });
   }
 });
@@ -327,7 +297,7 @@ router.post('/getChatHistory', authenticateToken, async(req,res) => {
   const userChat = await Chat.findOne({username:req.usernam});
   if(userChat)
   {
-    console.log( userChat.qnaData);
+    // console.log( userChat.qnaData);
     const data = 
     {
       newToken :req.newToken,
@@ -341,3 +311,54 @@ router.post('/getChatHistory', authenticateToken, async(req,res) => {
     return res.status(403).send({ message: "user's chat not found" });
   }
 })
+
+
+
+
+
+
+//******************      TEST/SAMPLE API       ******************
+///THIS FORMAT SHOULD BE FOLLOWED BY ALL THE API THAT WILL BE WRITTEN 
+router.route('/test').post(authenticateToken, (req, res) => {
+  console.log("______test api_____");
+  var d = new Date(); //data 
+
+  const data = 
+  {
+    newToken :req.newToken,
+    text : "date"+d
+  }
+  return res.status(200).json(data);
+});
+
+
+//TEST API FOR SENDING SAMPLE DATA ON QUESTION ASK 
+router.post('/testApp', async (req, res) => {
+  console.log("______TEST-ASK_____");
+  const question = req.body.question;
+  console.log(question);
+  answer = "hehehehehhe";
+  return res.status(200).json({ answer });
+});
+
+//API TO GET DATA 
+router.post('/dataapi', authenticateToken, (req,res) => {
+  console.log("______DATA-API_____");
+
+  // authenticateToken is the middleware here to check token before moving on 
+
+  //will enter this function only when reurned successfully from middleware 
+  console.log("authinticated")
+
+  // now do data work here
+
+  const data = 
+  {
+    newToken :req.newToken
+  }
+  return res.json(data);
+});
+
+
+
+module.exports = router; 

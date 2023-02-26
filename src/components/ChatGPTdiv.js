@@ -25,9 +25,9 @@ export default function LeftBox() {
 
         if (response.ok) {
             console.log(json.answer)
-            setchatHistory( prev => ({
-                array:[...prev, json.answer]
-            }))
+            // setchatHistory( prev => ({
+            //     array:[...prev, json.answer]
+            // }))
         }
         else{
             console.log("cant get data");

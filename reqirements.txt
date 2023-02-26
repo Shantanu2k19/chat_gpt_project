@@ -13,3 +13,9 @@ chat_gpt@0.1.0 /home/zodiac/Desktop/chat_gpt_project
 +-- universal-cookie@4.0.4
 `-- web-vitals@2.1.4
 
+
+
+maniual 
+
+npm i universal-cookie
+npm i react-router-dom

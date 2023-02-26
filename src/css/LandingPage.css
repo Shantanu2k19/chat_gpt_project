@@ -69,7 +69,7 @@ div.content {
 /* css for chat */
 .chat-area{
   /* border: 2px solid gray; */
-  height: 86%;
+  height: 90%;
   overflow: hidden;
   margin-left: 5%;
   margin-right: 5%;
@@ -96,7 +96,7 @@ div.content {
 
 .clear{
   clear:both;
-  height: 10px;
+  height: 7px;
 }
 
 .answerChat{
@@ -126,7 +126,6 @@ div.content {
 .gpt-chat-icon{
   width: 22px;
   padding: 5px;
-  padding-right: 20px;
 }
 
 .question-text-parent{
@@ -135,15 +134,14 @@ div.content {
 
 .question-text-1{
   flex: 1;
-  /* border: 2px solid yellow; */
 }
 
 .question-text-2{
-  /* vertical-align: middle; */
-  padding-top: 5%;
-  margin-right: 20px;
-  /* border: 2px solid green; */
+  margin: 5px 10px 5px 8px;
+  /* border: 1px solid green; */
   width: 100%;
+  display: flex;
+  align-items: center; 
 }
 
 
@@ -154,13 +152,12 @@ div.content {
 
 /* form css */
 .form-area{
-  box-shadow: 5px 5px 15px -1px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 8px 30px 14px rgba(0, 0, 0, 0.35);
   border-radius: 10px;
-  border: 2px solid white;
-  height: 6%;
+  height: 5%;
   background-color: #40414F;
   border: 1px solid #303038;
-  margin: 20px;
+  margin: 0px 8px 8px 8px;
 }
 
 .form-area-content {
@@ -170,21 +167,22 @@ div.content {
 }
 
 .form-textbox{
-  /* border: 2px solid blue; */
+  /* border: 1px solid blue; */
   width: 96%;
 }
 
 .send-icon{
-  /* border: 2px solid red; */
+  /* border: 1px solid red; */
   width: 35px;
   text-align: center;
   margin-left: 15px;
   border-radius: 10px;
-  padding: 8px;
+  padding: 3px 8px 8px 8px;
 }
 
 .send-icon:hover{
-  background-color: #1d1d20;
+  background-color: #35353b;
+  box-shadow: 0px 0px 5px 4px rgba(0, 0, 0, 0.15);
 }
 
 /* question text box  */
@@ -197,4 +195,14 @@ div.content {
   outline: none;
   font-size: 1.2em;
   font-family: "Lato", sans-serif;
+}
+
+
+.downImage{
+  opacity: 0.4;
+  width: 25px;
+  position: absolute;
+  right:35px;
+  z-index:1000;
+  bottom: 12%;
 }
