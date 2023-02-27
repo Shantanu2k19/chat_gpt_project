@@ -1,6 +1,5 @@
 import React, { useRef, useEffect } from "react";
 import ChatHistory from "../components/ChatHistory.js";
-import ChatGPTdiv from "../components/ChatGPTdiv.js";
 import "../css/LandingPage.css";
 import { Link } from "react-router-dom";
 import Cookies from "universal-cookie";
@@ -9,7 +8,23 @@ import { useNavigate } from "react-router-dom";
 const cookies = new Cookies();
 
 export default function LandingPage() {
-    console.log("landinggggg")
+  console.log("langing page entered");
+
+  //AUTHORIZING
+  let navigate = useNavigate();
+
+  useEffect(() => {
+    console.log("authorizing...");
+
+    const cookies = new Cookies();
+    const cAccToken = cookies.get("accessToken");
+
+    if (!cAccToken) {
+      // window.location.assign("/error");
+      navigate("/error");
+    }
+  });
+
   //LOGOUT HANDLER
   const logoutUser = async () => {
     console.log("logging out");
@@ -81,31 +96,6 @@ export default function LandingPage() {
   useEffect(() => {
     scrollBottom();
   });
-  let navigate = useNavigate();
-
-
-  useEffect(() => {
-    console.log("effectdddd");
-
-    // scrollBottom();
-    const cookies = new Cookies();
-    const cAccToken = cookies.get("accessToken");
-
-
-    // function Component() {
-    //     let navigate = useNavigate();
-    //     navigate("/error");
-    // }
-
-
-    if (!cAccToken) {
-      // window.location.assign("/error");
-        navigate("/error");
-    }
-
-  });
-
- 
 
   //FOR SHOWING THE BUTTON : SCROLL TO BOTTOM
   const [showButton, setShowButton] = React.useState(false);
