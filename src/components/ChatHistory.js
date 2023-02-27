@@ -35,8 +35,15 @@ export default function ChatHistory() {
         fetchData();
     }, []);
 
+    const [temp, setTemp] = React.useState("1");
+    function ayoo(){
+        console.log("ayooo");
+        setTemp("2");
+    }
+
     const chatSnippet = chatHistory.map( (ele, ind)=> {
         return <ChatItem 
+        key = {ind}
         item = {ele} 
         index = {ind}/>
     })
@@ -44,6 +51,7 @@ export default function ChatHistory() {
     return (
         <div>
             {chatSnippet}
+            <button onClick={ayoo}>{temp} </button>
         </div>
     )
 };

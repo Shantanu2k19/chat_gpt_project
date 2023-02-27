@@ -1,7 +1,7 @@
 import React from "react"
 import Cookies from "universal-cookie"
 
-export default function LeftBox() {
+export default function ChatGPTdiv() {
 
     const [question, setPrompt] = React.useState('');
 
