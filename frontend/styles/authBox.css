@@ -1,0 +1,208 @@
+
+.ayooo{
+    border:2px solid red;
+  }
+  
+  
+  
+  .btn-secondary {
+    padding: 10px;
+  }
+  
+  .form-container {
+    height: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  
+  }
+  
+  .form--input {
+    width: 90%;
+    margin-bottom: 20px;
+    height: 45px;
+    border-radius: 15px;
+    border: 1px solid gray;
+    padding: 5px;
+    font-family: 'Inter', sans-serif;
+    font-family: monospace, monospace;
+    font-size: 17px;
+    font-weight: 100;
+  }
+  
+  .form--submit {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    background-color: #639;
+    border: none;
+    cursor: pointer;
+    height: 140%;
+  }
+  
+  .form-top-toggle {
+    display: flex;
+    margin-bottom: 40px;
+    gap: 35px;
+    width: 100%;
+    padding: 35px;
+  }
+  
+  .form-switcher-disable {
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 10px 10px;
+    text-align: center;
+    transition: 200ms;
+    width: 100%;
+    box-sizing: border-box;
+    border: 0;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    font-family: sans-serif;
+    font-size: 18px;
+    font-style: bold;
+    letter-spacing: 1px;
+  }
+  
+  .form-switcher-disable:not(:disabled):hover,
+  .form-switcher-disable:not(:disabled):focus {
+    outline: 0;
+    background: rgb(4, 99, 36) 78%;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, .2), 0 3px 8px 0 rgba(0, 0, 0, .15);
+  }
+  
+  .form-switcher-disable:disabled {
+    filter: saturate(0.2) opacity(0.5);
+    -webkit-filter: saturate(0.2) opacity(0.5);
+    cursor: not-allowed;
+  }
+  
+  /* CSS for button ends */
+  
+  
+  .form-switcher-enable {
+    color: black;
+    cursor: pointer;
+    /* CSS for button starts*/
+    background-color: #d47bd4;
+    border-radius: 12px;
+    color: #000;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 10px 10px;
+    text-align: center;
+    transition: 200ms;
+    width: 100%;
+    box-sizing: border-box;
+    border: 0;
+    font-size: 16px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    font-family: sans-serif;
+    font-size: 18px;
+    font-style: bold;
+    letter-spacing: 1px;
+    background-image: linear-gradient(to right, #F27121cc, #E94057cc, #8A2387cc);
+    text-decoration: underline;
+  }
+  
+  .form-switcher-enable:not(:disabled):hover,
+  .form-switcher-enable:not(:disabled):focus {
+    outline: 0;
+    background: rgb(4, 99, 36) 78%;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, .2), 0 3px 8px 0 rgba(0, 0, 0, .15);
+  }
+  
+  .form-switcher-enable:disabled {
+    filter: saturate(0.2) opacity(0.5);
+    -webkit-filter: saturate(0.2) opacity(0.5);
+    cursor: not-allowed;
+  }
+  
+  /* CSS for button ends */
+  
+  
+  
+  
+  
+  
+  /* CSS for button start */
+  .button-85 {
+    padding: 0.6em 2em;
+    border: none;
+    outline: none;
+    color: rgb(255, 255, 255);
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    font-family: sans-serif;
+    font-size: 16px;
+    font-style: bold;
+    letter-spacing: 1px;
+  }
+  
+  .button-85:before {
+    content: "";
+    background: linear-gradient(45deg,
+            #ff0000,
+            #ff7300,
+            #fffb00,
+            #48ff00,
+            #00ffd5,
+            #002bff,
+            #7a00ff,
+            #ff00c8,
+            #ff0000);
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing-button-85 20s linear infinite;
+    transition: opacity 0.3s ease-in-out;
+    border-radius: 10px;
+  }
+  
+  @keyframes glowing-button-85 {
+    0% {
+        background-position: 0 0;
+    }
+  
+    50% {
+        background-position: 400% 0;
+    }
+  
+    100% {
+        background-position: 0 0;
+    }
+  }
+  
+  .button-85:after {
+    z-index: -1;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #222;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+  }
+  
+  /* css button end */
