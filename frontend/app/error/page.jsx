@@ -137,8 +137,7 @@ const ErrorPage = () => {
                   Sorry, the page can’t be found
                 </h3>
                 <p className="mb-10 text-base font-medium leading-relaxed text-body-color sm:text-lg sm:leading-relaxed">
-                  The page you were looking for appears to have been moved,
-                  deleted or does not exist.
+                  Maybe you forgot to login?
                 </p>
                 <Link
                   href="/"
