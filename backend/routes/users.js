@@ -196,8 +196,81 @@ router.post('/signup', async (req, res) => {
   }
 })
 
+//SIGIN WITH GOOGLE API 
+router.post('/signupWithGoogle', async (req, res) => {
+  console.log("______SIGN-IN W GOOGLE_____");
 
+  let { username, email } = req.body;
 
+  //find for duplicate email 
+  const mail = await User.findOne({email});
+  if(mail) {
+    console.log("Mail exist");
+    if(!mail.isGlogin){
+      return res.status(401).send({ message: 'Email exist, Login instead' });
+    }
+
+    //login user 
+    console.log("user id exist, logging in");
+    const forJWTsign = {username};
+    console.log('generating access token')
+    const accessToken = generateAccessToken(forJWTsign); 
+    const refreshToken = jwt.sign(forJWTsign, process.env.REFRESH_TOKEN_SECRET)
+
+    refreshTokens.push(refreshToken)
+    console.log("user login valid : ", username)
+    
+    return res.status(200).send({ accessToken: accessToken, refreshToken: refreshToken });
+  }
+
+  //find for duplicate user 
+  let user = await User.findOne({username});
+
+  while(user){
+    username = username+Math.floor((Math.random() * 10000) + 1);
+    console.log(username);
+    user = await User.findOne({username});
+  }
+
+  let password = Math.random();
+  try {
+    const newUser = new User({ username, password, email, isGlogin:true});
+    
+    try {
+      newUser.save();
+      console.log('new user added!');
+    }
+    catch{
+      res.status(400).send({ message : JSON.stringify('Error: ' + err)})
+      return;
+    }
+
+    //initialize chat as well
+    const newChat = new Chat({username});
+
+    try{
+      newChat.save()
+      console.log('Chat initialized!')
+    }
+    catch{
+      console.log("cant create chat")
+      res.status(400).send({ message : JSON.stringify('Error: ' + err)})
+      return;
+    }
+    
+
+    //returning refresh and access tokens 
+    const forJWTsign = {username};
+    const accessToken = generateAccessToken(forJWTsign); 
+    const refreshToken = jwt.sign(forJWTsign, process.env.REFRESH_TOKEN_SECRET)
+    refreshTokens.push(refreshToken)
+    return res.status(200).send({ accessToken: accessToken, refreshToken: refreshToken });
+  } 
+  catch (err) {
+    console.error(err);
+    res.status(500).send({ message: 'Server error' });
+  }
+})
 
 
 

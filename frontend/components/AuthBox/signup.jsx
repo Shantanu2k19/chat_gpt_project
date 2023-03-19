@@ -53,7 +53,6 @@ export default function Signup(props) {
 
             router.push('/loggedin')
           }  else {
-            const data = await response.json();
             console.log("signup FAIL");
             console.error(data.message);
           }
