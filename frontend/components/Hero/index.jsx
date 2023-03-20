@@ -1,6 +1,37 @@
+"use client";
 import Link from "next/link";
+import Cookies from "universal-cookie";
+import { useRouter } from "next/navigation";
 
 const Hero = () => {
+  const cookies = new Cookies();
+  let router = useRouter();
+
+  async function demoLogin() {
+    const username = "demo_user";
+    const password = "noobie";
+    console.log("logging try");
+
+    const response = await fetch("http://localhost:5000/users/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password }),
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      console.log("logged in success");
+
+      cookies.set("accessToken", data.accessToken);
+      cookies.set("refreshToken", data.refreshToken);
+
+      router.push("/loggedin");
+    } else {
+      console.log("log in FAIL");
+      console.error(data.message);
+    }
+  }
+
   return (
     <>
       <section
@@ -15,29 +46,34 @@ const Hero = () => {
                 data-wow-delay=".2s"
               >
                 <h1 className="mb-5 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
-                Chatting with GPT is cool, How about talking with it?
+                  Chatting with GPT is cool, How about talking with it?
                 </h1>
                 <p className="mb-12 text-base font-medium !leading-relaxed text-body-color dark:text-white dark:opacity-90 sm:text-lg md:text-xl">
-                ChatGPT is a large language model created by OpenAI. 
-                It is designed to understand natural language and generate human-like responses to a wide range of questions and prompts. 
-                <br/>
-                <br/>
-                <strong>TalkGPT</strong> allows you to interact with chatGPT using voice commands. This enables hands-free and convenient interaction with the AI, freeing users from having to type on the screen. 
-                Making the user experience more intuitive and accessible.
+                  ChatGPT is a large language model created by OpenAI. It is
+                  designed to understand natural language and generate
+                  human-like responses to a wide range of questions and prompts.
+                  <br />
+                  <br />
+                  <strong>TalkGPT</strong> allows you to interact with chatGPT
+                  using voice commands. This enables hands-free and convenient
+                  interaction with the AI, freeing users from having to type on
+                  the screen. Making the user experience more intuitive and
+                  accessible.
                 </p>
                 <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
                   <Link
-                    href="https://nextjstemplates.com/templates/startup"
+                    href="#"
+                    onClick={demoLogin}
                     className="rounded-md bg-primary py-4 px-8 text-base font-semibold text-white duration-300 ease-in-out hover:bg-primary/80"
                   >
-                    Login 
+                    Demo Login
                   </Link>
-                  <Link
-                    href="https://github.com/NextJSTemplates/startup-nextjs"
+                  {/* <Link
+                    href=""
                     className="rounded-md bg-black/20 py-4 px-8 text-base font-semibold text-black duration-300 ease-in-out hover:bg-black/30 dark:bg-white/20 dark:text-white dark:hover:bg-white/30"
                   >
                     Signup 
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
             </div>

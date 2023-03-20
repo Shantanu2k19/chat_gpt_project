@@ -15,7 +15,7 @@ Clone
 Cd to frontend folder 
 
 npm install 
-npm run dev 
+npm run dev   //for dev 
 
 
 
@@ -29,3 +29,8 @@ Fix css of login page
 
 Voice implementation
 Scroll improvement
+
+
+ npm i jwt-decode
+
+ npm install --save react-toastify

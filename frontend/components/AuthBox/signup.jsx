@@ -60,11 +60,12 @@ export default function Signup(props) {
 
     return (
         <div className="form-container" style={{ display: displayEle }}>
-            <form className="form" onSubmit={handleSubmit}>
+            <form className="form" onSubmit={handleSubmit} id="signupForm">
                 <div className="form-top-toggle">
                     <span className="form-switcher-disable" onClick={props.handleClick} >Login</span>
                     <span className="form-switcher-enable">Sign up</span>
                 </div>
+                <div className="form-inner-content">
                 <input
                     type="username"
                     placeholder="username"
@@ -97,9 +98,11 @@ export default function Signup(props) {
                     onChange={handleChange}
                     value={formData.passwordconfirm}
                 />
-                <br></br>
-                <button className="button-85">Sign Up</button>
                 <br/>
+                </div>
+                <div className="googleButton">
+                <button className="button-85" form="signupForm" >Submit</button>
+                </div>
             </form>
 
         </div>

@@ -1,35 +1,63 @@
+a:hover {
+  cursor:pointer;
+ }
+ 
+ .line-overkill{
+  /* width: 80%; */
+  opacity: 0.2;
+  margin-top: 20px;
+  
 
-.ayooo{
-    border:2px solid red;
+ }
+
+.login_box{
+    /* border:2px solid red; */
+    padding-top: 20px;
+    background-color: rgba(41, 39, 39, 0.3);
+    box-shadow: 0 5px 30px black;
+    border-radius: 20px;
   }
   
-  
-  
-  .btn-secondary {
-    padding: 10px;
-  }
+.googleButton{
+  /* border:2px solid green; */
+  display: flex;
+  justify-content: center; 
+  padding: 10px;
+}
   
   .form-container {
-    height: auto;
+    /* border:2px solid white; */
+
+    /* height: 45vh; */
     padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
   
+  .form-inner-content{
+    /* border: 2px solid blue; */
+    padding: 15px 20px 0px 20px;
+    min-height: 28vh;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center; 
   }
   
   .form--input {
-    width: 90%;
-    margin-bottom: 20px;
+
+    width: 100%;
     height: 45px;
     border-radius: 15px;
-    border: 1px solid gray;
-    padding: 5px;
-    font-family: 'Inter', sans-serif;
-    font-family: monospace, monospace;
+    padding: 15px;
+    font-family: sans-serif;
     font-size: 17px;
     font-weight: 100;
+
+    border: none;
+    border-bottom: 2px solid white;
+    margin-bottom: 20px;
+    background-color: transparent;
+    color: white;
   }
   
   .form--submit {
@@ -44,13 +72,15 @@
   }
   
   .form-top-toggle {
+    /* border:2px solid yellow; */
     display: flex;
-    margin-bottom: 40px;
     gap: 35px;
     width: 100%;
-    padding: 35px;
+    /* padding: 30px; */
+    justify-content: space-between;
   }
-  
+
+
   .form-switcher-disable {
     border-radius: 12px;
     cursor: pointer;
@@ -73,7 +103,7 @@
   .form-switcher-disable:not(:disabled):hover,
   .form-switcher-disable:not(:disabled):focus {
     outline: 0;
-    background: rgb(4, 99, 36) 78%;
+    background: rgb(61 174 197) 78%;
     box-shadow: 0 0 0 2px rgba(0, 0, 0, .2), 0 3px 8px 0 rgba(0, 0, 0, .15);
   }
   
@@ -116,7 +146,7 @@
   .form-switcher-enable:not(:disabled):hover,
   .form-switcher-enable:not(:disabled):focus {
     outline: 0;
-    background: rgb(4, 99, 36) 78%;
+    background: rgb(61 174 197) 78%;
     box-shadow: 0 0 0 2px rgba(0, 0, 0, .2), 0 3px 8px 0 rgba(0, 0, 0, .15);
   }
   

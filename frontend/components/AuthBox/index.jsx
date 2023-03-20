@@ -7,8 +7,12 @@ import "../../styles/authBox.css";
 import jwt from 'jwt-decode'
 import Cookies from "universal-cookie"
 import { useRouter } from 'next/navigation';
+import { useTheme } from "next-themes";
 
 export default function RightBox(){
+    const { theme, setTheme } = useTheme();
+    console.log(theme)
+    const gtheme = theme==="dark"?"filled_black":"outline"
     let router= useRouter()
     const cookies = new Cookies();
     const[isLogin, setIsLogin] = React.useState(false)
@@ -61,19 +65,21 @@ export default function RightBox(){
     
         google.accounts.id.renderButton(
             document.getElementById("signInDiv"),
-            { theme: "outline", size:"large"}
+            { theme: gtheme, size:"large", width:"300px"}
         )
-    }, []);
+        
+        // google.accounts.id.prompt();
+    }, [theme]);
 
 
     return(
-    <div className='ayooo'>
-        
-        <div id="signInDiv">
-
+    <div className='login_box'>
+        <div className="googleButton">
+            <div id="signInDiv"></div>
         </div>
-        <br/>
 
+        <hr className="line-overkill"/>
+        
         <Login
             handleClick={toggleForm}
             isLogin = {isLogin}
