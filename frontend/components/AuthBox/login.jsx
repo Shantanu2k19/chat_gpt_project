@@ -68,6 +68,7 @@ export default function Login(props) {
                     name="username"
                     onChange={handleChange}
                     value={formData.username}
+                    style={{borderBottom:"2px solid red"}}
                 />
                 <input
                     type="password"

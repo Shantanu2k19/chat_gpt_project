@@ -56,7 +56,17 @@ export default function RightBox(){
             console.error(data.message);
           }
     }
-    
+
+    let backg = theme==="light"? "rgba(241,242,246, 0.3)":"rgba(41, 39, 39, 0.3)";
+    let boxSh = theme==="light"?"0 5px 30px #dadee8":"0 5px 30px black";
+
+    console.log(backg, boxSh);
+
+    const loginStyle = {
+        backgroundColor: backg,
+        boxShadow:boxSh,
+    }
+
     React.useEffect(() => {
         google.accounts.id.initialize({
             client_id : "293258871762-clmknpcjj0cv69slpdiognh5c041e89u.apps.googleusercontent.com",
@@ -73,7 +83,7 @@ export default function RightBox(){
 
 
     return(
-    <div className='login_box'>
+    <div className='login_box' style={loginStyle}>
         <div className="googleButton">
             <div id="signInDiv"></div>
         </div>
@@ -83,6 +93,7 @@ export default function RightBox(){
         <Login
             handleClick={toggleForm}
             isLogin = {isLogin}
+            theme = {theme}
         />
         <Signup
             handleClick={toggleForm}
