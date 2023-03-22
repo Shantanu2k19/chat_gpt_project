@@ -1,10 +1,14 @@
 'use client';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useTheme } from "next-themes";
 import React from "react"
 import Cookies from "universal-cookie"
 import { useRouter } from 'next/navigation';
 
 export default function Login(props) {
+    const { theme, setTheme } = useTheme();
 
     const cookies = new Cookies();
     let router= useRouter()
@@ -16,6 +20,36 @@ export default function Login(props) {
         password: "",
     })
 
+    function showAlert(mssg, mode){
+        console.log("alert");
+
+        if(mode==1)
+        {
+        toast.success(mssg, {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: theme,
+          });
+        }
+        else
+        {
+        toast.warn(mssg, {
+            position: "top-center",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: theme,
+            });
+        }
+    }
 
     function handleChange(event) {
         const { name, value } = event.target
@@ -40,16 +74,18 @@ export default function Login(props) {
           const data = await response.json();
           if (response.ok) {
             console.log("logged in success");
+            showAlert("Success", 1);
             // console.log(data.accessToken);
             // console.log(data.refreshToken);
 
             cookies.set("accessToken", data.accessToken);
             cookies.set("refreshToken", data.refreshToken);
 
-            router.push('/loggedin')
+            // router.push('/loggedin')
           } else {
             console.log("log in FAIL");
-            console.error(data.message);
+            console.error(data);
+            showAlert(data.message, 2);
           }
     };
 

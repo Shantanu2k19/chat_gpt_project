@@ -93,7 +93,7 @@ router.post('/login', async (req, res) => {
   const user = await User.findOne({ username });
   if(user == null)
   {
-    return res.status(400).send("user not found")
+    return res.status(401).send({ message : JSON.stringify("User not found!")})
   }
 
   const forJWTsign = {username};
@@ -113,12 +113,12 @@ router.post('/login', async (req, res) => {
     } 
     else 
     {
-      return res.status(401).send('Incorrect password')
+      return res.status(401).send({ message : JSON.stringify("Password incorrect!")})
     }
   } 
   catch (err) {
     console.error(err);
-    res.status(500).send("something went wrong :/");
+    res.status(401).send({ message : JSON.stringify("Something went wrong :/")});
   }
 })
 
