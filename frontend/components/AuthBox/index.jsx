@@ -7,6 +7,10 @@ import "../../styles/authBox.css";
 import jwt from 'jwt-decode'
 import Cookies from "universal-cookie"
 import { useRouter } from 'next/navigation';
+
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useTheme } from "next-themes";
 
 export default function RightBox(){
@@ -22,6 +26,37 @@ export default function RightBox(){
         setIsLogin(prevShow => !prevShow)
     }
     
+
+    function showAlert(mssg, mode){
+        console.log("alert");
+
+        if(mode==1)
+        {
+        toast.success(mssg, {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: theme,
+          });
+        }
+        else
+        {
+        toast.warn(mssg, {
+            position: "top-center",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: theme,
+            });
+        }
+    }
 
     async function handleCallbackResponse(googResponse){
         console.log("Sigin with google");
@@ -45,7 +80,8 @@ export default function RightBox(){
           const data = await gResponse.json();
           if (gResponse.ok) {
             console.log("signup success");
-            console.log(data.accessToken);
+            // console.log(data.accessToken);
+            showAlert("Success", 1)
 
             cookies.set("accessToken", data.accessToken);
             cookies.set("refreshToken", data.refreshToken);
@@ -53,6 +89,7 @@ export default function RightBox(){
             router.push('/loggedin')
           }  else {
             console.log("signup FAIL");
+            showAlert(data.message, 2)
             console.error(data.message);
           }
     }

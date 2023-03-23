@@ -2,8 +2,15 @@ import React from "react"
 import { useRouter } from 'next/navigation';
 import Cookies from "universal-cookie"
 
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useTheme } from "next-themes";
+
 export default function Signup(props) {
     const cookies = new Cookies();
+    const { theme, setTheme } = useTheme();
+
 
     const displayEle = props.isLogin ? "none" : "block";
     let router= useRouter()
@@ -24,11 +31,43 @@ export default function Signup(props) {
         }))
     }
 
+    function showAlert(mssg, mode){
+        console.log("alert");
+
+        if(mode==1)
+        {
+        toast.success(mssg, {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: theme,
+          });
+        }
+        else
+        {
+        toast.warn(mssg, {
+            position: "top-center",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: theme,
+            });
+        }
+    }
+
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         if (formData.password !== formData.passwordconfirm) {
             console.log("passwords do not match !!");
+            showAlert("passwords do not match !", 2);
             return;
         }
 
@@ -46,7 +85,8 @@ export default function Signup(props) {
           const data = await response.json();
           if (response.ok) {
             console.log("signup success");
-            console.log(data.accessToken);
+            // console.log(data.accessToken);
+            showAlert("Success", 1);
 
             cookies.set("accessToken", data.accessToken);
             cookies.set("refreshToken", data.refreshToken);
@@ -54,7 +94,8 @@ export default function Signup(props) {
             router.push('/loggedin')
           }  else {
             console.log("signup FAIL");
-            console.error(data.message);
+            // console.error(data.message);
+            showAlert(data.message, 2);
           }
     };
 
