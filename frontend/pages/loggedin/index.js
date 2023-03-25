@@ -100,7 +100,7 @@ export default function LandingPage() {
   });
 
   //FOR SHOWING THE BUTTON : SCROLL TO BOTTOM
-  const [showButton, setShowButton] = React.useState(false);
+  const [showButton, setShowButton] = React.useState(true);
 
   const listInnerRef = useRef();
 
@@ -113,8 +113,8 @@ export default function LandingPage() {
         // console.log('Reached bottom')
         setShowButton(false);
       } else {
-        console.log('top')
-        // setShowButton(true);
+        // console.log('top')
+        setShowButton(true);
       }
     }
   };
