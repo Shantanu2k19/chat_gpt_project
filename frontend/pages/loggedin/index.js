@@ -49,13 +49,12 @@ export default function LandingPage() {
   };
 
   //ASK QUESTION AND ADD TO HISTORY TAB AREA
-  const [question, setPrompt] = React.useState("");
   const [newQuestions, setnewQuestions] = React.useState([]);
 
   const handleSubmit = async (e) => {
     console.log("question submitted");
     e.preventDefault();
-    setPrompt("");
+    const question=e.target.ques.value;
     console.log(question);
 
     const cookies = new Cookies();
@@ -106,15 +105,16 @@ export default function LandingPage() {
   const listInnerRef = useRef();
 
   const onScroll = () => {
-    console.log("listener");
+    // console.log("listener");
     if (listInnerRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
-      if (scrollTop + clientHeight === scrollHeight) {
-        //   console.log('Reached bottom')
+
+      if (scrollTop + clientHeight >= scrollHeight-20) {
+        // console.log('Reached bottom')
         setShowButton(false);
       } else {
-        // console.log('top')
-        setShowButton(true);
+        console.log('top')
+        // setShowButton(true);
       }
     }
   };
@@ -258,8 +258,8 @@ export default function LandingPage() {
                   type="text"
                   className="ques--input"
                   name="ques"
-                  value={question}
-                  onChange={(e) => setPrompt(e.target.value)}
+                  // value={question}
+                  // onChange={(e) => setPrompt(e.target.value)}
                 />
               </form>
             </div>
