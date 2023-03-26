@@ -2,14 +2,29 @@ import React, { useRef, useEffect } from "react";
 import "../../styles/loggedin.css";
 import ChatHistory from "./ChatHistory.js";
 import Cookies from "universal-cookie";
-// import { useNavigate } from "react-router-dom";
-
-import { useRouter } from 'next/navigation';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/navigation";
+import ReactLoading from "react-loading";
 
 const cookies = new Cookies();
 
 export default function LandingPage() {
   console.log("langing page entered");
+  const theme = "dark";
+
+  function showAlert(mssg) {
+    toast.info(mssg, {
+      position: "top-center",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: theme,
+    });
+  }
 
   //AUTHORIZING
   let router = useRouter();
@@ -22,7 +37,7 @@ export default function LandingPage() {
 
     if (!cAccToken) {
       // window.location.assign("/error");
-      router.push('/error');
+      router.push("/error");
     }
   });
 
@@ -34,7 +49,7 @@ export default function LandingPage() {
     cookies.remove("accessToken");
     cookies.remove("refreshToken");
 
-    router.push('/');
+    router.push("/");
 
     const response = await fetch("http://localhost:5000/users/logout", {
       method: "DELETE",
@@ -50,11 +65,20 @@ export default function LandingPage() {
 
   //ASK QUESTION AND ADD TO HISTORY TAB AREA
   const [newQuestions, setnewQuestions] = React.useState([]);
+  const [needHistory, setneedHistory] = React.useState(true);
+  const [tempQuestion, setTempQuestion] = React.useState(false);
+  const [tempQuestionVal, setTempQuestionVal] = React.useState(false);
+
+  console.log("needHistory :", needHistory);
 
   const handleSubmit = async (e) => {
     console.log("question submitted");
     e.preventDefault();
-    const question=e.target.ques.value;
+    setTempQuestionVal(e.target.ques.value);
+    setTempQuestion(true);
+
+    const question = e.target.ques.value;
+    e.target.ques.value = "";
     console.log(question);
 
     const cookies = new Cookies();
@@ -64,7 +88,6 @@ export default function LandingPage() {
     const response = await fetch(
       "http://localhost:5000/users/question_to_gpt",
       {
-        // const response = await fetch('http://localhost:5000/users/testApp', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -84,6 +107,35 @@ export default function LandingPage() {
       console.log("cant get data");
     }
     console.log("updated");
+
+    setTempQuestion(false);
+  };
+
+  //CLEAR CONVERSATION
+  const clearConversation = async () => {
+    console.log("clearing conversation");
+    showAlert("clearing conversation");
+
+    const cookies = new Cookies();
+    const cAccToken = cookies.get("accessToken");
+    const reftoken = cookies.get("refreshToken");
+
+    const response = await fetch("http://localhost:5000/users/clearChat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${cAccToken}`,
+      },
+      body: JSON.stringify({ reftoken }),
+    });
+
+    if (response.ok) {
+      console.log("Clear chat success");
+      setnewQuestions([]);
+      setneedHistory(false);
+    } else {
+      console.log("server issue in clearing, check");
+    }
   };
 
   //FOR SCROLLING TO BOTTOM
@@ -109,7 +161,7 @@ export default function LandingPage() {
     if (listInnerRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
 
-      if (scrollTop + clientHeight >= scrollHeight-20) {
+      if (scrollTop + clientHeight >= scrollHeight - 20) {
         // console.log('Reached bottom')
         setShowButton(false);
       } else {
@@ -121,158 +173,180 @@ export default function LandingPage() {
 
   //RETURN DIV
   return (
-    <div>
-      <div className="sidebar">
-        <div className="sidebar--content">
-          <a>
-            <img
-              alt="delete-img"
-              src="/images/loggedin/delete.png"
-              width="19px"
-              style={{ marginRight: "10px" }}
-            />
-            <span className="sidebar-text">
-              Clear conversation
-            </span>
-          </a>
+    <>
+      <ToastContainer
+        position="top-center"
+        autoClose={1000}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover
+        theme={theme}
+      />
+      <div>
+        <div className="sidebar">
+          <div className="sidebar--content">
+            <a>
+              <img
+                alt="delete-img"
+                src="/images/loggedin/pro_d.png"
+                width="18px"
+                style={{ marginRight: "10px" }}
+              />
+              <span className="sidebar-text">Pro mode</span>
+            </a>
+          </div>
+
+          <div className="sidebar--content" onClick={clearConversation}>
+            <a>
+              <img
+                alt="delete-img"
+                src="/images/loggedin/delete.png"
+                width="19px"
+                style={{ marginRight: "10px" }}
+              />
+              <span className="sidebar-text">Clear conversation</span>
+            </a>
+          </div>
+
+          <div className="sidebar--content">
+            <a>
+              <img
+                alt="darkmode-prop"
+                src="/images/loggedin/moon.png"
+                width="18px"
+                style={{ marginRight: "10px" }}
+              />
+              <span className="sidebar-text">Switch Theme</span>
+            </a>
+          </div>
+          <div className="sidebar--content">
+            <a>
+              <img
+                alt="contact-img"
+                src="/images/loggedin/contact.png"
+                width="18px"
+                style={{ marginRight: "10px" }}
+              />
+              <span className="sidebar-text">Report Bug</span>
+            </a>
+          </div>
+          <div className="sidebar--content" onClick={logoutUser}>
+            <a>
+              <img
+                alt="logout-img"
+                src="/images/loggedin/logout.png"
+                width="18px"
+                style={{ marginRight: "10px" }}
+              />
+              <span className="sidebar-text">Log Out</span>
+            </a>
+          </div>
         </div>
 
-        <div className="sidebar--content">
-          <a>
-            <img
-              alt="darkmode-prop"
-              src="/images/loggedin/moon.png"
-              width="18px"
-              style={{ marginRight: "10px" }}
-            />
-            <span className="sidebar-text">
-              Dark Mode
-            </span>
-          </a>
-        </div>
-        <div className="sidebar--content">
-          <a>
-            <img
-              alt="contact-img"
-              src="/images/loggedin/contact.png"
-              width="18px"
-              style={{ marginRight: "10px" }}
-            />
-            <span className="sidebar-text" >
-              Contact Developers
-            </span>
-          </a>
-        </div>
-        <div className="sidebar--content" onClick={logoutUser}>
-          <a>
-            <img
-              alt="logout-img"
-              src="/images/loggedin/logout.png"
-              width="18px"
-              style={{ marginRight: "10px" }}
-            />
-            <span className="sidebar-text">
-              Log Out
-            </span>
-          </a>
-        </div>
-        <div className="sidebar--content">
-          <a>
-            <img
-              alt="logout-img"
-              src="/images/loggedin/logout.png"
-              width="18px"
-              style={{ marginRight: "10px" }}
-            />
-            <span className="sidebar-text">
-              Get Data
-            </span>
-          </a>
-        </div>
-      </div>
+        <div className="content">
+          <div className="chat-area">
+            <div
+              className="chat-area-child"
+              onScroll={() => onScroll()}
+              ref={listInnerRef}
+            >
+              {needHistory && <ChatHistory />}
 
-      <div className="content">
-        <div className="chat-area">
-          <div
-            className="chat-area-child"
-            onScroll={() => onScroll()}
-            ref={listInnerRef}
-          >
-            <ChatHistory />
+              {newQuestions.map((item, index) => (
+                <div key={index} className="chatBoxItem">
+                  <div
+                    className={index % 2 === 1 ? "answerChat" : "questionChat"}
+                  >
+                    <div className="question-text-parent">
+                      <div className="question-text-1">
+                        <img
+                          alt="logout-img"
+                          src={
+                            index % 2 === 1
+                              ? "/images/loggedin/chat_gpt_logo.png"
+                              : "/images/loggedin/user.png"
+                          }
+                          className="gpt-chat-icon"
+                        />
+                      </div>
+                      <div className="question-text-2">
+                        {/* <span key={index}>{item}</span> */}
+                        <span
+                          key={index}
+                          dangerouslySetInnerHTML={{ __html: item }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="clear"></div>
+                </div>
+              ))}
 
-            {/* new chat adding */}
-            {/* <ChatGPTdiv /> */}
-
-            {newQuestions.map((item, index) => (
-              <div key={index} className="chatBoxItem">
-                <div
-                  className={index % 2 === 1 ? "answerChat" : "questionChat"}
-                >
+              {tempQuestion && (
+              <div className="chatBoxItem">
+                <div className="questionChat">
                   <div className="question-text-parent">
                     <div className="question-text-1">
                       <img
                         alt="logout-img"
-                        src={
-                          index % 2 === 1
-                            ? "/images/loggedin/chat_gpt_logo.png"
-                            : "/images/loggedin/user.png"
-                        }
+                        src="/images/loggedin/user.png"
                         className="gpt-chat-icon"
                       />
                     </div>
                     <div className="question-text-2">
-                      {/* <span key={index}>{item}</span> */}
-                      <span
-                        key={index}
-                        dangerouslySetInnerHTML={{ __html: item }}
-                      />
+                      <span>{tempQuestionVal}</span>
                     </div>
                   </div>
                 </div>
                 <div className="clear"></div>
+                </div>
+              )}
+
+              {tempQuestion && (
+                <ReactLoading type="bubbles" color="black" width={"80px"} />
+              )}
+
+              <div ref={messagesEndRef} />
+            </div>
+          </div>
+
+          {/* Scroll button */}
+          <div>
+            {showButton && (
+              <img
+                onClick={scrollBottom}
+                alt="send"
+                className="downImage"
+                src="/images/loggedin/down2.png"
+              />
+            )}
+          </div>
+
+          {/* FORM AREA */}
+
+          <div className="form-area">
+            {/* <ChatGPTdiv /> */}
+            <div className="form-area-content">
+              <div className="form-textbox">
+                <form onSubmit={handleSubmit} id="question_form">
+                  <input type="text" className="ques--input" name="ques" />
+                </form>
               </div>
-            ))}
-            <div ref={messagesEndRef} />
-          </div>
-        </div>
-
-        <div>
-          {showButton && (
-            <img
-              onClick={scrollBottom}
-              alt="send"
-              className="downImage"
-              src="/images/loggedin/down2.png"
-            />
-          )}
-        </div>
-
-        {/* FORM AREA */}
-
-        <div className="form-area">
-          {/* <ChatGPTdiv /> */}
-          <div className="form-area-content">
-            <div className="form-textbox">
-              <form onSubmit={handleSubmit}>
-                <input
-                  type="text"
-                  className="ques--input"
-                  name="ques"
-                  // value={question}
-                  // onChange={(e) => setPrompt(e.target.value)}
-                />
-              </form>
-            </div>
-            <div className="send-icon">
-              <img alt="send" src="/images/loggedin/send.png" width="30px" />
-            </div>
-            <div className="send-icon">
-              <img alt="send" src="/images/loggedin/mic.png" width="14px" />
+              <button className="send-icon" form="question_form" type="submit">
+                <img alt="send" src="/images/loggedin/send.png" width="30px" />
+              </button>
+              <div className="send-icon">
+                <img alt="send" src="/images/loggedin/mic.png" width="14px" />
+              </div>
             </div>
           </div>
+          <div></div>
         </div>
-        <div></div>
       </div>
-    </div>
+    </>
   );
 }

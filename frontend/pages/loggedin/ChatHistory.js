@@ -2,11 +2,11 @@ import React from "react"
 import Cookies from "universal-cookie"
 
 
-export default function ChatHistory() {
+export default function ChatHistory(prop) {
     console.log("chat_history entered")
 
-    const [chatHistory, setchatHistory] = React.useState(['Item 1', 'Item 2']);
-    
+    const [chatHistory, setchatHistory] = React.useState(['Nothing available', 'Try logging-in again']);
+
     React.useEffect(() => {
         async function fetchData() {
 
@@ -43,7 +43,7 @@ export default function ChatHistory() {
     })
 
     return (
-        <div>
+        <div style={{color: "red"}}>
             {chatSnippet}
         </div>
     )
@@ -51,7 +51,7 @@ export default function ChatHistory() {
 
 export function ChatItem(props){
     // console.log(props)
-    if(props.index %2 === 1 )
+    if(props.index %2 === 0 )
     {
         return(
             <div className="chatBoxItem">

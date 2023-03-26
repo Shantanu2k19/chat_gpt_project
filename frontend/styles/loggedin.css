@@ -74,7 +74,7 @@ div.content {
   overflow: hidden;
   margin-left: 5%;
   margin-right: 5%;
-
+  /* padding-top: 10px; */
   visibility: visible;
   opacity: 1;
   transition: opacity 2s linear;
@@ -98,6 +98,7 @@ div.content {
 .clear{
   clear:both;
   height: 7px;
+  border:1px solid red;
 }
 
 .answerChat{
@@ -109,6 +110,7 @@ div.content {
   background-color: #343541;
   border-radius: 1px 20px 20px 20px;
   padding: 5px;
+  font-size: 0.87em;
 }
 
 .questionChat{
@@ -122,6 +124,7 @@ div.content {
   background-color: #595b6c95;
   border-radius: 20px 1px 20px 20px;
   padding: 5px;
+  font-size: 0.87em;
 }
 
 .gpt-chat-icon{
@@ -144,7 +147,6 @@ div.content {
   display: flex;
   align-items: center; 
 }
-
 
 
 
@@ -179,6 +181,11 @@ div.content {
   margin-left: 15px;
   border-radius: 10px;
   padding: 3px 8px 8px 8px;
+
+  border: none;
+  cursor: pointer;
+  appearance: none;
+  background-color: inherit;
 }
 
 .send-icon:hover{
@@ -194,7 +201,7 @@ div.content {
   color:white;
   border: none;
   outline: none;
-  font-size: 1.2em;
+  font-size: 0.87em;
   font-family: "Lato", sans-serif;
 }
 
@@ -206,4 +213,5 @@ div.content {
   right:35px;
   z-index:1000;
   bottom: 12%;
+  cursor: pointer !important;
 }
