@@ -43,7 +43,7 @@ export default function ChatHistory(prop) {
     })
 
     return (
-        <div style={{color: "red"}}>
+        <div>
             {chatSnippet}
         </div>
     )

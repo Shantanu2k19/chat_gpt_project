@@ -30,7 +30,7 @@ export default function LandingPage() {
   let router = useRouter();
 
   useEffect(() => {
-    console.log("authorizing...");
+    // console.log("authorizing...");
 
     const cookies = new Cookies();
     const cAccToken = cookies.get("accessToken");
@@ -69,17 +69,17 @@ export default function LandingPage() {
   const [tempQuestion, setTempQuestion] = React.useState(false);
   const [tempQuestionVal, setTempQuestionVal] = React.useState(false);
 
-  console.log("needHistory :", needHistory);
+  // console.log("needHistory :", needHistory);
 
   const handleSubmit = async (e) => {
-    console.log("question submitted");
+    // console.log("question submitted");
     e.preventDefault();
     setTempQuestionVal(e.target.ques.value);
     setTempQuestion(true);
 
     const question = e.target.ques.value;
     e.target.ques.value = "";
-    console.log(question);
+    // console.log(question);
 
     const cookies = new Cookies();
     const cAccToken = cookies.get("accessToken");
@@ -100,13 +100,13 @@ export default function LandingPage() {
     const json = await response.json();
 
     if (response.ok) {
-      console.log(json.answer);
+      // console.log(json.answer);
       const ans = json.answer;
       setnewQuestions((prevItem) => [...prevItem, question, ans]);
     } else {
       console.log("cant get data");
     }
-    console.log("updated");
+    // console.log("updated");
 
     setTempQuestion(false);
   };
@@ -142,7 +142,7 @@ export default function LandingPage() {
   const messagesEndRef = useRef(null);
 
   const scrollBottom = async (e) => {
-    console.log("scroll to bottom const");
+    console.log("scroll to bottom");
 
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -171,6 +171,17 @@ export default function LandingPage() {
     }
   };
 
+  function proMode(){
+    showAlert("Pro mode give faster responses. Coming soon!")
+  }
+
+  function switchTheme(){
+    showAlert("Themes Coming soon!")
+  }
+
+  function reportBug(){
+    showAlert("Coming soon!")
+  }
   //RETURN DIV
   return (
     <>
@@ -188,7 +199,7 @@ export default function LandingPage() {
       />
       <div>
         <div className="sidebar">
-          <div className="sidebar--content">
+          <div className="sidebar--content" onClick={proMode}>
             <a>
               <img
                 alt="delete-img"
@@ -212,7 +223,7 @@ export default function LandingPage() {
             </a>
           </div>
 
-          <div className="sidebar--content">
+          <div className="sidebar--content" onClick={switchTheme}>
             <a>
               <img
                 alt="darkmode-prop"
@@ -223,7 +234,7 @@ export default function LandingPage() {
               <span className="sidebar-text">Switch Theme</span>
             </a>
           </div>
-          <div className="sidebar--content">
+          <div className="sidebar--content" onClick={reportBug}>
             <a>
               <img
                 alt="contact-img"
