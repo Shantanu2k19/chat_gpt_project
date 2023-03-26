@@ -2,6 +2,7 @@ Starting a new project
 
 npm install 
 
+
 nodemon server : backend
 
 npm run dev : frontend 
@@ -34,3 +35,6 @@ Scroll improvement
  npm i jwt-decode
 
  npm install --save react-toastify
+ 
+ 
+npm i react-loading
