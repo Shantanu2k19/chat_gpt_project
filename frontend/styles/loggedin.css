@@ -5,6 +5,14 @@ body {
   color:white;
 }
 
+#light {
+  background-color: rgb(255, 255, 255);
+}
+
+#dark {
+  background-color: #444654;
+}
+
 .sidebar {
   margin: 0;
   padding: 0;
