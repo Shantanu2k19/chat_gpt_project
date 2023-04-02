@@ -39,9 +39,10 @@ body {
 .sidebar a {
   display: block;
   color: white;
-  padding: 16px;
+  padding: 14px;
   text-decoration: none;
   cursor: pointer;
+  margin: 0px 5px 0px 5px;
 }
 
 .sidebar a:hover:not(.active) {
@@ -51,9 +52,14 @@ body {
 }
 
 .sidebar-text {
-  font-size: 0.87em;
+  font-size: 0.70em;
 }
 
+
+.sidebar-image{
+  width: 14px;
+  padding-right: 8px;
+}
 /* HEADER  */
 .header {
   display: flex;
@@ -142,6 +148,7 @@ body {
   display: table;
   vertical-align: middle;
   background-color: #343541;
+  border-bottom: 1px solid #74768d;
   border-radius: 1px 20px 20px 20px;
   padding: 5px;
   font-size: 0.87em;
@@ -155,7 +162,8 @@ body {
   display: table;
   vertical-align: middle;
   float: right;
-  background-color: #595b6c95;
+  background-color: #62647795;
+  border-bottom: 1px solid #8e90a795;
   border-radius: 20px 1px 20px 20px;
   padding: 5px;
   font-size: 0.87em;
@@ -256,6 +264,7 @@ body {
   z-index: 90;
 }
 
+/* 
 .lol {
   height: 20px;
   width: 50px;
@@ -265,4 +274,4 @@ body {
   top: 10%;
   transition: 0.3s;
   z-index: 99;
-}
+} */

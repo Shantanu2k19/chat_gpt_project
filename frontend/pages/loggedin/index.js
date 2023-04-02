@@ -69,6 +69,7 @@ export default function LandingPage() {
   const [needHistory, setneedHistory] = React.useState(true);
   const [tempQuestion, setTempQuestion] = React.useState(false);
   const [tempQuestionVal, setTempQuestionVal] = React.useState(false);
+  const [confirmDelete, setConfirmDelete] = React.useState(false);
 
   // console.log("needHistory :", needHistory);
 
@@ -114,6 +115,8 @@ export default function LandingPage() {
 
   //CLEAR CONVERSATION
   const clearConversation = async () => {
+    setConfirmDelete(false);
+
     console.log("clearing conversation");
     showAlert("clearing conversation");
 
@@ -134,6 +137,7 @@ export default function LandingPage() {
       console.log("Clear chat success");
       setnewQuestions([]);
       setneedHistory(false);
+      // clearConversation(false);
     } else {
       console.log("server issue in clearing, check");
     }
@@ -174,7 +178,7 @@ export default function LandingPage() {
   };
 
   function proMode() {
-    showAlert("Pro mode give faster responses. Coming soon!");
+    showAlert("Pro mode gives faster responses. Coming soon!");
   }
 
   function switchTheme() {
@@ -229,6 +233,12 @@ export default function LandingPage() {
     if (sidebarOpen) setSideBarOpen(false);
   };
 
+  const [isEnabled, setIsEnabled] = useState(false);
+
+  const toggleState = () => {
+    setIsEnabled((prevState) => !prevState);
+  };
+
   //RETURN DIV
   return (
     <div className="home">
@@ -264,43 +274,47 @@ export default function LandingPage() {
               <img
                 alt="delete-img"
                 src="/images/loggedin/pro_d.png"
-                width="18px"
-                style={{ marginRight: "10px" }}
+                className="sidebar-image"
               />
               <span className="sidebar-text">Pro mode</span>
             </a>
           </div>
 
-          <div className="sidebar--content" onClick={clearConversation}>
-            <a>
-              <img
-                alt="delete-img"
-                src="/images/loggedin/delete.png"
-                width="19px"
-                style={{ marginRight: "10px" }}
-              />
-              <span className="sidebar-text">Clear conversation</span>
-            </a>
-          </div>
+          {!confirmDelete && (
+            <div
+              className="sidebar--content"
+              onClick={() => setConfirmDelete(true)}
+            >
+              <a>
+                <img
+                  alt="delete-img"
+                  src="/images/loggedin/delete.png"
+                  className="sidebar-image"
+                />
+                <span className="sidebar-text">Clear conversation</span>
+              </a>
+            </div>
+          )}
 
-          <div className="sidebar--content" onClick={switchTheme}>
-            <a>
-              <img
-                alt="darkmode-prop"
-                src="/images/loggedin/moon.png"
-                width="18px"
-                style={{ marginRight: "10px" }}
-              />
-              <span className="sidebar-text">Switch Theme</span>
-            </a>
-          </div>
+          {confirmDelete && (
+            <div className="sidebar--content" onClick={clearConversation}>
+              <a>
+                <img
+                  alt="delete-img"
+                  src="/images/loggedin/clear.png"
+                  className="sidebar-image"
+                />
+                <span className="sidebar-text">Confirm clear</span>
+              </a>
+            </div>
+          )}
+
           <div className="sidebar--content" onClick={reportBug}>
             <a>
               <img
                 alt="contact-img"
                 src="/images/loggedin/contact.png"
-                width="18px"
-                style={{ marginRight: "10px" }}
+                className="sidebar-image"
               />
               <span className="sidebar-text">Report Bug</span>
             </a>
@@ -310,12 +324,26 @@ export default function LandingPage() {
               <img
                 alt="logout-img"
                 src="/images/loggedin/logout.png"
-                width="18px"
-                style={{ marginRight: "10px" }}
+                className="sidebar-image"
               />
               <span className="sidebar-text">Log Out</span>
             </a>
           </div>
+
+          <hr style={{ width: "80%", color: "#ffffff85" }} />
+
+          {/* switch theme  */}
+          <div className="sidebar--content" onClick={switchTheme}>
+            <a>
+              <img
+                alt="darkmode-prop"
+                src="/images/loggedin/moon.png"
+                className="sidebar-image"
+              />
+              <span className="sidebar-text">Switch Theme</span>
+            </a>
+          </div>
+
         </div>
         {/* { sidebarOpen && screenWidth<=620 && (<button className="lol" onClick={toggleSidebar}>closse</button>)} */}
       </>
