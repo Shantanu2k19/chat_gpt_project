@@ -376,6 +376,27 @@ router.post("/getChatHistory", authenticateToken, async (req, res) => {
   }
 });
 
+
+//CLEAR CHAT HISTORY
+router.post("/clearChat", authenticateToken, async (req, res) => {
+  
+  console.log("got name : ", req.usernam);
+  const userChat = await Chat.findOne({ username: req.usernam });
+  if (userChat) {
+    userChat.qnaData = [];
+    userChat.save();
+
+    const data = {
+      newToken: req.newToken,
+    };
+    return res.json(data);
+  } else {
+    console.log("some error occured!");
+    return res.status(403).send({ message: "user's chat not found" });
+  }
+});
+
+
 //******************      TEST/SAMPLE API       ******************
 ///THIS FORMAT SHOULD BE FOLLOWED BY ALL THE API THAT WILL BE WRITTEN
 router.route("/test").post(authenticateToken, (req, res) => {
