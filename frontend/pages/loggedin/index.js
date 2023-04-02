@@ -6,28 +6,12 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 import ReactLoading from "react-loading";
-import {createContext} from "react";
-
 
 const cookies = new Cookies();
 
-export const ThemeContext = createContext(null);
-
 export default function LandingPage() {
-
-  //DARK MODE/THEME
-  const [theme, setTheme] = React.useState("dark");
-
-  const toggleTheme = () => {
-    setTheme(theme === "light" ? "dark" : "light")
-    // console.log(theme)
-  }
-
-
-
-
-
   console.log("langing page entered");
+  const theme = "dark";
 
   function showAlert(mssg) {
     toast.info(mssg, {
@@ -41,34 +25,6 @@ export default function LandingPage() {
       theme: theme,
     });
   }
-
-  //BUG POPUP
- 
-    const reportBug = async () => { 
-      const cookies = new Cookies();
-    const cAccToken = cookies.get("accessToken");
-    const reftoken = cookies.get("refreshToken");
-
-     const response = await fetch("http://localhost:5000/users/bugReport", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${cAccToken}`,
-      },
-      body: JSON.stringify({ reftoken }),
-    }).then((response) => { 
-      if (!response.ok) {
-        return Promise.reject('Our servers are having issues! We couldn\'t send your feedback!');
-      }
-      response.json()
-    }).then(() => {
-      alert('Success!');
-    }).catch((error) => {
-      alert('Our servers are having issues! We couldn\'t send your feedback!', error);
-    })
-  }
-  
-
 
   //AUTHORIZING
   let router = useRouter();
@@ -223,10 +179,11 @@ export default function LandingPage() {
     showAlert("Themes Coming soon!")
   }
 
-
+  function reportBug(){
+    showAlert("Coming soon!")
+  }
   //RETURN DIV
   return (
-    <ThemeContext.Provider value={{theme, toggleTheme}}>
     <>
       <ToastContainer
         position="top-center"
@@ -240,7 +197,7 @@ export default function LandingPage() {
         pauseOnHover
         theme={theme}
       />
-      <div id={theme}>
+      <div>
         <div className="sidebar">
           <div className="sidebar--content" onClick={proMode}>
             <a>
@@ -266,20 +223,14 @@ export default function LandingPage() {
             </a>
           </div>
 
-          <div className="sidebar--content" onClick={toggleTheme}>
+          <div className="sidebar--content" onClick={switchTheme}>
             <a>
-              {theme === "dark" ? <img
+              <img
                 alt="darkmode-prop"
                 src="/images/loggedin/moon.png"
                 width="18px"
                 style={{ marginRight: "10px" }}
-              />:<img
-              alt="darkmode-prop"
-              src="/images/loggedin/sun.png"
-              width="18px"
-              style={{ marginRight: "10px" }}
-            /> }
-              
+              />
               <span className="sidebar-text">Switch Theme</span>
             </a>
           </div>
@@ -408,6 +359,5 @@ export default function LandingPage() {
         </div>
       </div>
     </>
-    </ThemeContext.Provider>
   );
 }
