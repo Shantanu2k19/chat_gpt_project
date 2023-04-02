@@ -171,16 +171,16 @@ export default function LandingPage() {
     }
   };
 
-  function proMode(){
-    showAlert("Pro mode give faster responses. Coming soon!")
+  function proMode() {
+    showAlert("Pro mode give faster responses. Coming soon!");
   }
 
-  function switchTheme(){
-    showAlert("Themes Coming soon!")
+  function switchTheme() {
+    showAlert("Themes Coming soon!");
   }
 
-  function reportBug(){
-    showAlert("Coming soon!")
+  function reportBug() {
+    showAlert("Coming soon!");
   }
   //RETURN DIV
   return (
@@ -298,22 +298,22 @@ export default function LandingPage() {
               ))}
 
               {tempQuestion && (
-              <div className="chatBoxItem">
-                <div className="questionChat">
-                  <div className="question-text-parent">
-                    <div className="question-text-1">
-                      <img
-                        alt="logout-img"
-                        src="/images/loggedin/user.png"
-                        className="gpt-chat-icon"
-                      />
-                    </div>
-                    <div className="question-text-2">
-                      <span>{tempQuestionVal}</span>
+                <div className="chatBoxItem">
+                  <div className="questionChat">
+                    <div className="question-text-parent">
+                      <div className="question-text-1">
+                        <img
+                          alt="logout-img"
+                          src="/images/loggedin/user.png"
+                          className="gpt-chat-icon"
+                        />
+                      </div>
+                      <div className="question-text-2">
+                        <span>{tempQuestionVal}</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="clear"></div>
+                  <div className="clear"></div>
                 </div>
               )}
 

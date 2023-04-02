@@ -185,7 +185,7 @@ export default function LandingPage() {
     showAlert("Coming soon!");
   }
 
-  //NEW CHANGES 
+  //NEW CHANGES
 
   const MyComponent = styled.div`
     display: none;
@@ -208,9 +208,9 @@ export default function LandingPage() {
   }, []);
 
   useEffect(() => {
-    console.log("starting page")
+    console.log("starting page");
     setScreenWidth(window.innerWidth);
-    
+
     console.log(screenWidth);
 
     if (screenWidth <= 620) {
@@ -332,7 +332,7 @@ export default function LandingPage() {
           <Header switchFn={toggleSidebar} />
         </MyComponent>
 
-{/* chat area  */}
+        {/* chat area  */}
         <div
           className="chat-area"
           style={screenWidth <= 620 ? { paddingTop: "28px" } : {}}
@@ -436,8 +436,6 @@ export default function LandingPage() {
             </div>
           </div>
         </div>
-
-
       </div>
     </div>
   );
