@@ -2,7 +2,7 @@
 export default function lol(){
     return (
         <div>
-            Helolo qwudhewd
+            Helolo test page
         </div>
     )
 }

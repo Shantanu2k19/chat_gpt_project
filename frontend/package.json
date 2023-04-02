@@ -19,6 +19,7 @@
     "react-loading": "^2.0.3",
     "react-modal-video": "^2.0.0",
     "react-toastify": "^9.1.1",
+    "styled-components": "^5.3.9",
     "universal-cookie": "^4.0.4"
   },
   "devDependencies": {
