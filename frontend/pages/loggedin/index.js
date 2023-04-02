@@ -140,38 +140,38 @@ export default function LandingPage() {
   };
 
   //FOR SCROLLING TO BOTTOM
-  // const messagesEndRef = useRef(null);
+  const messagesEndRef = useRef(null);
 
-  // const scrollBottom = async (e) => {
-  //   console.log("scroll to bottom");
+  const scrollBottom = async (e) => {
+    console.log("scroll to bottom");
 
-  //   messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  // };
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
-  // useEffect(() => {
-  //   scrollBottom();
-  // });
+  useEffect(() => {
+    scrollBottom();
+  });
 
   //FOR SHOWING THE BUTTON : SCROLL TO BOTTOM
 
-  // const [showButton, setShowButton] = React.useState(true);
+  const [showButton, setShowButton] = React.useState(true);
 
-  // const listInnerRef = useRef();
+  const listInnerRef = useRef();
 
-  // const onScroll = () => {
-  //   // console.log("listener");
-  //   if (listInnerRef.current) {
-  //     const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
+  const onScroll = () => {
+    // console.log("listener");
+    if (listInnerRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
 
-  //     if (scrollTop + clientHeight >= scrollHeight - 20) {
-  //       // console.log('Reached bottom')
-  //       setShowButton(false);
-  //     } else {
-  //       // console.log('top')
-  //       setShowButton(true);
-  //     }
-  //   }
-  // };
+      if (scrollTop + clientHeight >= scrollHeight - 20) {
+        // console.log('Reached bottom')
+        setShowButton(false);
+      } else {
+        // console.log('top')
+        setShowButton(true);
+      }
+    }
+  };
 
   function proMode() {
     showAlert("Pro mode give faster responses. Coming soon!");
@@ -339,8 +339,8 @@ export default function LandingPage() {
         >
           <div
             className="chat-area-child"
-            // onScroll={() => onScroll()}
-            // ref={listInnerRef}
+            onScroll={() => onScroll()}
+            ref={listInnerRef}
           >
             {needHistory && <ChatHistory />}
 
@@ -398,10 +398,10 @@ export default function LandingPage() {
               <ReactLoading type="bubbles" color="black" width={"80px"} />
             )}
 
-            {/* <div ref={messagesEndRef} /> */}
+            <div ref={messagesEndRef} />
           </div>
 
-          {/* Scroll button 
+          {/* Scroll button */}
           <div>
             {showButton && (
               <img
@@ -412,7 +412,6 @@ export default function LandingPage() {
               />
             )}
           </div>
-          */}
 
           {/* FORM AREA */}
 
