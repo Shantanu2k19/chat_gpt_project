@@ -381,6 +381,11 @@ router.post("/getChatHistory", authenticateToken, async (req, res) => {
 router.post("/clearChat", authenticateToken, async (req, res) => {
   
   console.log("got name : ", req.usernam);
+
+  if(req.usernam==="demo_user")
+  {
+    return res.status(403).send({ message: "Not available for demo user!" });
+  }
   const userChat = await Chat.findOne({ username: req.usernam });
   if (userChat) {
     userChat.qnaData = [];

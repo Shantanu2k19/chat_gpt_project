@@ -14,8 +14,22 @@ export default function LandingPage() {
   console.log("langing page entered");
   const theme = "dark";
 
-  function showAlert(mssg) {
-    toast.info(mssg, {
+  function showAlert(mssg, val) {
+    if (val == 0) {
+      toast.info(mssg, {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: theme,
+      });
+      return;
+    }
+
+    toast.error(mssg, {
       position: "top-center",
       autoClose: 1000,
       hideProgressBar: false,
@@ -118,7 +132,6 @@ export default function LandingPage() {
     setConfirmDelete(false);
 
     console.log("clearing conversation");
-    showAlert("clearing conversation");
 
     const cookies = new Cookies();
     const cAccToken = cookies.get("accessToken");
@@ -132,14 +145,17 @@ export default function LandingPage() {
       },
       body: JSON.stringify({ reftoken }),
     });
+    const json = await response.json();
 
     if (response.ok) {
-      console.log("Clear chat success");
+      showAlert("clearing conversation", 0);
+      // console.log("Clear chat success");
       setnewQuestions([]);
       setneedHistory(false);
       // clearConversation(false);
     } else {
-      console.log("server issue in clearing, check");
+      showAlert(json.message, 1);
+      // console.log(json.message);
     }
   };
 
@@ -178,15 +194,15 @@ export default function LandingPage() {
   };
 
   function proMode() {
-    showAlert("Pro mode gives faster responses. Coming soon!");
+    showAlert("Pro mode gives faster responses. Coming soon!", 0);
   }
 
   function switchTheme() {
-    showAlert("Themes Coming soon!");
+    showAlert("Themes Coming soon!", 0);
   }
 
   function reportBug() {
-    showAlert("Coming soon!");
+    showAlert("Coming soon!", 0);
   }
 
   //NEW CHANGES
@@ -343,7 +359,6 @@ export default function LandingPage() {
               <span className="sidebar-text">Switch Theme</span>
             </a>
           </div>
-
         </div>
         {/* { sidebarOpen && screenWidth<=620 && (<button className="lol" onClick={toggleSidebar}>closse</button>)} */}
       </>
