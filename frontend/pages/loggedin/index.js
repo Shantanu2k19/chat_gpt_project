@@ -12,7 +12,50 @@ const cookies = new Cookies();
 
 export default function LandingPage() {
   console.log("langing page entered");
-  const theme = "dark";
+  let theme = "dark";
+
+  //FOR DARK MODE
+  const [isEnabled, setIsEnabled] = useState(true);
+
+  const toggleState = () => {
+    setIsEnabled((prevState) => !prevState);
+  };
+
+  const updateTheme = (isDarkEnabled) => {
+    // Get all available styles
+    const styles = getComputedStyle(document.body);
+
+    // Get the --black and --white variable values
+    const black = styles.getPropertyValue("--black");
+    const white = styles.getPropertyValue("--white");
+    const grayL = styles.getPropertyValue("--grey");
+    const grayD = styles.getPropertyValue("--darkGrey");
+
+    console.log("baclsK ", black);
+    const docEl = document.documentElement;
+
+    if (isDarkEnabled) {
+      docEl.style.setProperty("--backgroundSB", black);
+      docEl.style.setProperty("--foregroundSB", white);
+      docEl.style.setProperty("--hoverColor", grayD);
+
+      docEl.style.setProperty("--background", black);
+      docEl.style.setProperty("--foreground", white);
+    } else {
+      docEl.style.setProperty("--backgroundSB", white);
+      docEl.style.setProperty("--foregroundSB", black);
+      docEl.style.setProperty("--hoverColor", grayL);
+
+      docEl.style.setProperty("--background", white);
+      docEl.style.setProperty("--foreground", black);
+    }
+  };
+
+  useEffect(() => {
+    // Pass in the isEnabled state
+    isEnabled? theme="dark":theme="light";
+    updateTheme(isEnabled);
+  }, [isEnabled]);
 
   function showAlert(mssg, val) {
     if (val == 0) {
@@ -91,9 +134,16 @@ export default function LandingPage() {
     // console.log("question submitted");
     e.preventDefault();
     setTempQuestionVal(e.target.ques.value);
-    setTempQuestion(true);
 
     const question = e.target.ques.value;
+
+    if(question.length <=1 ) 
+    {
+      showAlert("Aks better question for meaningful response :)", 0);
+      return;
+    }
+    
+    setTempQuestion(true);
     e.target.ques.value = "";
     // console.log(question);
 
@@ -197,10 +247,6 @@ export default function LandingPage() {
     showAlert("Pro mode gives faster responses. Coming soon!", 0);
   }
 
-  function switchTheme() {
-    showAlert("Themes Coming soon!", 0);
-  }
-
   function reportBug() {
     showAlert("Coming soon!", 0);
   }
@@ -249,12 +295,6 @@ export default function LandingPage() {
     if (sidebarOpen) setSideBarOpen(false);
   };
 
-  const [isEnabled, setIsEnabled] = useState(false);
-
-  const toggleState = () => {
-    setIsEnabled((prevState) => !prevState);
-  };
-
   //RETURN DIV
   return (
     <div className="home">
@@ -289,7 +329,11 @@ export default function LandingPage() {
             <a>
               <img
                 alt="delete-img"
-                src="/images/loggedin/pro_d.png"
+                src={
+                  isEnabled
+                    ? "/images/loggedin/pro_d.png"
+                    : "/images/loggedin/pro_l.png"
+                }
                 className="sidebar-image"
               />
               <span className="sidebar-text">Pro mode</span>
@@ -304,7 +348,11 @@ export default function LandingPage() {
               <a>
                 <img
                   alt="delete-img"
-                  src="/images/loggedin/delete.png"
+                  src={
+                    isEnabled
+                      ? "/images/loggedin/delete.png"
+                      : "/images/loggedin/delete_l.png"
+                  }
                   className="sidebar-image"
                 />
                 <span className="sidebar-text">Clear conversation</span>
@@ -317,7 +365,11 @@ export default function LandingPage() {
               <a>
                 <img
                   alt="delete-img"
-                  src="/images/loggedin/clear.png"
+                  src={
+                    isEnabled
+                      ? "/images/loggedin/clear.png"
+                      : "/images/loggedin/clear_l.png"
+                  }
                   className="sidebar-image"
                 />
                 <span className="sidebar-text">Confirm clear</span>
@@ -329,7 +381,11 @@ export default function LandingPage() {
             <a>
               <img
                 alt="contact-img"
-                src="/images/loggedin/contact.png"
+                src={
+                  isEnabled
+                    ? "/images/loggedin/contact.png"
+                    : "/images/loggedin/contact_l.png"
+                }
                 className="sidebar-image"
               />
               <span className="sidebar-text">Report Bug</span>
@@ -339,7 +395,11 @@ export default function LandingPage() {
             <a>
               <img
                 alt="logout-img"
-                src="/images/loggedin/logout.png"
+                src={
+                  isEnabled
+                    ? "/images/loggedin/logout.png"
+                    : "/images/loggedin/logout_l.png"
+                }
                 className="sidebar-image"
               />
               <span className="sidebar-text">Log Out</span>
@@ -349,15 +409,25 @@ export default function LandingPage() {
           <hr style={{ width: "80%", color: "#ffffff85" }} />
 
           {/* switch theme  */}
-          <div className="sidebar--content" onClick={switchTheme}>
-            <a>
-              <img
-                alt="darkmode-prop"
-                src="/images/loggedin/moon.png"
-                className="sidebar-image"
-              />
-              <span className="sidebar-text">Switch Theme</span>
-            </a>
+          <div className="sidebar--content">
+            <br />
+
+            <label className="toggle-wrapper" htmlFor="toggle">
+              <div className={`toggle ${isEnabled ? "enabled" : "disabled"}`}>
+                <div className="icons">
+                  <img className="iconkk" src="/images/loggedin/sun.png"></img>
+                  <img className="iconkk" src="/images/loggedin/moon.png"></img>
+                  {/* <MoonIcon /> */}
+                </div>
+                <input
+                  id="toggle"
+                  name="toggle"
+                  type="checkbox"
+                  checked={isEnabled}
+                  onClick={toggleState}
+                />
+              </div>
+            </label>
           </div>
         </div>
         {/* { sidebarOpen && screenWidth<=620 && (<button className="lol" onClick={toggleSidebar}>closse</button>)} */}

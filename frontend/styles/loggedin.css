@@ -1,17 +1,32 @@
 /* GLOBAL  */
+
+:root {
+  --black: #202123;
+  --white: #f5f5f5;
+  --grey: #878A98;
+  --darkGrey: #343541;
+
+  --transition: 0.5s ease;
+  --background: var(--black);
+  --foreground: var(--white);
+  --hoverColor: var(--grey)
+}
+
+/* #444654; */
+ 
 html,
 body {
   margin: 0px;
   font-family: "Lato", sans-serif;
-  background-color: #444654;
+  background-color: var(--backgroundSB); 
   color: white;
 }
 
 .home {
   /* border: 2px solid black; */
   display: flex;
-  min-height: 99vh;
-  max-height: 99vh;
+  min-height: 100vh;
+  max-height: 100vh;
 }
 
 /* SIDEBAR  */
@@ -20,7 +35,11 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Lato", sans-serif;
-  background-color: #202123;
+
+  background: var(--backgroundSB);
+  color: var(--foregroundSB);
+  transition: color var(--transition), background var(--transition); 
+
   overflow: auto;
   position: fixed;
 
@@ -32,13 +51,13 @@ body {
 }
 
 .sidebar--content {
-  border: 1px solid #202123;
+  /* border: 1px solid #202123; */
   /* dont appply padding or margin  */
 }
 
 .sidebar a {
   display: block;
-  color: white;
+  /* color: ; */
   padding: 14px;
   text-decoration: none;
   cursor: pointer;
@@ -46,7 +65,7 @@ body {
 }
 
 .sidebar a:hover:not(.active) {
-  background-color: #343541;
+  background-color: var(--hoverColor);
   border-radius: 10px;
   color: white;
 }
@@ -195,7 +214,8 @@ body {
   box-shadow: 0px 8px 30px 14px rgba(0, 0, 0, 0.35);
   border-radius: 10px;
   height: 40px;
-  background-color: #40414f;
+  /* background-color: #40414f; */
+  background-color: var(--hoverColor);
   border: 1px solid #303038;
   margin: 0px 8px 8px 8px;
 }
@@ -235,7 +255,8 @@ body {
   width: 99%;
   height: 100%;
   background: none;
-  color: white;
+  /* color: white; */
+  color: var(--foregroundSB);
   border: none;
   outline: none;
   font-size: 0.87em;
@@ -275,3 +296,75 @@ body {
   transition: 0.3s;
   z-index: 99;
 } */
+
+
+
+/* switch theme button  */
+
+
+
+/* 
+html {
+  background: var(--background);
+  color: var(--foreground);
+  transition: color var(--transition), background var(--transition);
+} */
+
+.toggle-wrapper {
+  width: 100px;
+  /* display: block; */
+}
+
+.toggle {
+  height: 15px;
+  
+  width: 74px;
+  background: var(--black);
+  border-radius: 40px;
+  padding: 10px;
+  position: relative;
+  margin: auto; 
+  cursor: pointer;
+
+  background: var(--foreground);
+transition: background var(--transition);
+
+}
+
+.toggle::before {
+  content: "";
+  display: block;
+  height: 25px;
+  width: 25px;
+  border-radius: 31px;
+  background: var(--white);
+  position: absolute;
+  z-index: 2;
+  transform: translate(0);
+  transition: transform var(--transition);
+  top: 5px;
+  background: var(--background);
+  transition: transform var(--transition), background var(--transition);
+}
+
+.toggle.enabled::before {
+  transform: translateX(53px);
+}
+
+.toggle input {
+    position: absolute;
+    top: 0;
+    opacity: 0;
+}
+
+.toggle .icons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  margin: 0 5px;
+}
+
+.iconkk{
+  width: 20px;
+}
