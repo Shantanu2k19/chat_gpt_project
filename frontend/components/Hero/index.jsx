@@ -24,6 +24,7 @@ const Hero = () => {
 
       cookies.set("accessToken", data.accessToken);
       cookies.set("refreshToken", data.refreshToken);
+      cookies.set("userName", "demo_user");
 
       router.push("/loggedin");
     } else {

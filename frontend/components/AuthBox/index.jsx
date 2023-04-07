@@ -63,10 +63,11 @@ export default function RightBox(){
         // console.log("encoded\n",gResponse.credential);
 
         var user_obj = jwt(googResponse.credential)
-        console.log(user_obj);
+        // console.log(user_obj.picture);
 
         const email = user_obj.email;
         const username = user_obj.given_name+(user_obj.nbf)%10000;
+        // const userImg = user_obj.picture;
 
         console.log(username);
 
@@ -85,6 +86,8 @@ export default function RightBox(){
 
             cookies.set("accessToken", data.accessToken);
             cookies.set("refreshToken", data.refreshToken);
+            cookies.set("userName", username);
+            cookies.set("userPic", user_obj.picture);
 
             router.push('/loggedin')
           }  else {

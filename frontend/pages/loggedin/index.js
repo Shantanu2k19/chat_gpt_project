@@ -13,6 +13,8 @@ const cookies = new Cookies();
 export default function LandingPage() {
   console.log("langing page entered");
   let theme = "dark";
+  const [userName, setUserName] = React.useState("user");
+  const [userPic, setUserPic] = React.useState("_");
 
   //FOR DARK MODE
   const [isEnabled, setIsEnabled] = useState(true);
@@ -105,6 +107,9 @@ export default function LandingPage() {
       // window.location.assign("/error");
       router.push("/error");
     }
+
+    setUserName(cookies.get("userName"));
+    if(cookies.get("userPic")!==undefined) setUserPic(cookies.get("userPic"));
   });
 
   //LOGOUT HANDLER
@@ -114,6 +119,8 @@ export default function LandingPage() {
     const token = cookies.get("refreshToken");
     cookies.remove("accessToken");
     cookies.remove("refreshToken");
+    cookies.remove("userName");
+    cookies.remove("userPic");
 
     router.push("/");
 
@@ -147,7 +154,7 @@ export default function LandingPage() {
 
     if(question.length <=1 ) 
     {
-      showAlert("Aks better question for meaningful response :)", 0);
+      showAlert("Ask better question for meaningful responses :)", 0);
       return;
     }
     
@@ -259,6 +266,10 @@ export default function LandingPage() {
     showAlert("Coming soon!", 0);
   }
 
+  function myAccount(){
+    showAlert("Hi, cutie", 0);
+  }
+
   //NEW CHANGES
 
   const MyComponent = styled.div`
@@ -333,6 +344,53 @@ export default function LandingPage() {
               : { left: "-212px", position: "static" }
           }
         >
+
+
+          <div className="sidebar--content" onClick={myAccount}>
+            <div className="my-account">
+              <img
+                alt="user-img"
+                src={
+                  userPic!="_"? userPic:
+                    (isEnabled
+                    ? "/images/loggedin/user_d.png"
+                    : "/images/loggedin/user_l.png"
+                    )
+                }
+                className="sidebar-image-2"
+              />
+              <br />
+              <span className="sidebar-text">{userName}</span>
+            </div>
+          </div>
+
+
+          {/* switch theme  */}
+          <div className="sidebar--content">
+            <br />
+
+            <label className="toggle-wrapper" htmlFor="toggle">
+              <div className={`toggle ${isEnabled ? "enabled" : "disabled"}`}>
+                <div className="icons">
+                  <img className="iconkk" src="/images/loggedin/sun.png"></img>
+                  <img className="iconkk" src="/images/loggedin/moon.png"></img>
+                  {/* <MoonIcon /> */}
+                </div>
+                <input
+                  id="toggle"
+                  name="toggle"
+                  type="checkbox"
+                  checked={isEnabled}
+                  onClick={toggleState}
+                />
+              </div>
+            </label>
+          </div>
+
+          <div style={{flexGrow: "1"}}></div>
+
+          <hr style={{ width: "90%", color: "rgba(255, 255, 255, 0.226)" }} />
+
           <div className="sidebar--content" onClick={proMode}>
             <a>
               <img
@@ -414,29 +472,11 @@ export default function LandingPage() {
             </a>
           </div>
 
-          <hr style={{ width: "80%", color: "#ffffff85" }} />
 
-          {/* switch theme  */}
-          <div className="sidebar--content">
-            <br />
 
-            <label className="toggle-wrapper" htmlFor="toggle">
-              <div className={`toggle ${isEnabled ? "enabled" : "disabled"}`}>
-                <div className="icons">
-                  <img className="iconkk" src="/images/loggedin/sun.png"></img>
-                  <img className="iconkk" src="/images/loggedin/moon.png"></img>
-                  {/* <MoonIcon /> */}
-                </div>
-                <input
-                  id="toggle"
-                  name="toggle"
-                  type="checkbox"
-                  checked={isEnabled}
-                  onClick={toggleState}
-                />
-              </div>
-            </label>
-          </div>
+          <div style={{height: "20px"}}></div>
+
+
         </div>
         {/* { sidebarOpen && screenWidth<=620 && (<button className="lol" onClick={toggleSidebar}>closse</button>)} */}
       </>

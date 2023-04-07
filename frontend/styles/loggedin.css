@@ -46,6 +46,10 @@ body {
   overflow: auto;
   position: fixed;
 
+
+  display: flex;
+  flex-direction: column;
+
   min-height: 100%;
   /* border: 2px solid green; */
   width: 210px;
@@ -82,6 +86,26 @@ body {
   width: 14px;
   padding-right: 8px;
 }
+
+
+.my-account{
+  /* border: 1px solid black; */
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; 
+  padding: 20px;
+  margin: 20px 20px 0px 20px;
+  background:rgba(187, 187, 187, 0.2);
+  border-radius: 10px;
+}
+
+.sidebar-image-2{
+  width: 40px;
+  border-radius: 50px;
+}
+
 /* HEADER  */
 .header {
   display: flex;
@@ -322,9 +346,7 @@ html {
 
 .toggle {
   height: 15px;
-  
   width: 74px;
-  background: var(--black);
   border-radius: 40px;
   padding: 10px;
   position: relative;

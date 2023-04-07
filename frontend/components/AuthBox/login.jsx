@@ -80,6 +80,7 @@ export default function Login(props) {
 
             cookies.set("accessToken", data.accessToken);
             cookies.set("refreshToken", data.refreshToken);
+            cookies.set("userName", username);
 
             router.push('/loggedin')
           } else {
