@@ -6,6 +6,9 @@
   --grey: #878A98;
   --darkGrey: #343541;
 
+  --gptColorDark: #4E4F60;
+  --gptColorLight: #E3E5E7;
+
   --transition: 0.5s ease;
   --background: var(--black);
   --foreground: var(--white);
@@ -119,7 +122,8 @@ body {
   width: 100%;
   flex-direction: column;
 
-  background-color: rgba(94, 94, 116, 0.377);
+  /* background-color: rgba(94, 94, 116, 0.377); */
+  background-color: var(--contentBG);
 }
 
 /* css for chat */
@@ -215,7 +219,8 @@ body {
   border-radius: 10px;
   height: 40px;
   /* background-color: #40414f; */
-  background-color: var(--hoverColor);
+  background-color: var(--contentBG);
+
   border: 1px solid #303038;
   margin: 0px 8px 8px 8px;
 }

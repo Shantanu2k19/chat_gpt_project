@@ -30,6 +30,9 @@ export default function LandingPage() {
     const white = styles.getPropertyValue("--white");
     const grayL = styles.getPropertyValue("--grey");
     const grayD = styles.getPropertyValue("--darkGrey");
+    const gptL = styles.getPropertyValue("--gptColorLight");
+    const gptD = styles.getPropertyValue("--gptColorDark");
+
 
     console.log("baclsK ", black);
     const docEl = document.documentElement;
@@ -41,6 +44,9 @@ export default function LandingPage() {
 
       docEl.style.setProperty("--background", black);
       docEl.style.setProperty("--foreground", white);
+
+      docEl.style.setProperty("--contentBG", gptD);
+
     } else {
       docEl.style.setProperty("--backgroundSB", white);
       docEl.style.setProperty("--foregroundSB", black);
@@ -48,6 +54,8 @@ export default function LandingPage() {
 
       docEl.style.setProperty("--background", white);
       docEl.style.setProperty("--foreground", black);
+
+      docEl.style.setProperty("--contentBG", gptL);
     }
   };
 
