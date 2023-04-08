@@ -35,7 +35,6 @@ export default function LandingPage() {
     const gptL = styles.getPropertyValue("--gptColorLight");
     const gptD = styles.getPropertyValue("--gptColorDark");
 
-
     console.log("baclsK ", black);
     const docEl = document.documentElement;
 
@@ -48,7 +47,6 @@ export default function LandingPage() {
       docEl.style.setProperty("--foreground", white);
 
       docEl.style.setProperty("--contentBG", gptD);
-
     } else {
       docEl.style.setProperty("--backgroundSB", white);
       docEl.style.setProperty("--foregroundSB", black);
@@ -63,7 +61,7 @@ export default function LandingPage() {
 
   useEffect(() => {
     // Pass in the isEnabled state
-    isEnabled? theme="dark":theme="light";
+    isEnabled ? (theme = "dark") : (theme = "light");
     updateTheme(isEnabled);
   }, [isEnabled]);
 
@@ -109,7 +107,8 @@ export default function LandingPage() {
     }
 
     setUserName(cookies.get("userName"));
-    if(cookies.get("userPic")!==undefined) setUserPic(cookies.get("userPic"));
+    if (cookies.get("userPic") !== undefined)
+      setUserPic(cookies.get("userPic"));
   });
 
   //LOGOUT HANDLER
@@ -152,12 +151,11 @@ export default function LandingPage() {
 
     const question = e.target.ques.value;
 
-    if(question.length <=1 ) 
-    {
+    if (question.length <= 1) {
       showAlert("Ask better question for meaningful responses :)", 0);
       return;
     }
-    
+
     setTempQuestion(true);
     e.target.ques.value = "";
     // console.log(question);
@@ -185,7 +183,7 @@ export default function LandingPage() {
       const ans = json.answer;
       setnewQuestions((prevItem) => [...prevItem, question, ans]);
     } else {
-      console.log("cant get data");
+      console.log("cant get bugData");
     }
     // console.log("updated");
 
@@ -262,11 +260,7 @@ export default function LandingPage() {
     showAlert("Pro mode gives faster responses. Coming soon!", 0);
   }
 
-  function reportBug() {
-    showAlert("Coming soon!", 0);
-  }
-
-  function myAccount(){
+  function myAccount() {
     showAlert("Hi, cutie", 0);
   }
 
@@ -315,30 +309,48 @@ export default function LandingPage() {
   };
 
 
-  //Bug Popup 
-  const [enabled, setEnabled] = React.useState(false);
+  //BUG POPUP 
+  const [bugPopEnabled, setBugPopEnabled] = React.useState(false);
+  const [bugData, setBugData] = React.useState("");
 
   function toggleBugPopup() {
-      setEnabled(!enabled);
+    setBugPopEnabled(!bugPopEnabled);
   }
 
-  const [data, setData] = React.useState({ review: "" });
+  const reportedBug = async (e) => {
+    console.log("reporting bug");
 
-  function handleChange(event) {
-      // console.log(event.target)
+    if(bugData.length <= 1){
+      showAlert("Express more :)", 0);
+      return;
+    }
 
-      const { name, value, type, checked } = event.target
+    const cookies = new Cookies();
+    const cAccToken = cookies.get("accessToken");
+    const reftoken = cookies.get("refreshToken");
 
-      setData(prevVal => {
-          return {
-              ...prevVal,
-              [name]: type == "checkbox" ? checked : value,
-          }
-      });
+    const response = await fetch(
+      "http://localhost:5000/users/reportBug",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cAccToken}`,
+        },
+        body: JSON.stringify({ bugData, reftoken }),
+      }
+    );
+
+    const json = await response.json();
+
+    if (response.ok) {
+      showAlert("Thanks for letting us know :)", 0);
+    } else {
+      showAlert(json.message, 1);
+    }
+    setBugData("")
+    toggleBugPopup();
   }
-
-  
-
 
   //RETURN DIV
   return (
@@ -358,26 +370,34 @@ export default function LandingPage() {
 
       {/* SIDEBAR  */}
       <>
-      <div className="globalDiv" style={enabled ? { top: "13%" } : { top: "-100px" }}>
-                <div className="insidecontent">
-                    <form >
-                        <label className="label"> Report bug/ Request feature
-                            <input className="bugInput"
-                                type="text"
-                                placeholder="...."
-                                onChange={handleChange}
-                                name="review"
-                                value={data.review}
-                            />
-                        </label>
-                        <div className="submitButtons">
-                            <button className="button-17">Submit</button>
-                            <div style={{width: '33px'}}></div>
-                            <button className="button-17" onClick={toggleBugPopup}>Close</button>
-                        </div>
-                    </form>
-                </div>
+        <div
+          className="globalDiv"
+          style={bugPopEnabled ? { top: "120px" } : { top: "-100px" }}
+        >
+            <div className="bugForm">
+              <div className="bugInsideDiv">
+                Report bug/ Request feature
+
+                <input
+                  className="bugInput"
+                  type="text"
+                  placeholder="...."
+                  // name="review"
+                  value={bugData}
+                  onChange={(e) => setBugData(e.target.value)}
+                />
+              </div>
             </div>
+
+              <div className="submitButtons">
+                <button className="button-17" onClick={reportedBug}>Submit</button>
+                <div style={{ width: "33px" }}></div>
+                <button className="button-17" onClick={toggleBugPopup}>
+                  Close
+                </button>
+              </div>
+
+        </div>
 
         <div
           className="sidebar"
@@ -391,18 +411,16 @@ export default function LandingPage() {
               : { left: "-212px", position: "static" }
           }
         >
-
-
           <div className="sidebar--content" onClick={myAccount}>
             <div className="my-account">
               <img
                 alt="user-img"
                 src={
-                  userPic!="_"? userPic:
-                    (isEnabled
+                  userPic != "_"
+                    ? userPic
+                    : isEnabled
                     ? "/images/loggedin/user_d.png"
                     : "/images/loggedin/user_l.png"
-                    )
                 }
                 className="sidebar-image-2"
               />
@@ -411,13 +429,12 @@ export default function LandingPage() {
             </div>
           </div>
 
-
           {/* switch theme  */}
           <div className="sidebar--content">
             <br />
 
             <label className="toggle-wrapper" htmlFor="toggle">
-              <div className={`toggle ${isEnabled ? "enabled" : "disabled"}`}>
+              <div className={`toggle ${isEnabled ? "bugPopEnabled" : "disabled"}`}>
                 <div className="icons">
                   <img className="iconkk" src="/images/loggedin/sun.png"></img>
                   <img className="iconkk" src="/images/loggedin/moon.png"></img>
@@ -434,7 +451,7 @@ export default function LandingPage() {
             </label>
           </div>
 
-          <div style={{flexGrow: "1"}}></div>
+          <div style={{ flexGrow: "1" }}></div>
 
           <hr style={{ width: "90%", color: "rgba(255, 255, 255, 0.226)" }} />
 
@@ -519,13 +536,8 @@ export default function LandingPage() {
             </a>
           </div>
 
-
-
-          <div style={{height: "20px"}}></div>
-
-
+          <div style={{ height: "20px" }}></div>
         </div>
-        {/* { sidebarOpen && screenWidth<=620 && (<button className="lol" onClick={toggleSidebar}>closse</button>)} */}
       </>
 
       {/* background blur  */}

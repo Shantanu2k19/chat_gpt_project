@@ -1,6 +1,7 @@
 const router = require("express").Router();
 let User = require("../models/user.model");
 let Chat = require("../models/chat.model");
+let Bug = require("../models/bug.model");
 const axios = require("axios");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -376,14 +377,11 @@ router.post("/getChatHistory", authenticateToken, async (req, res) => {
   }
 });
 
-
 //CLEAR CHAT HISTORY
 router.post("/clearChat", authenticateToken, async (req, res) => {
-  
   console.log("got name : ", req.usernam);
 
-  if(req.usernam==="demo_user")
-  {
+  if (req.usernam === "demo_user") {
     return res.status(403).send({ message: "Not available for demo user!" });
   }
   const userChat = await Chat.findOne({ username: req.usernam });
@@ -401,6 +399,37 @@ router.post("/clearChat", authenticateToken, async (req, res) => {
   }
 });
 
+//REPORT BUG / SUGGEST FEATURE
+router.post("/reportBug", authenticateToken, async (req, res) => {
+  console.log("______REPORT-BUG_____");
+
+  const bug = req.body.bugData;
+  // console.log(bug);
+
+  if (req.usernam === "demo_user") {
+    return res.status(403).send({ message: "Not available for demo user!" });
+  }
+
+  try {
+    const bugVariable = await Bug.findOne({ username: req.usernam });
+
+    if (bugVariable) {
+      bugVariable.bugData.push(bug);
+      bugVariable.save();
+      // console.log("already there");
+    } else {
+      const username = req.usernam;
+      const bugData = bug;
+      const newBug = new Bug({ username, bugData });
+      newBug.save();
+      // console.log("new user");
+    }
+    // console.log("done");
+    return res.status(200).send({ message: "Success" });
+  } catch {
+    return res.status(403).send({ message: "Some error occured!" });
+  }
+});
 
 //******************      TEST/SAMPLE API       ******************
 ///THIS FORMAT SHOULD BE FOLLOWED BY ALL THE API THAT WILL BE WRITTEN

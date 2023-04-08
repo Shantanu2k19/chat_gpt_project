@@ -3,25 +3,23 @@
 :root {
   --black: #202123;
   --white: #f5f5f5;
-  --grey: #878A98;
+  --grey: #878a98;
   --darkGrey: #343541;
 
-  --gptColorDark: #4E4F60;
-  --gptColorLight: #E3E5E7;
+  --gptColorDark: #4e4f60;
+  --gptColorLight: #e3e5e7;
 
   --transition: 0.5s ease;
   --background: var(--black);
   --foreground: var(--white);
-  --hoverColor: var(--grey)
+  --hoverColor: var(--grey);
 }
 
-/* #444654; */
- 
 html,
 body {
   margin: 0px;
   font-family: "Lato", sans-serif;
-  background-color: var(--backgroundSB); 
+  background-color: var(--backgroundSB);
   color: white;
 }
 
@@ -32,6 +30,9 @@ body {
   max-height: 100vh;
 }
 
+
+
+
 /* SIDEBAR  */
 
 .sidebar {
@@ -41,11 +42,10 @@ body {
 
   background: var(--backgroundSB);
   color: var(--foregroundSB);
-  transition: color var(--transition), background var(--transition); 
+  transition: color var(--transition), background var(--transition);
 
   overflow: auto;
   position: fixed;
-
 
   display: flex;
   flex-direction: column;
@@ -55,11 +55,6 @@ body {
   width: 210px;
   transition: 0.3s;
   z-index: 98;
-}
-
-.sidebar--content {
-  /* border: 1px solid #202123; */
-  /* dont appply padding or margin  */
 }
 
 .sidebar a {
@@ -78,33 +73,34 @@ body {
 }
 
 .sidebar-text {
-  font-size: 0.70em;
+  font-size: 0.7em;
 }
 
-
-.sidebar-image{
+.sidebar-image {
   width: 14px;
   padding-right: 8px;
 }
 
-
-.my-account{
+.my-account {
   /* border: 1px solid black; */
   width: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
   padding: 20px;
   margin: 20px 20px 0px 20px;
-  background:rgba(187, 187, 187, 0.2);
+  background: rgba(187, 187, 187, 0.2);
   border-radius: 10px;
 }
 
-.sidebar-image-2{
+.sidebar-image-2 {
   width: 40px;
   border-radius: 50px;
 }
+
+
+
 
 /* HEADER  */
 .header {
@@ -137,6 +133,9 @@ body {
   text-align: center;
 }
 
+
+
+
 /* CONTENT  */
 
 .content {
@@ -149,6 +148,9 @@ body {
   /* background-color: rgba(94, 94, 116, 0.377); */
   background-color: var(--contentBG);
 }
+
+
+
 
 /* css for chat */
 .chat-area {
@@ -237,6 +239,9 @@ body {
   align-items: center;
 }
 
+
+
+
 /* form css */
 .form-area {
   box-shadow: 0px 8px 30px 14px rgba(0, 0, 0, 0.35);
@@ -278,6 +283,9 @@ body {
   background-color: #35353b;
   box-shadow: 0px 0px 5px 4px rgba(0, 0, 0, 0.15);
 }
+
+
+
 
 /* question text box  */
 .ques--input {
@@ -327,18 +335,6 @@ body {
 } */
 
 
-
-/* switch theme button  */
-
-
-
-/* 
-html {
-  background: var(--background);
-  color: var(--foreground);
-  transition: color var(--transition), background var(--transition);
-} */
-
 .toggle-wrapper {
   width: 100px;
   /* display: block; */
@@ -350,12 +346,11 @@ html {
   border-radius: 40px;
   padding: 10px;
   position: relative;
-  margin: auto; 
+  margin: auto;
   cursor: pointer;
 
   background: var(--foreground);
-transition: background var(--transition);
-
+  transition: background var(--transition);
 }
 
 .toggle::before {
@@ -379,9 +374,9 @@ transition: background var(--transition);
 }
 
 .toggle input {
-    position: absolute;
-    top: 0;
-    opacity: 0;
+  position: absolute;
+  top: 0;
+  opacity: 0;
 }
 
 .toggle .icons {
@@ -392,140 +387,104 @@ transition: background var(--transition);
   margin: 0 5px;
 }
 
-.iconkk{
+.iconkk {
   width: 20px;
 }
+
+
+
 
 /* Bug Popup */
 
 .globalDiv {
   display: flex;
   position: absolute;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
   left: 50%;
   top: -100px;
   transform: translate(-50%, -50%);
-
   height: 170px;
-  width: 430px;
-  background-color: white;
-  box-shadow: 5px 4px 5px 1px rgb(82, 79, 79);
+  width: 75%;
+  box-shadow: 2px 2px 9px -2px var(--foreground);
   border-radius: 10px;
-
-  /* transition: all .5s ease-in-out; */
   transition: 0.47s;
+  z-index: 100;
+  max-width: 500px;
 
+  background-color: var(--contentBG);
+  border: 1px solid var(--foreground);
 }
 
-.button {
-  margin-left: 30px;
-  margin-top: 30px;
-  padding: 10px;
-  width: 5%;
-}
-
-.insidecontent {
+.bugForm {
+  /* border: 2px solid white; */
   display: flex;
-  align-items: center;
-  width: 100%;
-  justify-content: center;
-}
-
-.label {
-  display: flex;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   flex-direction: column;
   justify-content: center;
-  width:70%;
-  justify-items: center;
-  padding: 20px;
+  align-items: center;
+  width: 90%;
 }
 
-.bugInput{
-  width:70%;
+.bugInsideDiv {
+  /* border: 2px solid green; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  color: var(--foreground);
+}
+
+.bugInput {
+  width: 100%;
   height: 50px;
-  padding:5px;
+  padding: 5px;
+  border: 1px solid var(--foreground);
+  background-color: var(--contentBG);
+  transition: 0.47s;
+  color: var(--foreground);
+  border-radius: 10px;
+  margin: 10px;
 }
 
 .submitButtons {
   display: flex;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   flex-direction: row;
   width: 100%;
   justify-content: center;
-  justify-content: space-between;
-
+  /* border: 2px solid red; */
 }
 
-
-
-
-
-/* CSS */
 .button-17 {
   align-items: center;
-  appearance: none;
   background-color: #343541;
   border-radius: 14px;
-  border-style: none;
-  box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px, rgba(0, 0, 0, .14) 0 6px 10px 0, rgba(0, 0, 0, .12) 0 1px 18px 0;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 3px 5px -1px,
+    rgba(0, 0, 0, 0.14) 0 6px 10px 0, rgba(0, 0, 0, 0.12) 0 1px 18px 0;
   box-sizing: border-box;
   color: #f9fafb;
   cursor: pointer;
   display: inline-flex;
-  fill: currentcolor;
-  font-family: "Google Sans", Roboto, Arial, sans-serif;
   font-size: 14px;
   font-weight: 500;
   height: 38px;
   justify-content: center;
-  letter-spacing: .25px;
+  letter-spacing: 0.25px;
   line-height: normal;
   max-width: 100%;
   overflow: visible;
   padding: 2px 24px;
   position: relative;
   text-align: center;
-  text-transform: none;
-  transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1), opacity 15ms linear 30ms, transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
   width: auto;
-  will-change: transform, opacity;
+  border-style: none;
   z-index: 0;
+  transition: 0.3s;
 }
 
 .button-17:hover {
-  background: #F6F9FE;
+  background: #f6f9fe;
   color: #174ea6;
-}
-
-.button-17:active {
-  box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%), 0 8px 12px 6px rgb(60 64 67 / 15%);
-  outline: none;
-}
-
-.button-17:focus {
-  outline: none;
-  border: 2px solid #4285f4;
-}
-
-.button-17:not(:disabled) {
-  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
-}
-
-.button-17:not(:disabled):hover {
-  box-shadow: rgba(60, 64, 67, .3) 0 2px 3px 0, rgba(60, 64, 67, .15) 0 6px 10px 4px;
-}
-
-.button-17:not(:disabled):focus {
-  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
-}
-
-.button-17:not(:disabled):active {
-  box-shadow: rgba(60, 64, 67, .3) 0 4px 4px 0, rgba(60, 64, 67, .15) 0 8px 12px 6px;
-}
-
-.button-17:disabled {
-  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
 }
