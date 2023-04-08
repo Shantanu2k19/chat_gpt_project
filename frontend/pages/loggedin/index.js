@@ -314,6 +314,32 @@ export default function LandingPage() {
     if (sidebarOpen) setSideBarOpen(false);
   };
 
+
+  //Bug Popup 
+  const [enabled, setEnabled] = React.useState(false);
+
+  function toggleBugPopup() {
+      setEnabled(!enabled);
+  }
+
+  const [data, setData] = React.useState({ review: "" });
+
+  function handleChange(event) {
+      // console.log(event.target)
+
+      const { name, value, type, checked } = event.target
+
+      setData(prevVal => {
+          return {
+              ...prevVal,
+              [name]: type == "checkbox" ? checked : value,
+          }
+      });
+  }
+
+  
+
+
   //RETURN DIV
   return (
     <div className="home">
@@ -332,6 +358,27 @@ export default function LandingPage() {
 
       {/* SIDEBAR  */}
       <>
+      <div className="globalDiv" style={enabled ? { top: "13%" } : { top: "-100px" }}>
+                <div className="insidecontent">
+                    <form >
+                        <label className="label"> Report bug/ Request feature
+                            <input className="bugInput"
+                                type="text"
+                                placeholder="...."
+                                onChange={handleChange}
+                                name="review"
+                                value={data.review}
+                            />
+                        </label>
+                        <div className="submitButtons">
+                            <button className="button-17">Submit</button>
+                            <div style={{width: '33px'}}></div>
+                            <button className="button-17" onClick={toggleBugPopup}>Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
         <div
           className="sidebar"
           style={
@@ -443,7 +490,7 @@ export default function LandingPage() {
             </div>
           )}
 
-          <div className="sidebar--content" onClick={reportBug}>
+          <div className="sidebar--content" onClick={toggleBugPopup}>
             <a>
               <img
                 alt="contact-img"
