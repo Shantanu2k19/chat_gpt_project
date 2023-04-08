@@ -434,7 +434,7 @@ export default function LandingPage() {
             <br />
 
             <label className="toggle-wrapper" htmlFor="toggle">
-              <div className={`toggle ${isEnabled ? "bugPopEnabled" : "disabled"}`}>
+              <div className={`toggle ${isEnabled ? "enabled" : "disabled"}`}>
                 <div className="icons">
                   <img className="iconkk" src="/images/loggedin/sun.png"></img>
                   <img className="iconkk" src="/images/loggedin/moon.png"></img>
