@@ -8,6 +8,8 @@ import { useRouter } from "next/navigation";
 import ReactLoading from "react-loading";
 import styled from "styled-components";
 import Header from "./Header.js";
+import useSpeechSynthesis from "./T2Shelper";
+import SettingPopup from "./SettingsPopup";
 const cookies = new Cookies();
 
 export default function LandingPage() {
@@ -352,6 +354,61 @@ export default function LandingPage() {
     toggleBugPopup();
   }
 
+
+  //FOR SETINGS POPUP 
+  const [stnPopup, setStnPopup] = React.useState(true);
+
+  // const [text, setText] = useState('hello boy ');
+
+  const [pitch, setPitch] = useState(1);
+  const [rate, setRate] = useState(1);
+  const [voiceIndex, setVoiceIndex] = useState(null);
+
+  const [testAudio, setTestAudio] = React.useState("this is a test audio")
+  const onEnd = () => {
+    // You could do something here after speaking has finished
+  };
+  
+  
+  const { speak, cancel, speaking, supported, voices } = useSpeechSynthesis({
+    onEnd,
+  });
+
+  const voice = voices[voiceIndex] || null;
+
+  function speakNow(){
+    console.log("speaking");
+    setTimeout(() => {console.log("done")}, 1000); 
+
+    speak({ text, voice, rate, pitch });
+
+     {/* {prop.speaking ? (
+              <button type="button" onClick={cancel}>
+                Stop
+              </button>
+            ) : (
+              <button type="button" onClick={prop.speakNow}>
+                Speak
+              </button>
+            )} */}
+
+    return;
+  }
+
+  function testSpeach(){
+    const text = "this is a test audio";
+    speak({ text, voice, rate, pitch });
+  }
+
+  useEffect( () => {
+    console.log(supported);
+  }, []);
+
+  function closePopups(){
+    setBugPopEnabled(false);
+    setStnPopup(false);
+  }
+
   //RETURN DIV
   return (
     <div className="home">
@@ -368,6 +425,9 @@ export default function LandingPage() {
         theme={theme}
       />
 
+      {bugPopEnabled  &&  (<div className="overlay2" onClick={closePopups}> </div>)}
+      {stnPopup  &&  (<div className="overlay2" onClick={closePopups}> </div>)}
+
       {/* SIDEBAR  */}
       <>
         <div
@@ -376,8 +436,7 @@ export default function LandingPage() {
         >
             <div className="bugForm">
               <div className="bugInsideDiv">
-                Report bug/ Request feature
-
+                <strong>Report bug/ Request feature</strong>
                 <input
                   className="bugInput"
                   type="text"
@@ -398,6 +457,25 @@ export default function LandingPage() {
               </div>
 
         </div>
+
+        <SettingPopup 
+          supported = {supported}
+          stnPopup = {stnPopup}
+
+          pitch = {pitch}
+          setPitch = {setPitch}
+
+          rate = {rate}
+          setRate = {setRate}
+
+          voices = {voices}
+          voiceIndex = {voiceIndex}
+          setVoiceIndex = {setVoiceIndex}
+
+          speakNow = {speakNow}
+
+          testSpeach = {testSpeach}
+        />
 
         <div
           className="sidebar"
@@ -455,7 +533,7 @@ export default function LandingPage() {
 
           <hr style={{ width: "90%", color: "rgba(255, 255, 255, 0.226)" }} />
 
-          <div className="sidebar--content" onClick={proMode}>
+          <div className="sidebar--content" onClick={speakNow}>
             <a>
               <img
                 alt="delete-img"
@@ -467,6 +545,21 @@ export default function LandingPage() {
                 className="sidebar-image"
               />
               <span className="sidebar-text">Pro mode</span>
+            </a>
+          </div>
+
+          <div className="sidebar--content" onClick={() => setStnPopup(!stnPopup)}>
+            <a>
+              <img
+                alt="delete-img"
+                src={
+                  isEnabled
+                    ? "/images/loggedin/mic.png"
+                    : "/images/loggedin/mic_l.png"
+                }
+                className="sidebar-image"
+              />
+              <span className="sidebar-text">Voice Settings</span>
             </a>
           </div>
 

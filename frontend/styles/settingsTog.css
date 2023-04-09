@@ -1,0 +1,95 @@
+.wrapper {
+  /* border: 2px solid rgba(126, 126, 126, 0.423); */
+  width: 80%;
+  margin: 10px;
+  margin-bottom: 20px;
+  color: var(--foreground);
+}
+
+.settingForm {
+  padding: 20px 10px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* border: 1px solid pink; */
+
+  border-radius: 10px;
+}
+
+.threeDiv {
+  display: flex;
+  width: 100%;
+  height: 20px;
+  /* border: 1px solid green; */
+  padding-bottom: 10px;
+}
+
+.left-Div {
+  width: 40%;
+  /* border: 1px solid white; */
+  padding-left: 20px;
+}
+
+.right-div {
+  width: 60%;
+  /* border: 1px solid rgb(44, 138, 127); */
+  display: flex;
+  justify-content: center;
+}
+
+.selectClass {
+  width: 100%;
+  border-radius: 20px;
+}
+
+.silderClass {
+  width: 100%;
+}
+
+.aivoice {
+  /* height: 40px; */
+  width: 100%;
+  border-radius: 10px;
+  /* border: 2px solid rgb(0, 255, 183); */
+  padding-top: 10px;
+
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.aivoice-top{
+    /* border: 2px solid red; */
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.aivoice-bottom{
+    bottom: 100%;
+    /* border: 2px solid rgb(96, 57, 57); */
+    padding : 10px;
+}
+
+
+.voice-test-btn{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+/* 
+<div className="threeDiv">
+    <div className="left-Div">
+    </div>
+
+    <div className="right-div">
+    </div>
+</div> 
+*/
+

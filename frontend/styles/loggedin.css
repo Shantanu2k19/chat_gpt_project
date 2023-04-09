@@ -54,7 +54,7 @@ body {
   /* border: 2px solid green; */
   width: 210px;
   transition: 0.3s;
-  z-index: 98;
+  z-index: 71;
 }
 
 .sidebar a {
@@ -159,7 +159,7 @@ body {
   overflow: hidden;
   margin-left: 5%;
   margin-right: 5%;
-  margin-top: 10px;
+  /* margin-top: 10px; */
   visibility: visible;
   opacity: 1;
   transition: opacity 2s linear;
@@ -305,14 +305,25 @@ body {
   width: 25px;
   position: absolute;
   right: 35px;
-  z-index: 1000;
+  z-index: 70;
   bottom: 12%;
   cursor: pointer !important;
 }
 
 /* background blur   */
 .overlay {
-  background-color: #50526291;
+  background-color: #000000a5;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  transition: 1.3s;
+  z-index: 60;
+}
+
+.overlay2 {
+  background-color: #000000a5;
   height: 100%;
   width: 100%;
   position: absolute;
@@ -406,7 +417,7 @@ body {
   left: 50%;
   top: -100px;
   transform: translate(-50%, -50%);
-  height: 170px;
+  min-height: 180px;
   width: 75%;
   box-shadow: 2px 2px 9px -2px rgba(34, 34, 34, 0.699);
   border-radius: 10px;
@@ -428,7 +439,7 @@ body {
 }
 
 .bugInsideDiv {
-  /* border: 2px solid green; */
+  border: 2px solid green;
   display: flex;
   flex-direction: column;
   justify-content: center;
