@@ -9,6 +9,8 @@ export default function settings(prop) {
   const voiceRef = useRef(null);
 
   function resetVals() {
+    setIsGoogleVoice(false);
+
     const inputElement = rateRef.current;
     if (inputElement) {
       inputElement.value = "1";
@@ -28,12 +30,13 @@ export default function settings(prop) {
     prop.setVoiceIndex(0);
   }
 
-  const [isFocus, setFocus] = React.useState(true);
+  const [isGoogleVoice, setIsGoogleVoice] = React.useState(true);
 
 
-  // background-color: rgba(174, 174, 174, 0.176);
+  function googlePressed(){
 
-  
+  }
+
   return (
     <div
       className="globalDiv"
@@ -43,7 +46,7 @@ export default function settings(prop) {
       <hr style={{ width: "80%", color: "rgba(126, 126, 126, 0.423)" }} />
 
       <div className="wrapper">
-        <div className="settingForm" style={ isFocus ? { backgroundColor: "rgba(174, 174, 174, 0.176"} : {}}>
+        <div className="settingForm" style={ isGoogleVoice ? {} : { backgroundColor: "rgba(174, 174, 174, 0.176"}}>
 
           {!prop.supported && (
             <p>
@@ -94,6 +97,7 @@ export default function settings(prop) {
                     id="rate"
                     onChange={(event) => {
                       prop.setRate(event.target.value);
+                      setIsGoogleVoice(false);
                     }}
                     ref={rateRef}
                     className="silderClass"
@@ -118,6 +122,7 @@ export default function settings(prop) {
                     id="pitch"
                     onChange={(event) => {
                       prop.setPitch(event.target.value);
+                      setIsGoogleVoice(false);
                     }}
                     ref={pitchRef}
                     className="silderClass"
@@ -146,10 +151,13 @@ export default function settings(prop) {
         {/* <hr style={{ width: "80%", color: "rgba(126, 126, 126, 0.423)" }} /> */}
 <br />
 
-        <div className="aivoice" style={ isFocus ? {} : { backgroundColor: "rgba(174, 174, 174, 0.176"} }>
+        <div className="aivoice" style={ isGoogleVoice ? { backgroundColor: "rgba(174, 174, 174, 0.176"} : {} }>
           <div className="aivoice-top">Ai generated voice sound beterr</div>
           <div className="aivoice-bottom">
-            <ToggleSwitch label="gvoice" />
+            <ToggleSwitch 
+              setIsGoogleVoice={setIsGoogleVoice}
+              isGoogleVoice = {isGoogleVoice}
+            />
           </div>
         </div>
 

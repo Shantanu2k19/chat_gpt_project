@@ -7,6 +7,8 @@
 }
 
 .settingForm {
+  transition: 0.9s;
+
   padding: 20px 10px 10px 10px;
   display: flex;
   flex-direction: column;
@@ -59,6 +61,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  transition: 0.9s;
 }
 
 
