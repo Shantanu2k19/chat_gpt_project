@@ -47,19 +47,16 @@ const Hero = () => {
                 data-wow-delay=".2s"
               >
                 <h1 className="mb-5 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
-                  Chatting with GPT is cool, How about talking with it?
+                  Chatting with an AI assistant is cool, How about talking with it?
+                  <br></br>
+                  <strong>Introducing <span className="headingStyling">Neural Talk</span> </strong>
                 </h1>
                 <p className="mb-12 text-base font-medium !leading-relaxed text-body-color dark:text-white dark:opacity-90 sm:text-lg md:text-xl">
-                  ChatGPT is a large language model created by OpenAI. It is
-                  designed to understand natural language and generate
-                  human-like responses to a wide range of questions and prompts.
                   <br />
                   <br />
-                  <strong>TalkGPT</strong> allows you to interact with chatGPT
-                  using voice commands. This enables hands-free and convenient
-                  interaction with the AI, freeing users from having to type on
-                  the screen. Making the user experience more intuitive and
-                  accessible.
+                  Welcome to our cutting-edge AI chat website, 
+                  where you can interact with our intelligent virtual assistant
+                   using your voice! Our innovative platform leverages the latest advancements in natural language processing and machine learning to provide you with a seamless and intuitive chat experience that feels just like talking to a human.
                 </p>
                 <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
                   <Link

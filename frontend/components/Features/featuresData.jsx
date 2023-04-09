@@ -12,7 +12,7 @@ const featuresData = [
     ),
     title: "Smarter, Better",
     paragraph:
-      "TalkGPT uses most advanced AI to generate responses at the backend, it provides much better and humanly interaction compared to any other Virtual assistant.",
+      "Neural Talk uses most advanced AI and voice recognition technology to accurately understand and generate responses on your spoken commands or questions, making it easy for the users to interact with a virtual chat model in an intiutive and effortless manner.",
   },
   {
     id: 1,
@@ -28,7 +28,7 @@ const featuresData = [
 
     title: "Ultimate assistant",
     paragraph:
-      "TalkGPT's backend is trained on a massive dataset of human language, allowing it to generate coherent and contextually appropriate responses better than any present virtual assistant.",
+      "Neural Talk's backend is trained on a massive dataset of human language, allowing it to generate coherent and contextually appropriate responses better than any present virtual assistant.",
   },
   {
     id: 1,
@@ -43,7 +43,7 @@ const featuresData = [
     ),
     title: "Security",
     paragraph:
-      "TalkGPT uses JSON Web Tokens for user authorization and the password is not retained in its plaintext form, rather it is stored as a one-way hash. Providing secure and reliable authentication system.",
+      "Neural Talk uses JSON Web Tokens and JWT Authentication for user authorization and the password is not retained in its plaintext form, rather it is stored as a one-way hash providing secure and reliable authentication system.",
   },
   {
     id: 1,
@@ -58,7 +58,7 @@ const featuresData = [
     ),
     title: "Latest and greatest",
     paragraph:
-      "TalkGPT is Crafted with MERN stack with robustness and scalability in mind. React is used for frontend offering high-performance user interfaces along with NextJS for search engine optimization.",
+      "Neural Talk is Crafted with MERN stack with robustness and scalability in mind. React is used for frontend offering high-performance user interfaces along with NextJS for search engine optimization.",
   },
 ];
 export default featuresData;
