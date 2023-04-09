@@ -1,7 +1,7 @@
 export default function Head() {
   return (
     <>
-      <title>TalkGPT</title>
+      <title>Neural Talk</title>
       <script src="https://accounts.google.com/gsi/client" async defer></script>
 
       <meta content="width=device-width, initial-scale=1" name="viewport" />

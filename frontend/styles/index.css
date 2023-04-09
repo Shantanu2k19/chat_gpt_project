@@ -7,6 +7,7 @@
 @layer base {
   body {
     font-family: "Inter", sans-serif;
+    background: linear-gradient(0deg, hsla(344, 56%, 20%, 1) 0%, hsla(207, 82%, 2%, 1) 100%);
     /* overflow: hidden; */
   }
 }
@@ -31,4 +32,13 @@
   input#checkboxLabel:checked ~ .box span {
     @apply opacity-100;
   }
+}
+.headingStyling{
+  background-color: #f3ec78;
+    background-image: linear-gradient(45deg, #FF50D8,#FF50D8,#E128EB,#C301FF,#9B30FF,#7164FF,#4F8FFF,#07ECFF,#0B9EFF, #195FF2,#1856F2);
+    background-size: 100%;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -moz-text-fill-color: transparent;
 }

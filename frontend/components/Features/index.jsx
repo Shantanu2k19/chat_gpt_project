@@ -11,8 +11,8 @@ const Features = () => {
       >
         <div className="container">
           <SectionTitle
-            title="TalkGPT"
-            paragraph="TalkGPT is made with latest web-d stack to provide the best user experience and multitude of features."
+            title="Neural Talk"
+            paragraph="Neural Talk is made with latest web-d stack to provide the best user experience and multitude of features."
             center
           />
 
