@@ -7,7 +7,7 @@ const AboutSectionTwo = () => {
       <div className="container">
         <div className="-mx-4 flex flex-wrap items-center ">
           
-          <div className="w-full px-4 lg:w-1/2">
+          <div className="w-full px-4 lg:w-1/2 ">
             <div
               className="wow fadeInUp relative mx-auto mb-12 aspect-[25/24] max-w-[500px] text-center lg:m-0"
               data-wow-delay=".15s"
@@ -20,7 +20,7 @@ const AboutSectionTwo = () => {
             </div>
           </div>
 
-          <div className="w-full px-4 lg:w-1/2">
+          <div className="w-full px-4 lg:w-1/2 flex items-center justify-center">
             <div className="wow fadeInUp max-w-[90%]" data-wow-delay=".2s">
             <AuthBox />
             </div>
