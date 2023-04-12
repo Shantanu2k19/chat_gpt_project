@@ -11,6 +11,7 @@ import Header from "./Header.js";
 import useSpeechSynthesis from "./voiceHelper/T2Shelper";
 import useSpeechRecognition from './voiceHelper/S2Thelper';
 import SettingPopup from "./SettingsPopup";
+import test_sound from "../../public/audios/test_audio.mp3"
 const cookies = new Cookies();
 
 export default function LandingPage() {
@@ -394,10 +395,11 @@ export default function LandingPage() {
     return;
   }
 
+  const audioRef = useRef();
+
   function testSpeach(){
     const text = "this is a test audio";
-    
-    speak({ text, voice, rate, pitch });
+    isGoogleVoice ? (audioRef.current.play()) : speak({ text, voice, rate, pitch });
   }
 
   function closePopups(){
@@ -571,6 +573,10 @@ export default function LandingPage() {
               </div>
 
         </div>
+
+        <audio ref={audioRef}>
+        <source src={test_sound} type="audio/mpeg" />
+      </audio>
 
         <SettingPopup 
           supported = {supported}

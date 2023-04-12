@@ -499,9 +499,9 @@ router.post("/set_prefs", authenticateToken, async (req, res) => {
   console.log("______SET-PREFS_____");
   console.log("got name : ", req.usernam);
 
-  // if (req.usernam === "demo_user") {
-  //   return res.status(403).send({ message: "Not available for demo user!" });
-  // }
+  if (req.usernam === "demo_user") {
+    return res.status(403).send({ message: "Not available for demo user!" });
+  }
 
   const userChat = await User.findOne({ username: req.usernam });
   if (userChat) {
@@ -509,7 +509,12 @@ router.post("/set_prefs", authenticateToken, async (req, res) => {
       userChat.prefs = req.body.newPrefs;
       userChat.save();
       console.log(req.body.newPrefs)
-      // console.log(req.voiceIndex, req.rate, req.pitch);
+
+      console.log(req.body.newPrefs["gnable"])
+      if(req.body.newPrefs["gnable"])
+      {
+        return res.status(403).send({ message: "Upgrade to Pro for AI enabled features!" });
+      }
       const data = {
         newToken: req.newToken,
       };
