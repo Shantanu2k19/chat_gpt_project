@@ -9,32 +9,25 @@ export default function settings(prop) {
   const voiceRef = useRef(null);
 
   function resetVals() {
-    setIsGoogleVoice(false);
+    prop.setIsGoogleVoice(false);
 
     const inputElement = rateRef.current;
     if (inputElement) {
-      inputElement.value = "1";
+      inputElement.value = 1;
     }
     prop.setRate(1);
 
     const inputElement2 = pitchRef.current;
     if (inputElement2) {
-      inputElement2.value = "1";
+      inputElement2.value = 1;
     }
     prop.setPitch(1);
 
     const inputElement3 = voiceRef.current;
     if (inputElement3) {
-      inputElement3.value = "0";
+      inputElement3.value = 3;
     }
-    prop.setVoiceIndex(0);
-  }
-
-  const [isGoogleVoice, setIsGoogleVoice] = React.useState(true);
-
-
-  function googlePressed(){
-
+    prop.setVoiceIndex(3);
   }
 
   return (
@@ -46,7 +39,7 @@ export default function settings(prop) {
       <hr style={{ width: "80%", color: "rgba(126, 126, 126, 0.423)" }} />
 
       <div className="wrapper">
-        <div className="settingForm" style={ isGoogleVoice ? {} : { backgroundColor: "rgba(174, 174, 174, 0.176"}}>
+        <div className="settingForm" style={ prop.isGoogleVoice ? {} : { backgroundColor: "rgba(174, 174, 174, 0.176"}}>
 
           {!prop.supported && (
             <p>
@@ -65,7 +58,7 @@ export default function settings(prop) {
                   <select
                     id="voice"
                     name="voice"
-                    value={prop.voiceIndex || ""}
+                    value={prop.voiceIndex || 3}
                     onChange={(event) => {
                       prop.setVoiceIndex(event.target.value);
                       console.log(prop.voiceIndex);
@@ -73,7 +66,6 @@ export default function settings(prop) {
                     ref={voiceRef}
                     className="selectClass"
                   >
-                    <option value="">Default</option>
                     {prop.voices.map((option, index) => (
                       <option key={option.voiceURI} value={index}>
                         {`${option.lang} - ${option.name}`}
@@ -97,7 +89,7 @@ export default function settings(prop) {
                     id="rate"
                     onChange={(event) => {
                       prop.setRate(event.target.value);
-                      setIsGoogleVoice(false);
+                      prop.setIsGoogleVoice(false);
                     }}
                     ref={rateRef}
                     className="silderClass"
@@ -122,7 +114,7 @@ export default function settings(prop) {
                     id="pitch"
                     onChange={(event) => {
                       prop.setPitch(event.target.value);
-                      setIsGoogleVoice(false);
+                      prop.setIsGoogleVoice(false);
                     }}
                     ref={pitchRef}
                     className="silderClass"
@@ -151,12 +143,12 @@ export default function settings(prop) {
         {/* <hr style={{ width: "80%", color: "rgba(126, 126, 126, 0.423)" }} /> */}
 <br />
 
-        <div className="aivoice" style={ isGoogleVoice ? { backgroundColor: "rgba(174, 174, 174, 0.176"} : {} }>
+        <div className="aivoice" style={ prop.isGoogleVoice ? { backgroundColor: "rgba(174, 174, 174, 0.176"} : {} }>
           <div className="aivoice-top">Ai generated voice sound beterr</div>
           <div className="aivoice-bottom">
             <ToggleSwitch 
-              setIsGoogleVoice={setIsGoogleVoice}
-              isGoogleVoice = {isGoogleVoice}
+              setIsGoogleVoice={prop.setIsGoogleVoice}
+              isGoogleVoice = {prop.isGoogleVoice}
             />
           </div>
         </div>
@@ -169,7 +161,7 @@ export default function settings(prop) {
             </button>
           </div>
 
-          <div className="right-div">
+          <div className="right-div" onClick={prop.setPrefs}>
             <button className="button-17">Save</button>
           </div>
         </div>

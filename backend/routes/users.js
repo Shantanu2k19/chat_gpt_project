@@ -14,7 +14,7 @@ let refreshTokens = [];
 function generateAccessToken(data) {
   console.log("generate fn");
   // console.log(data);
-  return jwt.sign(data, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "15s" });
+  return jwt.sign(data, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "15m" });
 }
 
 function authenticateToken(req, res, next) {
@@ -23,7 +23,10 @@ function authenticateToken(req, res, next) {
 
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
-  if (token == null) return res.status(401).send("token not found!!!");
+  if (token == null)
+    return res
+      .status(401)
+      .send({ message: "token not found!!!, Login Again!!" });
   req.newToken = token;
 
   try {
@@ -36,7 +39,10 @@ function authenticateToken(req, res, next) {
     }
     return res
       .status(403)
-      .send("token not valid, but code should not reach here!!");
+      .send({
+        message:
+          "token not valid, but code should not reach here!!, Login Again!!",
+      });
   } catch {
     console.log("token expired!");
     //token expired, check for refresh token
@@ -44,11 +50,17 @@ function authenticateToken(req, res, next) {
     // console.log(refreshTokens);
 
     if (refreshToken == null)
-      return res.status(403).send("token Expired, refresh token not provided");
+      return res
+        .status(403)
+        .send({
+          message: "token Expired, refresh token not provided, Login Again!!",
+        });
 
     if (!refreshTokens.includes(refreshToken)) {
       // console.log(refreshTokens);
-      return res.status(403).send("refresh token not found in list");
+      return res
+        .status(403)
+        .send({ message: "refresh token not found, Login Again!!" });
     }
 
     try {
@@ -70,11 +82,14 @@ function authenticateToken(req, res, next) {
       }
       return res
         .status(403)
-        .send(
-          "referesh token verification failed, but code should not reach here!!"
-        );
+        .send({
+          message:
+            "referesh token verification failed, but code should not reach here!!, Login Again!!",
+        });
     } catch {
-      return res.status(403).send("referesh token verification failed");
+      return res
+        .status(403)
+        .send({ message: "referesh token verification failed, Login Again!!" });
     }
   }
 }
@@ -156,9 +171,21 @@ router.post("/signup", async (req, res) => {
     return;
   }
 
+  const preferences = {
+    gnable: false,
+    voice: 0,
+    rate: 1,
+    pitch: 1,
+  };
+
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ username, password: hashedPassword, email });
+    const newUser = new User({
+      username,
+      password: hashedPassword,
+      email,
+      prefs: preferences,
+    });
 
     try {
       newUser.save();
@@ -234,7 +261,20 @@ router.post("/signupWithGoogle", async (req, res) => {
 
   let password = Math.random();
   try {
-    const newUser = new User({ username, password, email, isGlogin: true });
+    const preferences = {
+      gnable: flase,
+      voice: 3,
+      rate: 1,
+      pitch: 1,
+    };
+
+    const newUser = new User({
+      username,
+      password,
+      email,
+      isGlogin: true,
+      prefs: preferences,
+    });
 
     try {
       newUser.save();
@@ -428,6 +468,58 @@ router.post("/reportBug", authenticateToken, async (req, res) => {
     return res.status(200).send({ message: "Success" });
   } catch {
     return res.status(403).send({ message: "Some error occured!" });
+  }
+});
+
+//GET PREFS
+router.post("/get_prefs", authenticateToken, async (req, res) => {
+  console.log("______GET-PREFS_____");
+  console.log("got name : ", req.usernam);
+
+  if (req.usernam === "demo_user") {
+    return res.status(403).send({ message: "Not available for demo user!" });
+  }
+
+  const userChat = await User.findOne({ username: req.usernam });
+  if (userChat) {
+    const prefss = userChat.prefs;
+    const data = {
+      newToken: req.newToken,
+      data: prefss,
+    };
+    return res.status(200).json(data);
+  } else {
+    console.log("some error occured!");
+    return res.status(403).send({ message: "user's chat not found" });
+  }
+});
+
+//SET PREFS
+router.post("/set_prefs", authenticateToken, async (req, res) => {
+  console.log("______SET-PREFS_____");
+  console.log("got name : ", req.usernam);
+
+  // if (req.usernam === "demo_user") {
+  //   return res.status(403).send({ message: "Not available for demo user!" });
+  // }
+
+  const userChat = await User.findOne({ username: req.usernam });
+  if (userChat) {
+    try {
+      userChat.prefs = req.body.newPrefs;
+      userChat.save();
+      console.log(req.body.newPrefs)
+      // console.log(req.voiceIndex, req.rate, req.pitch);
+      const data = {
+        newToken: req.newToken,
+      };
+      return res.status(200).json(data);
+    } catch {
+      return res.status(403).send({ message: "Something went wrong" });
+    }
+  } else {
+    console.log("some error occured!");
+    return res.status(403).send({ message: "No previous preferences found" });
   }
 });
 

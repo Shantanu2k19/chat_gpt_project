@@ -499,3 +499,10 @@ body {
   background: #f6f9fe;
   color: #174ea6;
 }
+
+
+.testVoice{
+  min-height: 200px;
+  background-color: white;
+  min-width: 200px;
+}

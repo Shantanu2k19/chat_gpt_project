@@ -24,7 +24,13 @@ const userSchema = new mongoose.Schema({
     isGlogin: {
         type: Boolean,
         default: false
-    }
+    },
+    prefs: [{
+        gnable : { type: Boolean, required: true, default: false },
+        voice: { type: Number,  required: true, default: 3 },
+        rate: { type: Number,  required: true, default: 1 },
+        pitch: { type: Number,  required: true, default: 1 },
+    }],
 }, {
     timestamps: false,
 })

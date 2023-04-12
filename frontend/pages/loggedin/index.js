@@ -8,7 +8,8 @@ import { useRouter } from "next/navigation";
 import ReactLoading from "react-loading";
 import styled from "styled-components";
 import Header from "./Header.js";
-import useSpeechSynthesis from "./T2Shelper";
+import useSpeechSynthesis from "./voiceHelper/T2Shelper";
+import useSpeechRecognition from './voiceHelper/S2Thelper';
 import SettingPopup from "./SettingsPopup";
 const cookies = new Cookies();
 
@@ -37,7 +38,6 @@ export default function LandingPage() {
     const gptL = styles.getPropertyValue("--gptColorLight");
     const gptD = styles.getPropertyValue("--gptColorDark");
 
-    console.log("baclsK ", black);
     const docEl = document.documentElement;
 
     if (isDarkEnabled) {
@@ -289,17 +289,14 @@ export default function LandingPage() {
   }, []);
 
   useEffect(() => {
-    console.log("starting page");
+    // console.log("starting page");
     setScreenWidth(window.innerWidth);
-
-    console.log(screenWidth);
 
     if (screenWidth <= 620) {
       setSideBarOpen(false);
     } else {
       setSideBarOpen(true);
     }
-    console.log("setting");
   }, [screenWidth]);
 
   const toggleSidebar = () => {
@@ -356,17 +353,19 @@ export default function LandingPage() {
 
 
   //FOR SETINGS POPUP 
-  const [stnPopup, setStnPopup] = React.useState(true);
+  const [stnPopup, setStnPopup] = React.useState(false);
 
   // const [text, setText] = useState('hello boy ');
 
   const [pitch, setPitch] = useState(1);
   const [rate, setRate] = useState(1);
-  const [voiceIndex, setVoiceIndex] = useState(null);
+  const [voiceIndex, setVoiceIndex] = useState(1);
 
-  const [testAudio, setTestAudio] = React.useState("this is a test audio")
+  const [isGoogleVoice, setIsGoogleVoice] = useState(false);
+
   const onEnd = () => {
     // You could do something here after speaking has finished
+    console.log("ENDDDD")
   };
   
   
@@ -374,7 +373,7 @@ export default function LandingPage() {
     onEnd,
   });
 
-  const voice = voices[voiceIndex] || null;
+  const voice = voices[voiceIndex] || 3;
 
   function speakNow(){
     console.log("speaking");
@@ -397,18 +396,133 @@ export default function LandingPage() {
 
   function testSpeach(){
     const text = "this is a test audio";
+    
     speak({ text, voice, rate, pitch });
   }
-
-  useEffect( () => {
-    console.log(supported);
-  }, []);
 
   function closePopups(){
     setBugPopEnabled(false);
     setStnPopup(false);
   }
 
+
+
+
+
+
+
+
+
+
+  //FOR SPEECH TO TEXT
+  const [lang, setLang] = useState('en-AU');
+  const [value, setValue] = useState('');
+  const [blocked, setBlocked] = useState(false);
+
+  // const onEnd = () => {
+  //   // You could do something here after listening has finished
+  // };
+
+  const onResult = (result) => {
+    setValue(result);
+  };
+
+  const changeLang = (event) => {
+    setLang(event.target.value);
+  };
+
+  const onError = (event) => {
+    if (event.error === 'not-allowed') {
+      setBlocked(true);
+    }
+  };
+
+  const { listen, listening, stop, supportedS2T } = useSpeechRecognition({
+    onResult,
+    onEnd,
+    onError,
+  });
+
+  const toggle = listening
+    ? stop
+    : () => {
+        setBlocked(false);
+        listen({ lang });
+      };
+
+
+
+
+      //GET PREFERENCE OF USER 
+      const getPrefs = async () => {
+  
+        console.log("get pref");
+    
+        const cookies = new Cookies();
+        const cAccToken = cookies.get("accessToken");
+        const reftoken = cookies.get("refreshToken");
+    
+        const response = await fetch("http://localhost:5000/users/get_prefs", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cAccToken}`,
+          },
+          body: JSON.stringify({ reftoken }),
+        });
+        const json = await response.json();
+    
+        if (response.ok) {
+          console.log("get pref success");
+
+          setVoiceIndex(json.data[0]["voice"])
+          setPitch(json.data[0]["pitch"])
+          setRate(json.data[0]["rate"])
+          setIsGoogleVoice(json.data[0]["gnable"])
+       } else {
+          showAlert(json.message, 1);
+        }
+      };
+
+      React.useEffect( () => {
+        getPrefs();
+      }, []) 
+
+
+
+      //SET PREFERENCE OF USER 
+      const setPrefs = async () => {
+        console.log("get pref");
+    
+        const cookies = new Cookies();
+        const cAccToken = cookies.get("accessToken");
+        const reftoken = cookies.get("refreshToken");
+
+        const newPrefs = {
+          "gnable": isGoogleVoice,
+          "voice": voiceIndex==""?3:voiceIndex,
+          "rate":rate,
+          "pitch":pitch,
+        }
+        const response = await fetch("http://localhost:5000/users/set_prefs", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cAccToken}`,
+          },
+          body: JSON.stringify({ reftoken, newPrefs }),
+        });
+        const json = await response.json();
+    
+        if (response.ok) {
+          console.log("set pref success");
+          showAlert("Preference set.", 0);
+       } else {
+          showAlert(json.message, 1);
+        }
+      };
+
+   
   //RETURN DIV
   return (
     <div className="home">
@@ -472,9 +586,14 @@ export default function LandingPage() {
           voiceIndex = {voiceIndex}
           setVoiceIndex = {setVoiceIndex}
 
+          isGoogleVoice = {isGoogleVoice}
+          setIsGoogleVoice ={setIsGoogleVoice}
+
           speakNow = {speakNow}
 
           testSpeach = {testSpeach}
+
+          setPrefs = {setPrefs}
         />
 
         <div
@@ -533,7 +652,7 @@ export default function LandingPage() {
 
           <hr style={{ width: "90%", color: "rgba(255, 255, 255, 0.226)" }} />
 
-          <div className="sidebar--content" onClick={speakNow}>
+          <div className="sidebar--content" onClick={getPrefs}>
             <a>
               <img
                 alt="delete-img"
@@ -730,6 +849,42 @@ export default function LandingPage() {
 
           <div></div>
         </div>
+
+        {/* <div className="testVoice">
+        <form id="speech-recognition-form">
+        <h2>Speech Recognition</h2>
+        {!supported && (
+          <p>
+            Oh no, it looks like your browser doesn&#39;t support Speech
+            Recognition.
+          </p>
+        )}
+        {supported && (
+          <React.Fragment>
+
+            <label htmlFor="transcript">Transcript</label>
+            <br/>
+            <textarea
+              id="transcript"
+              name="transcript"
+              placeholder="Waiting to take notes ..."
+              value={value}
+              rows={3}
+              disabled
+            />
+            <button disabled={blocked} type="button" onClick={toggle}>
+              {listening ? 'Stop' : 'Listen'}
+            </button>
+            {blocked && (
+              <p style={{ color: 'red' }}>
+                The microphone is blocked for this site in your browser.
+              </p>
+            )}
+          </React.Fragment>
+        )}
+      </form>
+        </div> */}
+
 
         {/* form area  */}
         <div className="form-area">
