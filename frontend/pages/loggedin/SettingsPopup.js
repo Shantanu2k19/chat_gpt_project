@@ -144,7 +144,7 @@ export default function settings(prop) {
 <br />
 
         <div className="aivoice" style={ prop.isGoogleVoice ? { backgroundColor: "rgba(174, 174, 174, 0.176"} : {} }>
-          <div className="aivoice-top">Ai generated voice sound beterr</div>
+          <div className="aivoice-top">Audio synthesized using AI for high fidelity and naturalness of the synthetic speech output.</div>
           <div className="aivoice-bottom">
             <ToggleSwitch 
               setIsGoogleVoice={prop.setIsGoogleVoice}
