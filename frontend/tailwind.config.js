@@ -11,13 +11,23 @@ module.exports = {
       center: true,
       padding: "1rem",
     },
-    backgroundImage: {
+    colors: {
       current: "currentColor",
       transparent: "transparent",
       white: "#FFFFFF",
+      black: "#090E34",
+      dark: "#1D2144",
+      primary: "#4A6CF7",
+      yellow: "#FBB040",
+      "body-color": "#959CB1",
+    },
+    backgroundImage:{
+      current: "currentColor",
+      transparent: "transparent",
+      white: "#FFFFFF",
+      dark: "#1D2144",
       black: "linear-gradient(0deg, rgb(4, 8, 65) 0%, hsla(207, 82%, 2%, 1) 100%)",
       //black: "#0a2431",  //dark background 
-     
       primary: "#4A6CF7", // "#3daec5",  //buttons
       yellow: "#FBB040",
       "body-color": "#959CB1",
