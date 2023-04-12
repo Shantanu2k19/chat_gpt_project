@@ -7,7 +7,7 @@
 @layer base {
   body {
     font-family: "Inter", sans-serif;
-    background: linear-gradient(0deg, hsla(344, 56%, 20%, 1) 0%, hsla(207, 82%, 2%, 1) 100%);
+    background: linear-gradient(0deg, rgb(4, 8, 65) 0%, hsla(207, 82%, 2%, 1) 100%);
     /* overflow: hidden; */
   }
 }

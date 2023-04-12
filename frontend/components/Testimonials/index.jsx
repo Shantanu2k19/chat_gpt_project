@@ -1,5 +1,6 @@
 import SectionTitle from "../Common/SectionTitle";
 import SingleTestimonial from "./SingleTestimonial";
+import Link from "next/link";
 
 const testimonialData = [
   {
@@ -10,6 +11,7 @@ const testimonialData = [
       "Our members are so impressed. It's intuitive. It's clean. It's distraction free. If you're building a community.",
     image: "/images/testimonials/auth-01.png",
     star: 5,
+    
   },
   {
     id: 2,
@@ -92,7 +94,7 @@ const Testimonials = () => {
           </defs>
         </svg>
       </div>
-      <div className="absolute left-0 bottom-5 z-[-1]">
+      <div className="absolute left-0 bottom-5 z-[-1]">v  
         <svg
           width="279"
           height="106"
