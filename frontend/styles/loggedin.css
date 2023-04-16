@@ -86,7 +86,7 @@ body {
 }
 
 .threeDiv2 {
-  min-height: 50px;
+  /* min-height: 50px; */
  display: flex;
   width: 98%;
   height: 100%;
@@ -125,13 +125,50 @@ body {
   align-items: left;  
 }
 
+.left-div2{
+  width: 80%;
+  border: 1px solid green;
+  height: 20px;
+  padding-left: 15px;
+  font-size: 0.8em;
+}
+
+.right-div3 {
+  width: 15%;
+  border: 1px solid rgb(139, 139, 139);
+  height: 20px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  animation: pulsate 1.5s ease-out;
+  animation-iteration-count: infinite;
+  opacity: 0.5;
+}
+@keyframes pulsate {
+  0% {
+      opacity: 0.5;
+  }
+  50% {
+      opacity: 1.0;
+  }
+  100% {
+      opacity: 0.5;
+  }
+}
+
 .sidebar--content:hover {
   background-color: var(--hoverColor);
   border-radius: 10px;
   color: white;
 }
 
-
+.infoDiv{
+  border: 1px solid rgb(139, 139, 139);
+  padding: 20px;
+}
 
 
 
@@ -139,7 +176,7 @@ body {
 .header {
   display: flex;
   height: 30px;
-  /* border: 2px solid blue; */
+  border: 2px solid blue;
   min-width: 100%;
   position: fixed;
   background: #343540;
@@ -147,6 +184,13 @@ body {
   border-bottom: 1px solid rgba(255, 255, 255, 0.39);
 }
 
+.header-dot{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 25px;
+  width: 5%;
+}
 .option-image {
   width: 24px;
 }
@@ -157,6 +201,15 @@ body {
   left: 0;
   /* border: 1px solid white; */
   width: 5%;
+}
+
+.statusInfo{
+  display: flex;
+  min-width: 85%;
+  background-color: rgba(255, 255, 0, 0.413);  
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;  
 }
 
 .header-text {
@@ -460,6 +513,68 @@ body {
 .iconkk {
   width: 20px;
 }
+
+
+
+/* for enable voice button  */
+
+.toggle2 {
+  height: 14px;
+  width: 71px;
+  border-radius: 40px;
+  padding: 10px;
+  position: relative;
+  margin: auto;
+  cursor: pointer;
+
+  background:none;
+  /* transition: background var(--transition); */
+  border: 3px solid var(--foreground);
+}
+
+.toggle2::before {
+  content: "";
+  display: block;
+  height: 25px;
+  width: 25px;
+  border-radius: 31px;
+  background: var(--white);
+  position: absolute;
+  z-index: 2;
+  transform: translate(0);
+  transition: transform var(--transition);
+  top: 5px;
+  background: var(--foreground);
+  transition: transform var(--transition), background var(--transition);
+  left: 6px;
+}
+
+.toggle2.enabled2::before {
+  transform: translateX(56px);
+}
+
+.toggle2 input {
+  position: absolute;
+  top: 0;
+  opacity: 0;
+}
+
+.toggle2 .icons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  margin: 0 4px;
+}
+
+.iconVoiceChange{
+  height: 20px;
+}
+
+.iconkk {
+  width: 20px;
+}
+
 
 
 

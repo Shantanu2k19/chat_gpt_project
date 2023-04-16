@@ -22,10 +22,16 @@ export default function LandingPage() {
   const [userPic, setUserPic] = React.useState("_");
 
   //FOR DARK MODE
-  const [isEnabled, setIsEnabled] = useState(true);
+  const [isDarkEnabled, setIsDarkEnabled] = useState(true);
 
-  const toggleState = () => {
-    setIsEnabled((prevState) => !prevState);
+  const [isMicEnabled, setIsMicEnabled] = useState(true);
+
+  const toggleDarkMode = () => {
+    setIsDarkEnabled((prevState) => !prevState);
+  };
+
+  const toggleMicState = () => {
+    setIsMicEnabled(!isMicEnabled);
   };
 
   const updateTheme = (isDarkEnabled) => {
@@ -64,10 +70,10 @@ export default function LandingPage() {
   };
 
   useEffect(() => {
-    // Pass in the isEnabled state
-    isEnabled ? (theme = "dark") : (theme = "light");
-    updateTheme(isEnabled);
-  }, [isEnabled]);
+    // Pass in the isDarkEnabled state
+    isDarkEnabled ? (theme = "dark") : (theme = "light");
+    updateTheme(isDarkEnabled);
+  }, [isDarkEnabled]);
 
   function showAlert(mssg, val) {
     if (val == 0) {
@@ -525,7 +531,11 @@ export default function LandingPage() {
         }
       };
 
-   
+
+  function setMicProp(){
+    setIsMicEnabled(!isMicEnabled);
+  }
+
   //RETURN DIV
   return (
     <div className="home">
@@ -622,7 +632,7 @@ export default function LandingPage() {
                 src={
                   userPic != "_"
                     ? userPic
-                    : isEnabled
+                    : isDarkEnabled
                     ? "/images/loggedin/user_d.png"
                     : "/images/loggedin/user_l.png"
                 }
@@ -638,7 +648,7 @@ export default function LandingPage() {
             <br />
 
             <label className="toggle-wrapper" htmlFor="toggle">
-              <div className={`toggle ${isEnabled ? "enabled" : "disabled"}`}>
+              <div className={`toggle ${isDarkEnabled ? "enabled" : "disabled"}`}>
                 <div className="icons">
                   <img className="iconkk" src="/images/loggedin/sun.png"></img>
                   <img className="iconkk" src="/images/loggedin/moon.png"></img>
@@ -648,14 +658,50 @@ export default function LandingPage() {
                   id="toggle"
                   name="toggle"
                   type="checkbox"
-                  checked={isEnabled}
-                  onClick={toggleState}
+                  checked={isDarkEnabled}
+                  onClick={toggleDarkMode}
                 />
               </div>
             </label>
           </div>
 
+             {/* switch mode  */}
+          <div className="sidebar--content">
+            <br />
+
+            <label className="toggle-wrapper" htmlFor="toggle2">
+              <div className={`toggle2 ${isMicEnabled ? "enabled2" : "disabled2"}`} >
+                <div className="icons">
+                  <img
+                    className="iconVoiceChange" 
+                    src= {isDarkEnabled? "/images/loggedin/mic_off_d.png" : "/images/loggedin/mic_off_l.png"}
+                  ></img>
+                  <img 
+                    className="iconVoiceChange" 
+                    src= {isDarkEnabled? "/images/loggedin/mic.png" : "/images/loggedin/mic_l.png"}
+                    ></img>
+                </div>
+                <input
+                  id="toggle2"
+                  name="toggle2"
+                  type="checkbox"
+                  checked={isMicEnabled}
+                  onClick={setMicProp}
+                />
+              </div>
+            </label>
+          </div>
+
+          
+
           <div style={{ flexGrow: "1" }}></div>
+
+          {screenWidth > 620 && (
+            <div className="threeDiv2"  style={{height:"20px"}}>
+              <div className="left-div2"> {isMicEnabled?"Mic Enabled...":"Mic Disabled..."}  </div>
+              <div className="dot" style={{ backgroundColor:isMicEnabled?"rgb(16, 219, 16)":"gray"}}></div>
+            </div>
+          )}
 
           <hr style={{ width: "90%", color: "rgba(255, 255, 255, 0.226)" }} />
 
@@ -665,7 +711,7 @@ export default function LandingPage() {
               <img
                 alt="delete-img"
                 src={
-                  isEnabled
+                  isDarkEnabled
                     ? "/images/loggedin/pro_d.png"
                     : "/images/loggedin/pro_l.png"
                 }
@@ -684,7 +730,7 @@ export default function LandingPage() {
               <img
                 alt="delete-img"
                 src={
-                  isEnabled
+                  isDarkEnabled
                     ? "/images/loggedin/mic.png"
                     : "/images/loggedin/mic_l.png"
                 }
@@ -703,7 +749,7 @@ export default function LandingPage() {
                 <img
                   alt="delete-img"
                   src={
-                    isEnabled
+                    isDarkEnabled
                       ? "/images/loggedin/delete.png"
                       : "/images/loggedin/delete_l.png"
                   }
@@ -720,7 +766,7 @@ export default function LandingPage() {
                 <img
                   alt="delete-img"
                   src={
-                    isEnabled
+                    isDarkEnabled
                       ? "/images/loggedin/clear.png"
                       : "/images/loggedin/clear_l.png"
                   }
@@ -736,7 +782,7 @@ export default function LandingPage() {
               <img
                 alt="contact-img"
                 src={
-                  isEnabled
+                  isDarkEnabled
                     ? "/images/loggedin/contact.png"
                     : "/images/loggedin/contact_l.png"
                 }
@@ -750,7 +796,7 @@ export default function LandingPage() {
               <img
                 alt="logout-img"
                 src={
-                  isEnabled
+                  isDarkEnabled
                     ? "/images/loggedin/logout.png"
                     : "/images/loggedin/logout_l.png"
                 }
@@ -773,7 +819,10 @@ export default function LandingPage() {
       <div className="content">
         {/* HEADER  */}
         <MyComponent>
-          <Header switchFn={toggleSidebar} />
+          <Header 
+            switchFn={toggleSidebar}
+            isMicEnabled = {isMicEnabled}
+          />
         </MyComponent>
 
         {/* chat area  */}
@@ -909,7 +958,7 @@ export default function LandingPage() {
               <img 
                 alt="send" 
                 src={
-                  isEnabled
+                  isDarkEnabled
                     ? "/images/loggedin/send.png"
                     : "/images/loggedin/send_l.png"
                 }

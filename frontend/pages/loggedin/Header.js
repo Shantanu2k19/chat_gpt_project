@@ -1,6 +1,6 @@
 export default function header(prop) {
   return (
-    <div className="header">
+    <div className="header" >
       <div className="header-link">
         <a
           href="#"
@@ -16,7 +16,12 @@ export default function header(prop) {
         </a>
       </div>
 
-      <div className="header-text">At your service</div>
+      <div className="statusInfo">sdsd{prop.status}</div>
+
+      <div className="header-dot">
+        <div className="dot" style={{ backgroundColor:prop.isMicEnabled?"rgb(16, 219, 16)":"gray"}}></div>
+      </div>
+
     </div>
   );
 }
