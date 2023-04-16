@@ -12,6 +12,7 @@ import useSpeechSynthesis from "./voiceHelper/T2Shelper";
 import useSpeechRecognition from './voiceHelper/S2Thelper';
 import SettingPopup from "./SettingsPopup";
 import test_sound from "../../public/audios/test_audio.mp3"
+import Animation from "./Animation"
 const cookies = new Cookies();
 
 export default function LandingPage() {
@@ -919,7 +920,7 @@ export default function LandingPage() {
             </div> */}
           </div>
           <div className="animation-content">
-
+              <Animation />
           </div>
         </div>
       </div>

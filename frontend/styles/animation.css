@@ -1,0 +1,348 @@
+.container {
+  height: 200px;
+  width: 300px;
+  animation: up-down 7.5s infinite ease-in-out;
+  border: 2px solid black;
+  /* background-color: #5e229734; */
+}
+
+/* cylinder border */
+.container #chatbot {
+  margin: auto;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  top: 0;
+  right: 0;
+  width: 150px;
+  height: 85px;
+  border: 12px solid #3d3e45;
+  border-radius: 5rem;
+}
+
+/* fin at bottom */
+.container #chatbot-corner {
+  margin: auto;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  top: 0;
+  right: 0;
+  top: 105px;
+  left: -65px;
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  background-color: #3d3e45;
+  transform: rotate(140deg);
+}
+
+/* antenna */
+.container #antenna {
+  margin: auto;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  top: 0;
+  right: 0;
+  top: -125px;
+  width: 10px;
+  background-color: #3d3e45;
+  transition: 1s;
+}
+
+/* beam of antenna duh */
+.container #antenna #beam {
+  position: absolute;
+  top: -12.5px;
+  left: -5px;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background-color: #3d3e45;
+  transition: 1s;
+}
+
+/* antenna wave */
+.container #antenna #beam-pulsar {
+  position: absolute;
+  top: -12.5px;
+  left: -5px;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  background-color: #3d3e45;
+  transition: 1s;
+}
+
+/* 3 dots in center */
+.container .dot {
+  height: 17.5px;
+  width: 17.5px;
+  margin: auto;
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  right: 0;
+  background-color: #3d3e45;
+  border-radius: 50%;
+
+  left: -65px;
+  transition: 1s;
+}
+
+.container .dot:nth-child(2) {
+  left: 0px;
+  animation-delay: 0.2s !important;
+  transition: 1s;
+}
+
+.container .dot:nth-child(3) {
+  left: 65px;
+  animation-delay: 0.4s !important;
+}
+
+/* speaking  */
+@keyframes pulse-inner {
+  0% {
+    transform: scale(1);
+  }
+  5% {
+    top: 0;
+    transform: scale(1);
+    height: 17.5px;
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+    transform: rotate(-370deg);
+  }
+  10% {
+    top: 22.5px;
+    height: 10px;
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+    border-bottom-left-radius: 3rem;
+    border-bottom-right-radius: 3rem;
+    transform: rotate(10deg);
+  }
+  15% {
+    transform: rotate(-10deg);
+  }
+  20% {
+    transform: rotate(10deg);
+  }
+  25% {
+    transform: rotate(-10deg);
+  }
+  30% {
+    transform: rotate(10deg);
+  }
+  35% {
+    transform: rotate(-10deg);
+  }
+  40% {
+    transform: rotate(10deg);
+  }
+  45% {
+    transform: rotate(-10deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+  55% {
+    transform: rotate(-10deg);
+  }
+  60% {
+    transform: rotate(10deg);
+  }
+  65% {
+    transform: rotate(0deg);
+  }
+  85% {
+    top: 22.5px;
+    height: 10px;
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+    border-bottom-left-radius: 3rem;
+    border-bottom-right-radius: 3rem;
+    transform: rotate(0deg);
+  }
+  92.5% {
+    top: 22.5px;
+    height: 10px;
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+    border-bottom-left-radius: 2.5rem;
+    border-bottom-right-radius: 2.5rem;
+    transform: rotate(0deg);
+  }
+  100% {
+    top: 0;
+    height: 17.5px;
+    border-radius: 50%;
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes pulse-outer-left {
+  0% {
+    height: 17.5px;
+  }
+  50% {
+    height: 17.5px;
+  }
+  55% {
+    height: 5px;
+  }
+  60% {
+    height: 17.5px;
+  }
+  100% {
+    height: 17.5px;
+  }
+}
+
+@keyframes pulse-outer-right {
+  0% {
+    height: 17.5px;
+  }
+  47% {
+    height: 17.5px;
+  }
+  52% {
+    height: 5px;
+  }
+  57% {
+    height: 17.5px;
+  }
+  100% {
+    height: 17.5px;
+  }
+}
+
+/* antenna */
+
+@keyframes beam-pulsar-appear {
+  0% {
+    visibility: hidden;
+    top: -12.5px;
+    height: 0;
+  }
+  50% {
+    visibility: hidden;
+    top: -12.5px;
+    height: 0;
+  }
+  55% {
+    visibility: visible;
+    top: -12.5px;
+    left: -5px;
+    height: 20px;
+    width: 20px;
+    opacity: 1;
+  }
+  65% {
+    top: -25px;
+    left: -15px;
+    height: 40px;
+    width: 40px;
+    opacity: 0;
+    visibility: visible;
+  }
+  74% {
+    visibility: hidden;
+    opacity: 0;
+  }
+  75% {
+    visibility: visible;
+    top: -12.5px;
+    left: -5px;
+    height: 20px;
+    width: 20px;
+    opacity: 1;
+  }
+  85% {
+    top: -25px;
+    left: -15px;
+    height: 40px;
+    width: 40px;
+    opacity: 0;
+    visibility: visible;
+  }
+  94% {
+    visibility: hidden;
+    opacity: 0;
+  }
+  100% {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+/* Listening  */
+@keyframes listening-pulse {
+  0% {
+    transform: scale(1);
+  }
+  10% {
+    transform: scale(1.5);
+  }
+  20% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.5);
+  }
+  40% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  60% {
+    transform: scale(1);
+  }
+  70% {
+    tranform: scale(1.5);
+  }
+  80% {
+    transform: scale(1);
+  }
+  90% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* up down for whole div  */
+@keyframes up-down {
+  0% {
+    transform: translate(0);
+  }
+  12.5% {
+    transform: translate(0, 2%);
+  }
+  25% {
+    transform: translate(0);
+  }
+  37.5% {
+    transform: translate(0, 2%);
+  }
+  50% {
+    transform: translate(0);
+  }
+  62.5% {
+    transform: translate(0, 2%);
+  }
+  75% {
+    transform: translate(0);
+  }
+  87.5% {
+    transform: translate(0, 2%);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
