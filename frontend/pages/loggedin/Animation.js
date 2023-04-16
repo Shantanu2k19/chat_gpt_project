@@ -93,7 +93,7 @@ export default function Animation(){
               onAnimationEnd={handleAnimationEnd}
               style={{
                 animation: voiceEnabled?centerAnimation:"none",
-              left: voiceEnabled?"-65px":"0px",
+              left: voiceEnabled?"-50px":"0px",
               }}
             ></div>
             {/* left  */}
@@ -109,7 +109,7 @@ export default function Animation(){
               className="dot"
               style={{
                 animation: rightAnimation,
-              left: voiceEnabled?"65px":"0px",
+              left: voiceEnabled?"50px":"0px",
               }}
             ></div>
           </div>
@@ -128,20 +128,17 @@ export default function Animation(){
           ></div>
           <div id="beam-pulsar"
             style={{
-              animation : speakingAnim? "beam-pulsar-appear 3s infinite ease-in-out":"none",
+              animation : speakingAnim? "beam-pulsar-appear 1s infinite ease-in-out":"none",
               display : speakingAnim? "block": "none",
           }}
           ></div> 
           </div>
   
         </div>
-        <br />
-        <br />
-        <br />
   
-        <button onClick={() => handleAnimation(1)}>on/off</button>
+        {/* <button onClick={() => handleAnimation(1)}>on/off</button>
         <button onClick={() => handleAnimation(2)}>startListening</button>
-        <button onClick={() => handleAnimation(3)}>startSpeaking</button>
+        <button onClick={() => handleAnimation(3)}>startSpeaking</button> */}
       </>
     );
 }

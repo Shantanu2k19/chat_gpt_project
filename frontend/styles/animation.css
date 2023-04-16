@@ -1,9 +1,9 @@
 .container {
-  height: 200px;
-  width: 300px;
+  height: 55px;
+  width: 150px;
   animation: up-down 7.5s infinite ease-in-out;
-  border: 2px solid black;
-  /* background-color: #5e229734; */
+  /* border: 2px solid black; */
+  /* background-color: #ffd900; */
 }
 
 /* cylinder border */
@@ -14,10 +14,12 @@
   left: 0;
   top: 0;
   right: 0;
-  width: 150px;
-  height: 85px;
-  border: 12px solid #3d3e45;
+  width: 100px;
+  height: 45px;
+  border: 5px solid var(--foreground);
+  /* solid #3d3e45; */
   border-radius: 5rem;
+  transition: 1s;
 }
 
 /* fin at bottom */
@@ -25,17 +27,17 @@
   margin: auto;
   position: absolute;
   bottom: 0;
-  left: 0;
-  top: 0;
   right: 0;
-  top: 105px;
-  left: -65px;
+  top: 49px;
+  left: -108px;
+  transform: rotate(216deg);
+
   width: 0;
   height: 0;
-  border-left: 20px solid transparent;
-  border-right: 20px solid transparent;
-  background-color: #3d3e45;
-  transform: rotate(140deg);
+  border-top: 22px solid transparent;
+  border-right: 15px solid var(--foreground);
+  border-bottom: 0px solid transparent;
+  transition: 1s;
 }
 
 /* antenna */
@@ -46,21 +48,21 @@
   left: 0;
   top: 0;
   right: 0;
-  top: -125px;
-  width: 10px;
-  background-color: #3d3e45;
+  top: -65px;
+  width: 8px;
+  background-color: var(--foreground);
   transition: 1s;
 }
 
 /* beam of antenna duh */
 .container #antenna #beam {
   position: absolute;
-  top: -12.5px;
-  left: -5px;
-  height: 20px;
-  width: 20px;
+  top: -6px;
+  left: -4px;
+  height: 15px;
+  width: 15px;
   border-radius: 50%;
-  background-color: #3d3e45;
+  background-color: var(--foreground);
   transition: 1s;
 }
 
@@ -68,24 +70,24 @@
 .container #antenna #beam-pulsar {
   position: absolute;
   top: -12.5px;
-  left: -5px;
+  left: -10px;
   height: 15px;
   width: 15px;
   border-radius: 50%;
-  background-color: #3d3e45;
+  background-color: var(--foreground);
   transition: 1s;
 }
 
 /* 3 dots in center */
 .container .dot {
-  height: 17.5px;
-  width: 17.5px;
+  height: 11.5px;
+  width: 11.5px;
   margin: auto;
   position: absolute;
   bottom: 0;
   top: 0;
   right: 0;
-  background-color: #3d3e45;
+  background-color: var(--foreground);
   border-radius: 50%;
 
   left: -65px;
@@ -111,14 +113,14 @@
   5% {
     top: 0;
     transform: scale(1);
-    height: 17.5px;
+    height: 11.5px;
     border-bottom-left-radius: 50%;
     border-bottom-right-radius: 50%;
     transform: rotate(-370deg);
   }
   10% {
     top: 22.5px;
-    height: 10px;
+    height: 8px;
     border-top-left-radius: 50%;
     border-top-right-radius: 50%;
     border-bottom-left-radius: 3rem;
@@ -160,7 +162,7 @@
   }
   85% {
     top: 22.5px;
-    height: 10px;
+    height: 8px;
     border-top-left-radius: 50%;
     border-top-right-radius: 50%;
     border-bottom-left-radius: 3rem;
@@ -169,7 +171,7 @@
   }
   92.5% {
     top: 22.5px;
-    height: 10px;
+    height: 8px;
     border-top-left-radius: 50%;
     border-top-right-radius: 50%;
     border-bottom-left-radius: 2.5rem;
@@ -178,7 +180,7 @@
   }
   100% {
     top: 0;
-    height: 17.5px;
+    height: 11.5px;
     border-radius: 50%;
     transform: rotate(-360deg);
   }
@@ -186,37 +188,37 @@
 
 @keyframes pulse-outer-left {
   0% {
-    height: 17.5px;
+    height: 11.5px;
   }
   50% {
-    height: 17.5px;
+    height: 11.5px;
   }
   55% {
     height: 5px;
   }
   60% {
-    height: 17.5px;
+    height: 11.5px;
   }
   100% {
-    height: 17.5px;
+    height: 11.5px;
   }
 }
 
 @keyframes pulse-outer-right {
   0% {
-    height: 17.5px;
+    height: 11.5px;
   }
   47% {
-    height: 17.5px;
+    height: 11.5px;
   }
   52% {
     height: 5px;
   }
   57% {
-    height: 17.5px;
+    height: 11.5px;
   }
   100% {
-    height: 17.5px;
+    height: 11.5px;
   }
 }
 
@@ -328,19 +330,19 @@
     transform: translate(0);
   }
   37.5% {
-    transform: translate(0, 2%);
+    transform: translate(0, 3%);
   }
   50% {
     transform: translate(0);
   }
   62.5% {
-    transform: translate(0, 2%);
+    transform: translate(0, 3%);
   }
   75% {
     transform: translate(0);
   }
   87.5% {
-    transform: translate(0, 2%);
+    transform: translate(0, 3%);
   }
   100% {
     transform: translate(0);
