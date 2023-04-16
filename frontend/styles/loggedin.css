@@ -276,62 +276,85 @@ body {
 
 
 /* form css */
-.form-area {
-  box-shadow: 0px 8px 30px 14px rgba(0, 0, 0, 0.35);
-  border-radius: 10px;
-  height: 40px;
-  /* background-color: #40414f; */
-  background-color: var(--contentBG);
-
-  border: 1px solid #303038;
+.bottom-area {
+  /* height: 40px; */
+  /* background-color: #777cc7; */
+  display: flex;
   margin: 0px 8px 8px 8px;
+  align-items: center;
 }
 
-.form-area-content {
+.question-content {
+  box-shadow: 0px 8px 30px 14px rgba(0, 0, 0, 0.35);
+  border-radius: 10px;
+  background-color: var(--contentBG);
+  border: 1px solid #303038;
+
   display: flex;
-  height: 70%;
-  padding: 10px;
+  height: 60px;
+  align-items: center;
+  justify-content: flex-start;
+  /* border: 2px solid white; */
+  /* width: 70%; */
+  flex-grow:1;
+}
+
+.animation-content{
+  min-width: 200px;
+  background-color: #ffee00c4;
+  border: 2px solid orange;
+  height: 60px;
 }
 
 .form-textbox {
   /* border: 1px solid blue; */
-  width: 96%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  flex-grow:1;
+
+  width: 100%;
 }
 
-.send-icon {
-  /* border: 1px solid red; */
-  width: 35px;
-  text-align: center;
-  margin-left: 15px;
-  border-radius: 10px;
-  padding: 3px 8px 8px 8px;
-
-  border: none;
-  cursor: pointer;
-  appearance: none;
-  background-color: inherit;
-}
-
-.send-icon:hover {
-  background-color: #35353b;
-  box-shadow: 0px 0px 5px 4px rgba(0, 0, 0, 0.15);
-}
-
-
-
-
-/* question text box  */
 .ques--input {
   width: 99%;
-  height: 100%;
+  min-height: 45px;
+  /* height: 100%; */
   background: none;
   /* color: white; */
   color: var(--foregroundSB);
   border: none;
   outline: none;
-  font-size: 0.87em;
-  font-family: "Lato", sans-serif;
+  font-size: 1.2em;
+  /* border: 2px solid green; */
+  margin-left: 20px;
 }
+
+
+.send-icon {
+  /* border: 1px solid red; */
+  width: 45px;
+  height: 45px;
+  text-align: center;
+  margin: 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  appearance: none;
+  border:none;
+  /* background: rgba(187, 187, 187, 0.322); */
+  transition: 0.5s;
+  background: none;
+}
+
+.send-icon:hover {
+  background: rgba(150, 150, 150, 0.651);
+  box-shadow: 0px 0px 4px 1px rgba(150, 150, 150, 0.651);
+}
+
+
+
+
 
 .downImage {
   opacity: 0.4;

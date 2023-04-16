@@ -898,20 +898,28 @@ export default function LandingPage() {
 
 
         {/* form area  */}
-        <div className="form-area">
+        <div className="bottom-area">
           {/* <ChatGPTdiv /> */}
-          <div className="form-area-content">
-            <div className="form-textbox">
-              <form onSubmit={handleSubmit} id="question_form">
-                <input type="text" className="ques--input" name="ques" />
-              </form>
-            </div>
+          <div className="question-content">
+            <form className="form-textbox" onSubmit={handleSubmit} id="question_form">
+              <input type="text" className="ques--input" name="ques" />
+            </form>
             <button className="send-icon" form="question_form" type="submit">
-              <img alt="send" src="/images/loggedin/send.png" width="30px" />
+              <img 
+                alt="send" 
+                src={
+                  isEnabled
+                    ? "/images/loggedin/send.png"
+                    : "/images/loggedin/send_l.png"
+                }
+                width="30px" />
             </button>
-            <div className="send-icon">
+            {/* <div className="send-icon">
               <img alt="send" src="/images/loggedin/mic.png" width="14px" />
-            </div>
+            </div> */}
+          </div>
+          <div className="animation-content">
+
           </div>
         </div>
       </div>
