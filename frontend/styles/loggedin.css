@@ -52,33 +52,9 @@ body {
 
   min-height: 100%;
   /* border: 2px solid green; */
-  width: 210px;
+  width: 260px;
   transition: 0.3s;
   z-index: 71;
-}
-
-.sidebar a {
-  display: block;
-  /* color: ; */
-  padding: 14px;
-  text-decoration: none;
-  cursor: pointer;
-  margin: 0px 5px 0px 5px;
-}
-
-.sidebar a:hover:not(.active) {
-  background-color: var(--hoverColor);
-  border-radius: 10px;
-  color: white;
-}
-
-.sidebar-text {
-  font-size: 0.7em;
-}
-
-.sidebar-image {
-  width: 14px;
-  padding-right: 8px;
 }
 
 .my-account {
@@ -94,10 +70,67 @@ body {
   border-radius: 10px;
 }
 
-.sidebar-image-2 {
+
+
+
+.my-account-image {
   width: 40px;
   border-radius: 50px;
 }
+
+.sidebar--content{
+  border: 1px solid blue;
+  min-height: 50px;
+  cursor: pointer;
+  margin: 3px;
+}
+
+.threeDiv2 {
+  min-height: 50px;
+ display: flex;
+  width: 98%;
+  height: 100%;
+  border: 1px solid rgb(255, 238, 1);
+}
+
+.left-div {
+  width: 20%;
+  border: 1px solid rgb(255, 0, 0);
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;  
+}
+
+.sidebar-image {
+  width: 24px;
+  border: 1px solid white;
+}
+
+.sidebar-text {
+  font-size: 0.9em;
+  padding-left: 5px;
+}
+
+
+.right-div2 {
+  width: 80%;
+  border: 1px solid rgb(80, 13, 235);
+  display: flex;
+  justify-content: center;
+  height: 50px;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: left;  
+}
+
+.sidebar--content:hover {
+  background-color: var(--hoverColor);
+  border-radius: 10px;
+  color: white;
+}
+
 
 
 

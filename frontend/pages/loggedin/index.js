@@ -608,10 +608,10 @@ export default function LandingPage() {
             screenWidth <= 620
               ? sidebarOpen
                 ? { left: "0px", position: "absolute" }
-                : { left: "-212px", position: "absolute" }
+                : { left: "-270px", position: "absolute" }
               : sidebarOpen
               ? { left: "0px", position: "static" }
-              : { left: "-212px", position: "static" }
+              : { left: "-270px", position: "static" }
           }
         >
           <div className="sidebar--content" onClick={myAccount}>
@@ -625,7 +625,7 @@ export default function LandingPage() {
                     ? "/images/loggedin/user_d.png"
                     : "/images/loggedin/user_l.png"
                 }
-                className="sidebar-image-2"
+                className="my-account-image"
               />
               <br />
               <span className="sidebar-text">{userName}</span>
@@ -658,8 +658,9 @@ export default function LandingPage() {
 
           <hr style={{ width: "90%", color: "rgba(255, 255, 255, 0.226)" }} />
 
-          <div className="sidebar--content" onClick={getPrefs}>
-            <a>
+          <div className="sidebar--content" onClick={proMode}>
+            <div className="threeDiv2">
+              <div className="left-div">
               <img
                 alt="delete-img"
                 src={
@@ -669,8 +670,12 @@ export default function LandingPage() {
                 }
                 className="sidebar-image"
               />
+              </div>
+              <div className="right-div2">
               <span className="sidebar-text">Pro mode</span>
-            </a>
+              </div>
+            </div>
+            
           </div>
 
           <div className="sidebar--content" onClick={() => setStnPopup(!stnPopup)}>
