@@ -17,28 +17,18 @@ const cookies = new Cookies();
 
 export default function LandingPage() {
   console.log("langing page entered");
+  let router = useRouter();  
+
+  //********************   FOR DARK MODE   ********************
   let theme = "dark";
-  const [userName, setUserName] = React.useState("user");
-  const [userPic, setUserPic] = React.useState("_");
-
-  //FOR DARK MODE
   const [isDarkEnabled, setIsDarkEnabled] = useState(true);
-
-  const [isMicEnabled, setIsMicEnabled] = useState(true);
-
+  
   const toggleDarkMode = () => {
     setIsDarkEnabled((prevState) => !prevState);
   };
 
-  const toggleMicState = () => {
-    setIsMicEnabled(!isMicEnabled);
-  };
-
   const updateTheme = (isDarkEnabled) => {
-    // Get all available styles
     const styles = getComputedStyle(document.body);
-
-    // Get the --black and --white variable values
     const black = styles.getPropertyValue("--black");
     const white = styles.getPropertyValue("--white");
     const grayL = styles.getPropertyValue("--grey");
@@ -70,11 +60,14 @@ export default function LandingPage() {
   };
 
   useEffect(() => {
-    // Pass in the isDarkEnabled state
     isDarkEnabled ? (theme = "dark") : (theme = "light");
     updateTheme(isDarkEnabled);
   }, [isDarkEnabled]);
 
+
+
+
+  //********************   ALERT FUNCTION    ********************
   function showAlert(mssg, val) {
     if (val == 0) {
       toast.info(mssg, {
@@ -102,12 +95,15 @@ export default function LandingPage() {
     });
   }
 
-  //AUTHORIZING
-  let router = useRouter();
+
+
+
+  //********************   AUTHORIZING   ********************
+
+  const [userName, setUserName] = React.useState("user");
+  const [userPic, setUserPic] = React.useState("_");
 
   useEffect(() => {
-    // console.log("authorizing...");
-
     const cookies = new Cookies();
     const cAccToken = cookies.get("accessToken");
 
@@ -121,7 +117,11 @@ export default function LandingPage() {
       setUserPic(cookies.get("userPic"));
   });
 
-  //LOGOUT HANDLER
+
+
+
+
+  //********************   LOGOUT HANDLER   ********************
   const logoutUser = async () => {
     console.log("logging out");
 
@@ -145,27 +145,24 @@ export default function LandingPage() {
     }
   };
 
-  //ASK QUESTION AND ADD TO HISTORY TAB AREA
+
+
+
+  //********************   ASK QUESTION AND ADD TO HISTORY TAB AREA   ********************
   const [newQuestions, setnewQuestions] = React.useState([]);
   const [needHistory, setneedHistory] = React.useState(true);
   const [tempQuestion, setTempQuestion] = React.useState(false);
   const [tempQuestionVal, setTempQuestionVal] = React.useState(false);
   const [confirmDelete, setConfirmDelete] = React.useState(false);
 
-  // console.log("needHistory :", needHistory);
-
   const handleSubmit = async (e) => {
-    // console.log("question submitted");
     e.preventDefault();
     setTempQuestionVal(e.target.ques.value);
-
     const question = e.target.ques.value;
-
     if (question.length <= 1) {
       showAlert("Ask better question for meaningful responses :)", 0);
       return;
     }
-
     setTempQuestion(true);
     e.target.ques.value = "";
     // console.log(question);
@@ -200,7 +197,10 @@ export default function LandingPage() {
     setTempQuestion(false);
   };
 
-  //CLEAR CONVERSATION
+
+
+
+  //********************   CLEAR CONVERSATION   ********************
   const clearConversation = async () => {
     setConfirmDelete(false);
 
@@ -222,17 +222,17 @@ export default function LandingPage() {
 
     if (response.ok) {
       showAlert("clearing conversation", 0);
-      // console.log("Clear chat success");
       setnewQuestions([]);
       setneedHistory(false);
-      // clearConversation(false);
     } else {
       showAlert(json.message, 1);
-      // console.log(json.message);
     }
   };
 
-  //FOR SCROLLING TO BOTTOM
+
+
+
+  //********************   SCROLL HANDLING   ********************
   const messagesEndRef = useRef(null);
 
   const scrollBottom = async (e) => {
@@ -246,11 +246,8 @@ export default function LandingPage() {
   });
 
   //FOR SHOWING THE BUTTON : SCROLL TO BOTTOM
-
   const [showButton, setShowButton] = React.useState(true);
-
   const listInnerRef = useRef();
-
   const onScroll = () => {
     // console.log("listener");
     if (listInnerRef.current) {
@@ -266,33 +263,27 @@ export default function LandingPage() {
     }
   };
 
-  function proMode() {
-    showAlert("Pro mode gives faster responses. Coming soon!", 0);
-  }
 
-  function myAccount() {
-    showAlert("Hi, cutie", 0);
-  }
 
-  //NEW CHANGES
+//********************   SIDEBAR HANDLING MINIMISE/MAXM ********************
 
   const MyComponent = styled.div`
-    display: none;
+  display: none;
 
-    @media (max-width: 620px) {
-      display: inline;
-    }
+  @media (max-width: 620px) {
+    display: inline;
+  }
   `;
 
   //sidebar using react
   const [sidebarOpen, setSideBarOpen] = React.useState(false);
   const [screenWidth, setScreenWidth] = React.useState(0);
   useEffect(() => {
-    const handleResize = () => {
-      setScreenWidth(window.innerWidth);
-    };
+  const handleResize = () => {
+    setScreenWidth(window.innerWidth);
+  };
 
-    window.addEventListener("resize", handleResize);
+  window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
@@ -315,7 +306,21 @@ export default function LandingPage() {
     if (sidebarOpen) setSideBarOpen(false);
   };
 
-  //BUG POPUP
+
+
+
+//********************   SIDEBAR FUNCTIONS ********************
+  function proMode() {
+    showAlert("Pro mode gives faster responses. Coming soon!", 0);
+  }
+
+  function myAccount() {
+    showAlert("Hi, cutie", 0);
+  }
+
+  
+
+//********************   REPORT BUG POPUP   ********************
   const [bugPopEnabled, setBugPopEnabled] = React.useState(false);
   const [bugData, setBugData] = React.useState("");
 
@@ -355,100 +360,12 @@ export default function LandingPage() {
     toggleBugPopup();
   };
 
-  //FOR SETINGS POPUP
+
+
+
+
+//********************   VOICE SETTINGS POPUP   ********************
   const [stnPopup, setStnPopup] = React.useState(false);
-
-  // const [text, setText] = useState('hello boy ');
-
-  const [pitch, setPitch] = useState(1);
-  const [rate, setRate] = useState(1);
-  const [voiceIndex, setVoiceIndex] = useState(1);
-
-  const [isGoogleVoice, setIsGoogleVoice] = useState(false);
-
-  const onEnd = () => {
-    // You could do something here after speaking has finished
-    console.log("ENDDDD");
-  };
-
-  const { speak, cancel, speaking, supported, voices } = useSpeechSynthesis({
-    onEnd,
-  });
-
-  const voice = voices[voiceIndex] || 3;
-
-  function speakNow() {
-    console.log("speaking");
-    setTimeout(() => {
-      console.log("done");
-    }, 1000);
-
-    speak({ text, voice, rate, pitch });
-
-    {
-      /* {prop.speaking ? (
-              <button type="button" onClick={cancel}>
-                Stop
-              </button>
-            ) : (
-              <button type="button" onClick={prop.speakNow}>
-                Speak
-              </button>
-            )} */
-    }
-
-    return;
-  }
-
-  const audioRef = useRef();
-
-  function testSpeach() {
-    const text = "this is a test audio";
-    isGoogleVoice
-      ? audioRef.current.play()
-      : speak({ text, voice, rate, pitch });
-  }
-
-  function closePopups() {
-    setBugPopEnabled(false);
-    setStnPopup(false);
-  }
-
-  //FOR SPEECH TO TEXT
-  const [lang, setLang] = useState("en-AU");
-  const [value, setValue] = useState("");
-  const [blocked, setBlocked] = useState(false);
-
-  // const onEnd = () => {
-  //   // You could do something here after listening has finished
-  // };
-
-  const onResult = (result) => {
-    setValue(result);
-  };
-
-  const changeLang = (event) => {
-    setLang(event.target.value);
-  };
-
-  const onError = (event) => {
-    if (event.error === "not-allowed") {
-      setBlocked(true);
-    }
-  };
-
-  const { listen, listening, stop, supportedS2T } = useSpeechRecognition({
-    onResult,
-    onEnd,
-    onError,
-  });
-
-  const toggle = listening
-    ? stop
-    : () => {
-        setBlocked(false);
-        listen({ lang });
-      };
 
   //GET PREFERENCE OF USER
   const getPrefs = async () => {
@@ -516,11 +433,122 @@ export default function LandingPage() {
     }
   };
 
+
+  //close function for all popups 
+  function closePopups() {
+    setBugPopEnabled(false);
+    setStnPopup(false);
+  }
+  
+
+
+
+  //********************   FOR HANDLING MIC ENABLE/DISABLE   ********************
+  const [isMicEnabled, setIsMicEnabled] = useState(true);
+
   function setMicProp() {
     setIsMicEnabled(!isMicEnabled);
   }
 
-  //RETURN DIV
+  const [pitch, setPitch] = useState(1);
+  const [rate, setRate] = useState(1);
+  const [voiceIndex, setVoiceIndex] = useState(1);
+
+  const [isGoogleVoice, setIsGoogleVoice] = useState(false);
+
+  const onEnd = () => {
+    // You could do something here after speaking has finished
+    console.log("ENDDDD");
+  };
+
+  const { speak, cancel, speaking, supported, voices } = useSpeechSynthesis({
+    onEnd,
+  });
+
+  const voice = voices[voiceIndex] || 3;
+
+  function speakNow() {
+    console.log("speaking");
+    setTimeout(() => {
+      console.log("done");
+    }, 1000);
+
+    speak({ text, voice, rate, pitch });
+
+    {
+      /* {prop.speaking ? (
+              <button type="button" onClick={cancel}>
+                Stop
+              </button>
+            ) : (
+              <button type="button" onClick={prop.speakNow}>
+                Speak
+              </button>
+            )} */
+    }
+
+    return;
+  }
+
+  const audioRef = useRef();
+
+  function testSpeach() {
+    const text = "this is a test audio";
+    isGoogleVoice
+      ? audioRef.current.play()
+      : speak({ text, voice, rate, pitch });
+  }
+
+
+
+  //FOR SPEECH TO TEXT
+  const [lang, setLang] = useState("en-AU");
+  const [value, setValue] = useState("");
+  const [blocked, setBlocked] = useState(false);
+
+  // const onEnd = () => {
+  //   // You could do something here after listening has finished
+  // };
+
+  const onResult = (result) => {
+    setValue(result);
+  };
+
+  const changeLang = (event) => {
+    setLang(event.target.value);
+  };
+
+  const onError = (event) => {
+    if (event.error === "not-allowed") {
+      setBlocked(true);
+    }
+  };
+
+  const { listen, listening, stop, supportedS2T } = useSpeechRecognition({
+    onResult,
+    onEnd,
+    onError,
+  });
+
+  const toggle = listening
+    ? stop
+    : () => {
+        setBlocked(false);
+        listen({ lang });
+      };
+
+
+
+
+
+
+
+
+
+
+
+
+  //********************   RETURN DIV   ********************
   return (
     <div className="home">
       <ToastContainer
