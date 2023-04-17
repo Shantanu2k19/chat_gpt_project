@@ -85,6 +85,13 @@ body {
   margin: 3px;
 }
 
+.sidebar--content2{
+  /* border: 1px solid blue; */
+  min-height: 50px;
+  cursor: pointer;
+  margin: 3px;
+}
+
 .threeDiv2 {
   /* min-height: 50px; */
  display: flex;
@@ -144,14 +151,16 @@ body {
 
 .new-feature{
   margin-right: 4px;
-  padding:1px;
-  font-size:0.8em;
+  padding:3px 4px 3px 4px;
+  font-size:0.7em;
   display: flex;
   justify-content: center;
   align-items: center;
   max-height: 50%;
   width:30px;
-  background-color: #b824f3a5;
+  background-color: #e9c80e;
+  border-radius: 5px;
+  color: black;
   
 }
 .dot {
@@ -565,7 +574,7 @@ body {
 }
 
 .toggle2.enabled2::before {
-  transform: translateX(56px);
+  transform: translateX(53px);
 }
 
 .toggle2 input {

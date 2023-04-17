@@ -611,7 +611,7 @@ export default function LandingPage() {
               : { left: "-270px", position: "static" }
           }
         >
-          <div className="sidebar--content" onClick={myAccount}>
+          <div className="sidebar--content2" onClick={myAccount}>
             <div className="my-account">
               <img
                 alt="user-img"
@@ -630,7 +630,7 @@ export default function LandingPage() {
           </div>
 
           {/* switch theme  */}
-          <div className="sidebar--content">
+          <div className="sidebar--content2">
             <br />
 
             <label className="toggle-wrapper" htmlFor="toggle">
@@ -654,7 +654,7 @@ export default function LandingPage() {
           </div>
 
           {/* switch mode  */}
-          <div className="sidebar--content">
+          <div className="sidebar--content2">
             <br />
 
             <label className="toggle-wrapper" htmlFor="toggle2">
