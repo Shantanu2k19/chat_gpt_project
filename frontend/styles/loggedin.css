@@ -79,7 +79,7 @@ body {
 }
 
 .sidebar--content{
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
   min-height: 50px;
   cursor: pointer;
   margin: 3px;
@@ -88,14 +88,16 @@ body {
 .threeDiv2 {
   /* min-height: 50px; */
  display: flex;
+ flex-direction: row;
+ align-items: center;
   width: 98%;
   height: 100%;
-  border: 1px solid rgb(255, 238, 1);
+  /* border: 1px solid rgb(255, 238, 1); */
 }
 
 .left-div {
-  width: 20%;
-  border: 1px solid rgb(255, 0, 0);
+  min-width: 20%;
+  /* border: 1px solid rgb(255, 0, 0); */
   height: 50px;
   display: flex;
   flex-direction: column;
@@ -104,8 +106,9 @@ body {
 }
 
 .sidebar-image {
+  max-height: 50%;
   width: 24px;
-  border: 1px solid white;
+  /* border: 1px solid white; */
 }
 
 .sidebar-text {
@@ -116,7 +119,7 @@ body {
 
 .right-div2 {
   width: 80%;
-  border: 1px solid rgb(80, 13, 235);
+  /* border: 1px solid rgb(80, 13, 235); */
   display: flex;
   justify-content: center;
   height: 50px;
@@ -127,7 +130,7 @@ body {
 
 .left-div2{
   width: 80%;
-  border: 1px solid green;
+  /* border: 1px solid green; */
   height: 20px;
   padding-left: 15px;
   font-size: 0.8em;
@@ -135,10 +138,22 @@ body {
 
 .right-div3 {
   width: 15%;
-  border: 1px solid rgb(139, 139, 139);
+  /* border: 1px solid rgb(139, 139, 139); */
   height: 20px;
 }
 
+.new-feature{
+  margin-right: 4px;
+  padding:1px;
+  font-size:0.8em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: 50%;
+  width:30px;
+  background-color: #b824f3a5;
+  
+}
 .dot {
   width: 10px;
   height: 10px;

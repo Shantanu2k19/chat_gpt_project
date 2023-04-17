@@ -9,10 +9,10 @@ import ReactLoading from "react-loading";
 import styled from "styled-components";
 import Header from "./Header.js";
 import useSpeechSynthesis from "./voiceHelper/T2Shelper";
-import useSpeechRecognition from './voiceHelper/S2Thelper';
+import useSpeechRecognition from "./voiceHelper/S2Thelper";
 import SettingPopup from "./SettingsPopup";
-import test_sound from "../../public/audios/test_audio.mp3"
-import Animation from "./Animation"
+import test_sound from "../../public/audios/test_audio.mp3";
+import Animation from "./Animation";
 const cookies = new Cookies();
 
 export default function LandingPage() {
@@ -315,8 +315,7 @@ export default function LandingPage() {
     if (sidebarOpen) setSideBarOpen(false);
   };
 
-
-  //BUG POPUP 
+  //BUG POPUP
   const [bugPopEnabled, setBugPopEnabled] = React.useState(false);
   const [bugData, setBugData] = React.useState("");
 
@@ -327,7 +326,7 @@ export default function LandingPage() {
   const reportedBug = async (e) => {
     console.log("reporting bug");
 
-    if(bugData.length <= 1){
+    if (bugData.length <= 1) {
       showAlert("Express more :)", 0);
       return;
     }
@@ -336,17 +335,14 @@ export default function LandingPage() {
     const cAccToken = cookies.get("accessToken");
     const reftoken = cookies.get("refreshToken");
 
-    const response = await fetch(
-      "http://localhost:5000/users/reportBug",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${cAccToken}`,
-        },
-        body: JSON.stringify({ bugData, reftoken }),
-      }
-    );
+    const response = await fetch("http://localhost:5000/users/reportBug", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${cAccToken}`,
+      },
+      body: JSON.stringify({ bugData, reftoken }),
+    });
 
     const json = await response.json();
 
@@ -355,12 +351,11 @@ export default function LandingPage() {
     } else {
       showAlert(json.message, 1);
     }
-    setBugData("")
+    setBugData("");
     toggleBugPopup();
-  }
+  };
 
-
-  //FOR SETINGS POPUP 
+  //FOR SETINGS POPUP
   const [stnPopup, setStnPopup] = React.useState(false);
 
   // const [text, setText] = useState('hello boy ');
@@ -373,23 +368,25 @@ export default function LandingPage() {
 
   const onEnd = () => {
     // You could do something here after speaking has finished
-    console.log("ENDDDD")
+    console.log("ENDDDD");
   };
-  
-  
+
   const { speak, cancel, speaking, supported, voices } = useSpeechSynthesis({
     onEnd,
   });
 
   const voice = voices[voiceIndex] || 3;
 
-  function speakNow(){
+  function speakNow() {
     console.log("speaking");
-    setTimeout(() => {console.log("done")}, 1000); 
+    setTimeout(() => {
+      console.log("done");
+    }, 1000);
 
     speak({ text, voice, rate, pitch });
 
-     {/* {prop.speaking ? (
+    {
+      /* {prop.speaking ? (
               <button type="button" onClick={cancel}>
                 Stop
               </button>
@@ -397,35 +394,29 @@ export default function LandingPage() {
               <button type="button" onClick={prop.speakNow}>
                 Speak
               </button>
-            )} */}
+            )} */
+    }
 
     return;
   }
 
   const audioRef = useRef();
 
-  function testSpeach(){
+  function testSpeach() {
     const text = "this is a test audio";
-    isGoogleVoice ? (audioRef.current.play()) : speak({ text, voice, rate, pitch });
+    isGoogleVoice
+      ? audioRef.current.play()
+      : speak({ text, voice, rate, pitch });
   }
 
-  function closePopups(){
+  function closePopups() {
     setBugPopEnabled(false);
     setStnPopup(false);
   }
 
-
-
-
-
-
-
-
-
-
   //FOR SPEECH TO TEXT
-  const [lang, setLang] = useState('en-AU');
-  const [value, setValue] = useState('');
+  const [lang, setLang] = useState("en-AU");
+  const [value, setValue] = useState("");
   const [blocked, setBlocked] = useState(false);
 
   // const onEnd = () => {
@@ -441,7 +432,7 @@ export default function LandingPage() {
   };
 
   const onError = (event) => {
-    if (event.error === 'not-allowed') {
+    if (event.error === "not-allowed") {
       setBlocked(true);
     }
   };
@@ -459,80 +450,73 @@ export default function LandingPage() {
         listen({ lang });
       };
 
+  //GET PREFERENCE OF USER
+  const getPrefs = async () => {
+    console.log("get pref");
 
+    const cookies = new Cookies();
+    const cAccToken = cookies.get("accessToken");
+    const reftoken = cookies.get("refreshToken");
 
+    const response = await fetch("http://localhost:5000/users/get_prefs", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${cAccToken}`,
+      },
+      body: JSON.stringify({ reftoken }),
+    });
+    const json = await response.json();
 
-      //GET PREFERENCE OF USER 
-      const getPrefs = async () => {
-  
-        console.log("get pref");
-    
-        const cookies = new Cookies();
-        const cAccToken = cookies.get("accessToken");
-        const reftoken = cookies.get("refreshToken");
-    
-        const response = await fetch("http://localhost:5000/users/get_prefs", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${cAccToken}`,
-          },
-          body: JSON.stringify({ reftoken }),
-        });
-        const json = await response.json();
-    
-        if (response.ok) {
-          console.log("get pref success");
+    if (response.ok) {
+      console.log("get pref success");
 
-          setVoiceIndex(json.data[0]["voice"])
-          setPitch(json.data[0]["pitch"])
-          setRate(json.data[0]["rate"])
-          setIsGoogleVoice(json.data[0]["gnable"])
-       } else {
-          showAlert(json.message, 1);
-        }
-      };
+      setVoiceIndex(json.data[0]["voice"]);
+      setPitch(json.data[0]["pitch"]);
+      setRate(json.data[0]["rate"]);
+      setIsGoogleVoice(json.data[0]["gnable"]);
+    } else {
+      showAlert(json.message, 1);
+    }
+  };
 
-      React.useEffect( () => {
-        getPrefs();
-      }, []) 
+  React.useEffect(() => {
+    getPrefs();
+  }, []);
 
+  //SET PREFERENCE OF USER
+  const setPrefs = async () => {
+    console.log("get pref");
 
+    const cookies = new Cookies();
+    const cAccToken = cookies.get("accessToken");
+    const reftoken = cookies.get("refreshToken");
 
-      //SET PREFERENCE OF USER 
-      const setPrefs = async () => {
-        console.log("get pref");
-    
-        const cookies = new Cookies();
-        const cAccToken = cookies.get("accessToken");
-        const reftoken = cookies.get("refreshToken");
+    const newPrefs = {
+      gnable: isGoogleVoice,
+      voice: voiceIndex == "" ? 3 : voiceIndex,
+      rate: rate,
+      pitch: pitch,
+    };
+    const response = await fetch("http://localhost:5000/users/set_prefs", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${cAccToken}`,
+      },
+      body: JSON.stringify({ reftoken, newPrefs }),
+    });
+    const json = await response.json();
 
-        const newPrefs = {
-          "gnable": isGoogleVoice,
-          "voice": voiceIndex==""?3:voiceIndex,
-          "rate":rate,
-          "pitch":pitch,
-        }
-        const response = await fetch("http://localhost:5000/users/set_prefs", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${cAccToken}`,
-          },
-          body: JSON.stringify({ reftoken, newPrefs }),
-        });
-        const json = await response.json();
-    
-        if (response.ok) {
-          console.log("set pref success");
-          showAlert("Preference set.", 0);
-       } else {
-          showAlert(json.message, 1);
-        }
-      };
+    if (response.ok) {
+      console.log("set pref success");
+      showAlert("Preference set.", 0);
+    } else {
+      showAlert(json.message, 1);
+    }
+  };
 
-
-  function setMicProp(){
+  function setMicProp() {
     setIsMicEnabled(!isMicEnabled);
   }
 
@@ -552,8 +536,16 @@ export default function LandingPage() {
         theme={theme}
       />
 
-      {bugPopEnabled  &&  (<div className="overlay2" onClick={closePopups}> </div>)}
-      {stnPopup  &&  (<div className="overlay2" onClick={closePopups}> </div>)}
+      {bugPopEnabled && (
+        <div className="overlay2" onClick={closePopups}>
+          {" "}
+        </div>
+      )}
+      {stnPopup && (
+        <div className="overlay2" onClick={closePopups}>
+          {" "}
+        </div>
+      )}
 
       {/* SIDEBAR  */}
       <>
@@ -561,56 +553,50 @@ export default function LandingPage() {
           className="globalDiv"
           style={bugPopEnabled ? { top: "120px" } : { top: "-100px" }}
         >
-            <div className="bugForm">
-              <div className="bugInsideDiv">
-                <strong>Report bug/ Request feature</strong>
-                <input
-                  className="bugInput"
-                  type="text"
-                  placeholder="...."
-                  // name="review"
-                  value={bugData}
-                  onChange={(e) => setBugData(e.target.value)}
-                />
-              </div>
+          <div className="bugForm">
+            <div className="bugInsideDiv">
+              <strong>Report bug/ Request feature</strong>
+              <input
+                className="bugInput"
+                type="text"
+                placeholder="...."
+                // name="review"
+                value={bugData}
+                onChange={(e) => setBugData(e.target.value)}
+              />
             </div>
+          </div>
 
-              <div className="submitButtons">
-                <button className="button-17" onClick={reportedBug}>Submit</button>
-                <div style={{ width: "33px" }}></div>
-                <button className="button-17" onClick={toggleBugPopup}>
-                  Close
-                </button>
-              </div>
-
+          <div className="submitButtons">
+            <button className="button-17" onClick={reportedBug}>
+              Submit
+            </button>
+            <div style={{ width: "33px" }}></div>
+            <button className="button-17" onClick={toggleBugPopup}>
+              Close
+            </button>
+          </div>
         </div>
 
         <audio ref={audioRef}>
-        <source src={test_sound} type="audio/mpeg" />
-      </audio>
+          <source src={test_sound} type="audio/mpeg" />
+        </audio>
 
-        <SettingPopup 
-          supported = {supported}
-          stnPopup = {stnPopup}
-
-          pitch = {pitch}
-          setPitch = {setPitch}
-
-          rate = {rate}
-          setRate = {setRate}
-
-          voices = {voices}
-          voiceIndex = {voiceIndex}
-          setVoiceIndex = {setVoiceIndex}
-
-          isGoogleVoice = {isGoogleVoice}
-          setIsGoogleVoice ={setIsGoogleVoice}
-
-          speakNow = {speakNow}
-
-          testSpeach = {testSpeach}
-
-          setPrefs = {setPrefs}
+        <SettingPopup
+          supported={supported}
+          stnPopup={stnPopup}
+          pitch={pitch}
+          setPitch={setPitch}
+          rate={rate}
+          setRate={setRate}
+          voices={voices}
+          voiceIndex={voiceIndex}
+          setVoiceIndex={setVoiceIndex}
+          isGoogleVoice={isGoogleVoice}
+          setIsGoogleVoice={setIsGoogleVoice}
+          speakNow={speakNow}
+          testSpeach={testSpeach}
+          setPrefs={setPrefs}
         />
 
         <div
@@ -648,7 +634,9 @@ export default function LandingPage() {
             <br />
 
             <label className="toggle-wrapper" htmlFor="toggle">
-              <div className={`toggle ${isDarkEnabled ? "enabled" : "disabled"}`}>
+              <div
+                className={`toggle ${isDarkEnabled ? "enabled" : "disabled"}`}
+              >
                 <div className="icons">
                   <img className="iconkk" src="/images/loggedin/sun.png"></img>
                   <img className="iconkk" src="/images/loggedin/moon.png"></img>
@@ -665,21 +653,31 @@ export default function LandingPage() {
             </label>
           </div>
 
-             {/* switch mode  */}
+          {/* switch mode  */}
           <div className="sidebar--content">
             <br />
 
             <label className="toggle-wrapper" htmlFor="toggle2">
-              <div className={`toggle2 ${isMicEnabled ? "enabled2" : "disabled2"}`} >
+              <div
+                className={`toggle2 ${isMicEnabled ? "enabled2" : "disabled2"}`}
+              >
                 <div className="icons">
                   <img
-                    className="iconVoiceChange" 
-                    src= {isDarkEnabled? "/images/loggedin/mic_off_d.png" : "/images/loggedin/mic_off_l.png"}
+                    className="iconVoiceChange"
+                    src={
+                      isDarkEnabled
+                        ? "/images/loggedin/mic_off_d.png"
+                        : "/images/loggedin/mic_off_l.png"
+                    }
                   ></img>
-                  <img 
-                    className="iconVoiceChange" 
-                    src= {isDarkEnabled? "/images/loggedin/mic.png" : "/images/loggedin/mic_l.png"}
-                    ></img>
+                  <img
+                    className="iconVoiceChange"
+                    src={
+                      isDarkEnabled
+                        ? "/images/loggedin/mic.png"
+                        : "/images/loggedin/mic_l.png"
+                    }
+                  ></img>
                 </div>
                 <input
                   id="toggle2"
@@ -692,14 +690,20 @@ export default function LandingPage() {
             </label>
           </div>
 
-          
-
           <div style={{ flexGrow: "1" }}></div>
 
           {screenWidth > 620 && (
-            <div className="threeDiv2"  style={{height:"20px"}}>
-              <div className="left-div2"> {isMicEnabled?"Mic Enabled...":"Mic Disabled..."}  </div>
-              <div className="dot" style={{ backgroundColor:isMicEnabled?"rgb(16, 219, 16)":"gray"}}></div>
+            <div className="threeDiv2" style={{ height: "20px" }}>
+              <div className="left-div2">
+                {" "}
+                {isMicEnabled ? "Mic Enabled..." : "Mic Disabled..."}{" "}
+              </div>
+              <div
+                className="dot"
+                style={{
+                  backgroundColor: isMicEnabled ? "rgb(16, 219, 16)" : "gray",
+                }}
+              ></div>
             </div>
           )}
 
@@ -708,36 +712,43 @@ export default function LandingPage() {
           <div className="sidebar--content" onClick={proMode}>
             <div className="threeDiv2">
               <div className="left-div">
-              <img
-                alt="delete-img"
-                src={
-                  isDarkEnabled
-                    ? "/images/loggedin/pro_d.png"
-                    : "/images/loggedin/pro_l.png"
-                }
-                className="sidebar-image"
-              />
+                <img
+                  alt="delete-img"
+                  src={
+                    isDarkEnabled
+                      ? "/images/loggedin/pro_d.png"
+                      : "/images/loggedin/pro_l.png"
+                  }
+                  className="sidebar-image"
+                />
               </div>
               <div className="right-div2">
-              <span className="sidebar-text">Pro mode</span>
+                <span className="sidebar-text">Pro mode</span>
               </div>
             </div>
-            
           </div>
 
-          <div className="sidebar--content" onClick={() => setStnPopup(!stnPopup)}>
-            <a>
-              <img
-                alt="delete-img"
-                src={
-                  isDarkEnabled
-                    ? "/images/loggedin/mic.png"
-                    : "/images/loggedin/mic_l.png"
-                }
-                className="sidebar-image"
-              />
-              <span className="sidebar-text">Voice Settings</span>
-            </a>
+          <div
+            className="sidebar--content"
+            onClick={() => setStnPopup(!stnPopup)}
+          >
+            <div className="threeDiv2">
+              <div className="left-div">
+                <img
+                  alt="delete-img"
+                  src={
+                    isDarkEnabled
+                      ? "/images/loggedin/mic.png"
+                      : "/images/loggedin/mic_l.png"
+                  }
+                  className="sidebar-image"
+                />
+              </div>
+              <div className="right-div2">
+                <span className="sidebar-text">Voice Settings</span>
+              </div>
+              <span class="new-feature">NEW</span>
+            </div>
           </div>
 
           {!confirmDelete && (
@@ -745,65 +756,81 @@ export default function LandingPage() {
               className="sidebar--content"
               onClick={() => setConfirmDelete(true)}
             >
-              <a>
-                <img
-                  alt="delete-img"
-                  src={
-                    isDarkEnabled
-                      ? "/images/loggedin/delete.png"
-                      : "/images/loggedin/delete_l.png"
-                  }
-                  className="sidebar-image"
-                />
-                <span className="sidebar-text">Clear conversation</span>
-              </a>
+              <div className="threeDiv2">
+                <div className="left-div">
+                  <img
+                    alt="delete-img"
+                    src={
+                      isDarkEnabled
+                        ? "/images/loggedin/delete.png"
+                        : "/images/loggedin/delete_l.png"
+                    }
+                    className="sidebar-image"
+                  />
+                </div>
+                <div className="right-div2">
+                  <span className="sidebar-text">Clear conversation</span>
+                </div>
+              </div>
             </div>
           )}
 
           {confirmDelete && (
             <div className="sidebar--content" onClick={clearConversation}>
-              <a>
-                <img
-                  alt="delete-img"
-                  src={
-                    isDarkEnabled
-                      ? "/images/loggedin/clear.png"
-                      : "/images/loggedin/clear_l.png"
-                  }
-                  className="sidebar-image"
-                />
-                <span className="sidebar-text">Confirm clear</span>
-              </a>
+              <div className="threeDiv2">
+                <div className="left-div">
+                  <img
+                    alt="delete-img"
+                    src={
+                      isDarkEnabled
+                        ? "/images/loggedin/clear.png"
+                        : "/images/loggedin/clear_l.png"
+                    }
+                    className="sidebar-image"
+                  />
+                </div>
+                <div className="right-div2">
+                  <span className="sidebar-text">Confirm clear</span>
+                </div>
+              </div>
             </div>
           )}
 
           <div className="sidebar--content" onClick={toggleBugPopup}>
-            <a>
-              <img
-                alt="contact-img"
-                src={
-                  isDarkEnabled
-                    ? "/images/loggedin/contact.png"
-                    : "/images/loggedin/contact_l.png"
-                }
-                className="sidebar-image"
-              />
-              <span className="sidebar-text">Report Bug</span>
-            </a>
+            <div className="threeDiv2">
+              <div className="left-div">
+                <img
+                  alt="contact-img"
+                  src={
+                    isDarkEnabled
+                      ? "/images/loggedin/contact.png"
+                      : "/images/loggedin/contact_l.png"
+                  }
+                  className="sidebar-image"
+                />
+              </div>
+              <div className="right-div2">
+                <span className="sidebar-text">Report Bug</span>
+              </div>
+            </div>
           </div>
           <div className="sidebar--content" onClick={logoutUser}>
-            <a>
-              <img
-                alt="logout-img"
-                src={
-                  isDarkEnabled
-                    ? "/images/loggedin/logout.png"
-                    : "/images/loggedin/logout_l.png"
-                }
-                className="sidebar-image"
-              />
-              <span className="sidebar-text">Log Out</span>
-            </a>
+            <div className="threeDiv2">
+              <div className="left-div">
+                <img
+                  alt="logout-img"
+                  src={
+                    isDarkEnabled
+                      ? "/images/loggedin/logout.png"
+                      : "/images/loggedin/logout_l.png"
+                  }
+                  className="sidebar-image"
+                />
+              </div>
+              <div className="right-div2">
+                <span className="sidebar-text">Log Out</span>
+              </div>
+            </div>
           </div>
 
           <div style={{ height: "20px" }}></div>
@@ -819,10 +846,7 @@ export default function LandingPage() {
       <div className="content">
         {/* HEADER  */}
         <MyComponent>
-          <Header 
-            switchFn={toggleSidebar}
-            isMicEnabled = {isMicEnabled}
-          />
+          <Header switchFn={toggleSidebar} isMicEnabled={isMicEnabled} />
         </MyComponent>
 
         {/* chat area  */}
@@ -946,30 +970,34 @@ export default function LandingPage() {
       </form>
         </div> */}
 
-
         {/* form area  */}
         <div className="bottom-area">
           {/* <ChatGPTdiv /> */}
           <div className="question-content">
-            <form className="form-textbox" onSubmit={handleSubmit} id="question_form">
+            <form
+              className="form-textbox"
+              onSubmit={handleSubmit}
+              id="question_form"
+            >
               <input type="text" className="ques--input" name="ques" />
             </form>
             <button className="send-icon" form="question_form" type="submit">
-              <img 
-                alt="send" 
+              <img
+                alt="send"
                 src={
                   isDarkEnabled
                     ? "/images/loggedin/send.png"
                     : "/images/loggedin/send_l.png"
                 }
-                width="30px" />
+                width="30px"
+              />
             </button>
             {/* <div className="send-icon">
               <img alt="send" src="/images/loggedin/mic.png" width="14px" />
             </div> */}
           </div>
           <div className="animation-content">
-              <Animation />
+            <Animation />
           </div>
         </div>
       </div>
