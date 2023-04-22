@@ -16,7 +16,7 @@ const useEventCallback = (fn, dependencies) => {
 };
 
 const useSpeechRecognition = (props = {}) => {
-  const { onEnd = () => {}, onResult = () => {}, onError = () => {} } = props;
+  const { onEnd2 = () => {}, onResult = () => {}, onError = () => {} } = props;
   const recognition = useRef(null);
   const [listening, setListening] = useState(false);
   const [supported, setSupported] = useState(false);
@@ -26,7 +26,6 @@ const useSpeechRecognition = (props = {}) => {
       .map((result) => result[0])
       .map((result) => result.transcript)
       .join('');
-
     onResult(transcript);
   };
 
@@ -59,19 +58,28 @@ const useSpeechRecognition = (props = {}) => {
     }
     // SpeechRecognition stops automatically after inactivity
     // We want it to keep going until we tell it to stop
-    recognition.current.onend = () => recognition.current.start();
+    recognition.current.onend = () => {
+      recognition.current.onresult = () => {};
+      recognition.current.onend = () => {};
+      recognition.current.onerror = () => {};
+      setListening(false);
+      recognition.current.stop();
+      onEnd2();
+    }
     recognition.current.start();
-  }, [listening, supported, recognition]);
+  }, [listening, supported, recognition, onEnd2]);
 
   const stop = useEventCallback(() => {
+    console.log("stopped called")
     if (!listening || !supported) return;
     recognition.current.onresult = () => {};
     recognition.current.onend = () => {};
     recognition.current.onerror = () => {};
     setListening(false);
+    console.log("listening stopped");
     recognition.current.stop();
-    onEnd();
-  }, [listening, supported, recognition, onEnd]);
+    onEnd2();
+  }, [listening, supported, recognition, onEnd2]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;

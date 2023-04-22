@@ -16,7 +16,7 @@ import Animation from "./Animation";
 const cookies = new Cookies();
 
 export default function LandingPage() {
-  console.log("langing page entered");
+  // console.log("langing page entered");
   let router = useRouter();  
 
   //********************   FOR DARK MODE   ********************
@@ -148,58 +148,6 @@ export default function LandingPage() {
 
 
 
-  //********************   ASK QUESTION AND ADD TO HISTORY TAB AREA   ********************
-  const [newQuestions, setnewQuestions] = React.useState([]);
-  const [needHistory, setneedHistory] = React.useState(true);
-  const [tempQuestion, setTempQuestion] = React.useState(false);
-  const [tempQuestionVal, setTempQuestionVal] = React.useState(false);
-  const [confirmDelete, setConfirmDelete] = React.useState(false);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setTempQuestionVal(e.target.ques.value);
-    const question = e.target.ques.value;
-    if (question.length <= 1) {
-      showAlert("Ask better question for meaningful responses :)", 0);
-      return;
-    }
-    setTempQuestion(true);
-    e.target.ques.value = "";
-    // console.log(question);
-
-    const cookies = new Cookies();
-    const cAccToken = cookies.get("accessToken");
-    const reftoken = cookies.get("refreshToken");
-
-    const response = await fetch(
-      "http://localhost:5000/users/question_to_gpt",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${cAccToken}`,
-        },
-        body: JSON.stringify({ question, reftoken }),
-      }
-    );
-
-    const json = await response.json();
-
-    if (response.ok) {
-      // console.log(json.answer);
-      const ans = json.answer;
-      setnewQuestions((prevItem) => [...prevItem, question, ans]);
-    } else {
-      console.log("cant get bugData");
-    }
-    // console.log("updated");
-
-    setTempQuestion(false);
-  };
-
-
-
-
   //********************   CLEAR CONVERSATION   ********************
   const clearConversation = async () => {
     setConfirmDelete(false);
@@ -236,7 +184,7 @@ export default function LandingPage() {
   const messagesEndRef = useRef(null);
 
   const scrollBottom = async (e) => {
-    console.log("scroll to bottom");
+    // console.log("scroll to bottom");
 
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -441,15 +389,7 @@ export default function LandingPage() {
   }
   
 
-
-
-  //********************   FOR HANDLING MIC ENABLE/DISABLE   ********************
-  const [isMicEnabled, setIsMicEnabled] = useState(true);
-
-  function setMicProp() {
-    setIsMicEnabled(!isMicEnabled);
-  }
-
+//********************   FOR HANDLING TEXT TO SPEECH   ********************
   const [pitch, setPitch] = useState(1);
   const [rate, setRate] = useState(1);
   const [voiceIndex, setVoiceIndex] = useState(1);
@@ -457,36 +397,25 @@ export default function LandingPage() {
   const [isGoogleVoice, setIsGoogleVoice] = useState(false);
 
   const onEnd = () => {
-    // You could do something here after speaking has finished
-    console.log("ENDDDD");
+    console.log("SPEAKING END");
+    setCurrentMicState(1);
+    mic_button.current.click();
   };
 
   const { speak, cancel, speaking, supported, voices } = useSpeechSynthesis({
     onEnd,
   });
-
   const voice = voices[voiceIndex] || 3;
 
-  function speakNow() {
-    console.log("speaking");
-    setTimeout(() => {
-      console.log("done");
-    }, 1000);
+  function cancelSpeaking(){
+    console.log("cancelling");
+    cancel();
+    setCurrentMicState(1);
+  }
 
+  function speakAnswer(speakingText) {
+    const text = speakingText;
     speak({ text, voice, rate, pitch });
-
-    {
-      /* {prop.speaking ? (
-              <button type="button" onClick={cancel}>
-                Stop
-              </button>
-            ) : (
-              <button type="button" onClick={prop.speakNow}>
-                Speak
-              </button>
-            )} */
-    }
-
     return;
   }
 
@@ -501,17 +430,59 @@ export default function LandingPage() {
 
 
 
-  //FOR SPEECH TO TEXT
-  const [lang, setLang] = useState("en-AU");
-  const [value, setValue] = useState("");
-  const [blocked, setBlocked] = useState(false);
+  //********************   FOR HANDLING VoiceChatEnabled ENABLE/DISABLE   ********************
+  const [isVoiceChatEnabled, setisVoiceChatEnabled] = useState(true);
+  const [currentMicState,setCurrentMicState] = useState(1);
 
-  // const onEnd = () => {
-  //   // You could do something here after listening has finished
-  // };
+  function setMicProp() {
+
+    if(isVoiceChatEnabled)
+    {
+      //turn off voice chat 
+      setisVoiceChatEnabled(false);
+      cancel();
+      stop
+      return;
+    }
+
+    //turn on voice chat 
+    if(!supported)
+    {
+      showAlert("Your browser does not support mic!! :(", 1);
+      return;
+    }
+    setisVoiceChatEnabled(true);
+  }
+
+
+
+
+
+
+//********************   FOR HANDLING SPEECH TO TEXT   ********************
+
+  const [lang, setLang] = useState("en-AU");
+  const [blocked, setBlocked] = useState(false);
+  const inputRef = useRef(null);
+  const buttonRef = useRef(null)
+  const mic_button = useRef(null)
+
+  const onEnd2 = () => {
+    setCurrentMicState(1);
+    console.log("question :", inputRef.current.value);
+
+    if(isVoiceChatEnabled)
+    {
+      //ask the question 
+      buttonRef.current.click();
+    }
+  };
 
   const onResult = (result) => {
-    setValue(result);
+    
+    // setValue(result);
+    inputRef.current.value=result;
+    // console.log(result);
   };
 
   const changeLang = (event) => {
@@ -520,20 +491,26 @@ export default function LandingPage() {
 
   const onError = (event) => {
     if (event.error === "not-allowed") {
+      showAlert("Some error occured while accessing mic!",1);
       setBlocked(true);
     }
   };
 
   const { listen, listening, stop, supportedS2T } = useSpeechRecognition({
     onResult,
-    onEnd,
+    onEnd2,
     onError,
   });
 
-  const toggle = listening
-    ? stop
-    : () => {
+  const toggleAudio = listening
+    ? 
+      stop
+    : () => 
+      {
+        inputRef.current.value = "";
+        setCurrentMicState(2);
         setBlocked(false);
+        console.log("listening...");
         listen({ lang });
       };
 
@@ -546,6 +523,58 @@ export default function LandingPage() {
 
 
 
+
+
+  //********************   ASK QUESTION AND ADD TO HISTORY TAB AREA   ********************
+  const [newQuestions, setnewQuestions] = React.useState([]);
+  const [needHistory, setneedHistory] = React.useState(true);
+  const [tempQuestion, setTempQuestion] = React.useState(false);
+  const [tempQuestionVal, setTempQuestionVal] = React.useState(false);
+  const [confirmDelete, setConfirmDelete] = React.useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setTempQuestionVal(e.target.ques.value);
+    const question = e.target.ques.value;
+    if (question.length <= 1) {
+      showAlert("Ask better question for meaningful responses :)", 0);
+      return;
+    }
+    setTempQuestion(true);
+    e.target.ques.value = "";
+    // console.log(question);
+
+    const cookies = new Cookies();
+    const cAccToken = cookies.get("accessToken");
+    const reftoken = cookies.get("refreshToken");
+
+    const response = await fetch(
+      "http://localhost:5000/users/question_to_gpt",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cAccToken}`,
+        },
+        body: JSON.stringify({ question, reftoken }),
+      }
+    );
+
+    const json = await response.json();
+
+    if (response.ok) {
+      // console.log(json.answer);
+      const ans = json.answer;
+      setnewQuestions((prevItem) => [...prevItem, question, ans]);
+      console.log("ayoooo, ",ans)
+      setCurrentMicState(3);
+      speakAnswer(ans);
+
+    } else {
+      console.log("cant get answer");
+    }
+    setTempQuestion(false);
+  };
 
 
   //********************   RETURN DIV   ********************
@@ -622,7 +651,6 @@ export default function LandingPage() {
           setVoiceIndex={setVoiceIndex}
           isGoogleVoice={isGoogleVoice}
           setIsGoogleVoice={setIsGoogleVoice}
-          speakNow={speakNow}
           testSpeach={testSpeach}
           setPrefs={setPrefs}
         />
@@ -687,23 +715,23 @@ export default function LandingPage() {
 
             <label className="toggle-wrapper" htmlFor="toggle2">
               <div
-                className={`toggle2 ${isMicEnabled ? "enabled2" : "disabled2"}`}
+                className={`toggle2 ${isVoiceChatEnabled ? "enabled2" : "disabled2"}`}
               >
                 <div className="icons">
                   <img
                     className="iconVoiceChange"
                     src={
                       isDarkEnabled
-                        ? "/images/loggedin/mic_off_d.png"
-                        : "/images/loggedin/mic_off_l.png"
+                        ? "/images/loggedin/voice-chat-block_l.png"
+                        : "/images/loggedin/voice-chat-block_l.png"
                     }
                   ></img>
                   <img
                     className="iconVoiceChange"
                     src={
                       isDarkEnabled
-                        ? "/images/loggedin/mic.png"
-                        : "/images/loggedin/mic_l.png"
+                        ? "/images/loggedin/voice-chat_l.png"
+                        : "/images/loggedin/voice-chat_l.png"
                     }
                   ></img>
                 </div>
@@ -711,7 +739,7 @@ export default function LandingPage() {
                   id="toggle2"
                   name="toggle2"
                   type="checkbox"
-                  checked={isMicEnabled}
+                  checked={isVoiceChatEnabled}
                   onClick={setMicProp}
                 />
               </div>
@@ -724,12 +752,12 @@ export default function LandingPage() {
             <div className="threeDiv2" style={{ height: "20px" }}>
               <div className="left-div2">
                 {" "}
-                {isMicEnabled ? "Mic Enabled..." : "Mic Disabled..."}{" "}
+                {isVoiceChatEnabled ? "Mic Enabled..." : "Mic Disabled..."}{" "}
               </div>
               <div
                 className="dot"
                 style={{
-                  backgroundColor: isMicEnabled ? "rgb(16, 219, 16)" : "gray",
+                  backgroundColor: isVoiceChatEnabled ? "rgb(16, 219, 16)" : "gray",
                 }}
               ></div>
             </div>
@@ -775,7 +803,7 @@ export default function LandingPage() {
               <div className="right-div2">
                 <span className="sidebar-text">Voice Settings</span>
               </div>
-              <span class="new-feature">NEW</span>
+              <span className="new-feature">NEW</span>
             </div>
           </div>
 
@@ -874,7 +902,7 @@ export default function LandingPage() {
       <div className="content">
         {/* HEADER  */}
         <MyComponent>
-          <Header switchFn={toggleSidebar} isMicEnabled={isMicEnabled} />
+          <Header switchFn={toggleSidebar} isMicEnabled={isVoiceChatEnabled} />
         </MyComponent>
 
         {/* chat area  */}
@@ -963,41 +991,6 @@ export default function LandingPage() {
           <div></div>
         </div>
 
-        {/* <div className="testVoice">
-        <form id="speech-recognition-form">
-        <h2>Speech Recognition</h2>
-        {!supported && (
-          <p>
-            Oh no, it looks like your browser doesn&#39;t support Speech
-            Recognition.
-          </p>
-        )}
-        {supported && (
-          <React.Fragment>
-
-            <label htmlFor="transcript">Transcript</label>
-            <br/>
-            <textarea
-              id="transcript"
-              name="transcript"
-              placeholder="Waiting to take notes ..."
-              value={value}
-              rows={3}
-              disabled
-            />
-            <button disabled={blocked} type="button" onClick={toggle}>
-              {listening ? 'Stop' : 'Listen'}
-            </button>
-            {blocked && (
-              <p style={{ color: 'red' }}>
-                The microphone is blocked for this site in your browser.
-              </p>
-            )}
-          </React.Fragment>
-        )}
-      </form>
-        </div> */}
-
         {/* form area  */}
         <div className="bottom-area">
           {/* <ChatGPTdiv /> */}
@@ -1007,9 +1000,35 @@ export default function LandingPage() {
               onSubmit={handleSubmit}
               id="question_form"
             >
-              <input type="text" className="ques--input" name="ques" />
+                <input 
+                  type="text" 
+                  className="ques--input" 
+                  name="ques"
+                  ref={inputRef}
+                  // placeholder="Use mic for voice commands..."
+              />              
             </form>
-            <button className="send-icon" form="question_form" type="submit">
+
+            <button 
+              disabled={blocked} 
+              type="button" 
+              onClick={toggleAudio} 
+              className="send-icon" 
+              style={{margin: "0px", animation: listening?"pulsate 1s infinite ease-out":"none"}}
+              ref={mic_button}
+            >
+            <img
+                alt="tapToSpeak"
+                src={
+                  isDarkEnabled
+                    ? "/images/loggedin/mic.png"
+                    : "/images/loggedin/mic_l.png"
+                }
+                width="27px"
+              />
+            </button>
+
+            <button className="send-icon" form="question_form" type="submit" ref={buttonRef}>
               <img
                 alt="send"
                 src={
@@ -1024,11 +1043,16 @@ export default function LandingPage() {
               <img alt="send" src="/images/loggedin/mic.png" width="14px" />
             </div> */}
           </div>
-          <div className="animation-content">
-            <Animation />
+          <div className="animation-content" onClick={cancelSpeaking}>
+            <Animation 
+            voiceEnabled={isVoiceChatEnabled}
+            currentMicState={currentMicState}
+            />
           </div>
         </div>
       </div>
     </div>
   );
 }
+
+

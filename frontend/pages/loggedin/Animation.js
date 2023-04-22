@@ -1,23 +1,16 @@
 import "../../styles/animation.css";
 import React, { useRef } from 'react';
 
-export default function Animation(){
-    const [voiceEnabled, setVoiceEnabled] = React.useState(false);
-    const [listeningAnim, setListeningAnim] = React.useState(false);
+export default function Animation(prop){
     const [speakingAnim, setSpeakingAnim] = React.useState(false);
   
     //voice animation
+    const idleAnim = "pulsate 1.5s ease-out"
     const listenAnimation = "listening-pulse 7.5s infinite ease-in-out";
-    
     
     const speakingAnimationOuterL = "pulse-outer-left 5s infinite ease-in-out";
     const speakingAnimationOuterR = "pulse-outer-right 5s infinite ease-in-out";
     const speakingAnimationInner = "pulse-inner 7.5s infinite ease-in-out";
-  
-    const centerCirc = ""
-  
-  
-    const dotAnimRef = useRef(null);
   
     const [centerAnimation, setCenterAnimation] = React.useState();
     const [leftAnimation, setLeftAnimation] = React.useState();
@@ -26,39 +19,35 @@ export default function Animation(){
     const handleAnimation = (param) => {
       switch(param)
       {
-        case 1:
-          voiceEnabled? console.log("turning off"): console.log("turining ONN");
-          if(voiceEnabled)
-          {
-              setVoiceEnabled(false);
-              setListeningAnim(false);
-              setSpeakingAnim(false);
-          }
-          else
-          {
-              setVoiceEnabled(true);
-              setListeningAnim(false);
-              setSpeakingAnim(false);
-          }
+        case 1:   //idle
+          // console.log("setting IDLE")
+          setSpeakingAnim(false);
+          setCenterAnimation(idleAnim);
+          setLeftAnimation(idleAnim);
+          setRightAnimation(idleAnim);
           return;
-        case 2:
-          console.log("Start listening");
+        case 2:   //listening
+        // console.log("setting LISTEN")
           StartListening();
           return;
-        case 3:
-          console.log("start speaking");
+        case 3:  //speaking
+        // console.log("setting SPEAK")
           StartSpeaking();
           return;
       }
     }
   
+    React.useEffect( ()=>{
+      if(prop.voiceEnabled==false)
+          setSpeakingAnim(false);
+          
+      handleAnimation(prop.currentMicState);
+      console.log(prop.currentMicState)
+    },[prop.currentMicState])
   
    
     function StartListening(){
-  
-      if(!voiceEnabled) setVoiceEnabled(true);
-  
-      setListeningAnim(true);
+
       setSpeakingAnim(false);
   
       setCenterAnimation(listenAnimation);
@@ -67,10 +56,8 @@ export default function Animation(){
     }
   
     function StartSpeaking(){
-      if(!voiceEnabled) setVoiceEnabled(true);
   
       setSpeakingAnim(true);
-      setListeningAnim(false);
   
       setCenterAnimation(speakingAnimationOuterL);
       setLeftAnimation(speakingAnimationInner);
@@ -78,7 +65,7 @@ export default function Animation(){
     }
   
     const handleAnimationEnd = () => {
-      console.log('Animation completed!');
+      // console.log('Animation completed!');
     };
   
     return (
@@ -88,19 +75,18 @@ export default function Animation(){
   
             {/* center div  */}
             <div 
-              ref={dotAnimRef} 
               className="dot"
               onAnimationEnd={handleAnimationEnd}
               style={{
-                animation: voiceEnabled?centerAnimation:"none",
-              left: voiceEnabled?"-50px":"0px",
+                animation: prop.voiceEnabled?centerAnimation:"none",
+              left: prop.voiceEnabled?"-50px":"0px",
               }}
             ></div>
             {/* left  */}
             <div 
               className="dot"
               style={{
-                animation: voiceEnabled? leftAnimation:"none",
+                animation: prop.voiceEnabled? leftAnimation:"none",
               }}
             ></div>
             
@@ -109,7 +95,7 @@ export default function Animation(){
               className="dot"
               style={{
                 animation: rightAnimation,
-              left: voiceEnabled?"50px":"0px",
+              left: prop.voiceEnabled?"50px":"0px",
               }}
             ></div>
           </div>

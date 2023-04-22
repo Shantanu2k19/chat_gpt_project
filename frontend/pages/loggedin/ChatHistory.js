@@ -2,7 +2,7 @@ import React from "react";
 import Cookies from "universal-cookie";
 
 export default function ChatHistory(prop) {
-  console.log("chat_history entered");
+  // console.log("chat_history entered");
 
   const [chatHistory, setchatHistory] = React.useState([
     "Nothing available",
