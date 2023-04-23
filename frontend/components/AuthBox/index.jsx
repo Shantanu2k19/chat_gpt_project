@@ -123,7 +123,7 @@ export default function RightBox(){
 
 
     return(
-    <div className='login_box' style={loginStyle}>
+    <div className='rounded-md bg-primary bg-opacity-5 py-10 px-6 dark:bg-dark sm:p-[60px]'>
         <div className="googleButton">
             <div id="signInDiv"></div>
         </div>

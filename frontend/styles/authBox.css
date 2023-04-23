@@ -56,7 +56,7 @@ a:hover {
   margin-bottom: 20px;
   background-color: transparent;
   color: white;
-  transition: 1s;
+  transition: 0.2s;
 }
 
 .form--submit {
@@ -103,13 +103,15 @@ a:hover {
   font-size: 18px;
   font-style: bold;
   letter-spacing: 1px;
+  transition: 0.3s;
 }
 
 .form-switcher-disable:not(:disabled):hover,
 .form-switcher-disable:not(:disabled):focus {
   outline: 0;
-  background: rgb(61 174 197) 78%;
+  background: rgb(74,108,247);
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2), 0 3px 8px 0 rgba(0, 0, 0, 0.15);
+  color:white;
 }
 
 .form-switcher-disable:disabled {
@@ -123,9 +125,11 @@ a:hover {
   color: black;
   cursor: pointer;
   /* CSS for button starts*/
-  background-color: #d47bd4;
+  /*  background-color: #d47bd4;*/
+  /*  background-image: linear-gradient(to right, #f27121cc, #e94057cc, #8a2387cc);*/
+  background-color:  rgb(74 108 247);
   border-radius: 12px;
-  color: #000;
+  color: #ffffff;
   cursor: pointer;
   font-weight: bold;
   padding: 10px 10px;
@@ -142,14 +146,12 @@ a:hover {
   font-size: 18px;
   font-style: bold;
   letter-spacing: 1px;
-  background-image: linear-gradient(to right, #f27121cc, #e94057cc, #8a2387cc);
-  text-decoration: underline;
 }
 
 .form-switcher-enable:not(:disabled):hover,
 .form-switcher-enable:not(:disabled):focus {
   outline: 0;
-  background: rgb(61 174 197) 78%;
+  background: rgb(53, 78, 179);
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2), 0 3px 8px 0 rgba(0, 0, 0, 0.15);
 }
 
