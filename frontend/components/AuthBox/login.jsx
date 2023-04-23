@@ -6,6 +6,7 @@ import { useTheme } from "next-themes";
 import React from "react"
 import Cookies from "universal-cookie"
 import { useRouter } from 'next/navigation';
+import config from '../../next.config.js'
 
 export default function Login(props) {
     const { theme, setTheme } = useTheme();
@@ -65,7 +66,7 @@ export default function Login(props) {
         const password = formData.password;
         console.log("logging try")
 
-        const response = await fetch('http://localhost:5000/users/login', {
+        const response = await fetch(`${config.serverUrl}/users/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password })

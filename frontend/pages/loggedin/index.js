@@ -14,6 +14,7 @@ import SettingPopup from "./SettingsPopup";
 import test_sound from "../../public/audios/test_audio.mp3";
 import Animation from "./Animation";
 const cookies = new Cookies();
+import config from '../../next.config.js'
 
 export default function LandingPage() {
   // console.log("langing page entered");
@@ -133,7 +134,7 @@ export default function LandingPage() {
 
     router.push("/");
 
-    const response = await fetch("http://localhost:5000/users/logout", {
+    const response = await fetch(`${config.serverUrl}/users/logout`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ token }),
@@ -158,7 +159,7 @@ export default function LandingPage() {
     const cAccToken = cookies.get("accessToken");
     const reftoken = cookies.get("refreshToken");
 
-    const response = await fetch("http://localhost:5000/users/clearChat", {
+    const response = await fetch(`${config.serverUrl}/users/clearChat`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -288,7 +289,7 @@ export default function LandingPage() {
     const cAccToken = cookies.get("accessToken");
     const reftoken = cookies.get("refreshToken");
 
-    const response = await fetch("http://localhost:5000/users/reportBug", {
+    const response = await fetch(`${config.serverUrl}/users/reportBug`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -323,7 +324,7 @@ export default function LandingPage() {
     const cAccToken = cookies.get("accessToken");
     const reftoken = cookies.get("refreshToken");
 
-    const response = await fetch("http://localhost:5000/users/get_prefs", {
+    const response = await fetch(`${config.serverUrl}/users/get_prefs`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -363,7 +364,7 @@ export default function LandingPage() {
       rate: rate,
       pitch: pitch,
     };
-    const response = await fetch("http://localhost:5000/users/set_prefs", {
+    const response = await fetch(`${config.serverUrl}/users/set_prefs`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -625,7 +626,7 @@ micState : 1- idle, 2-listening, 3-speaking
     const reftoken = cookies.get("refreshToken");
 
     const response = await fetch(
-      "http://localhost:5000/users/question_to_gpt",
+      `${config.serverUrl}/users/question_to_gpt`,
       {
         method: "POST",
         headers: {

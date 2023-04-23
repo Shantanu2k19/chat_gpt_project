@@ -17,6 +17,7 @@ const nextConfig = {
     });
     return config;
   },
+  serverUrl: 'http://localhost:5000'
 };
 
 

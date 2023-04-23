@@ -2,39 +2,77 @@
 import Link from "next/link";
 import Cookies from "universal-cookie";
 import { useRouter } from "next/navigation";
+import config from '../../next.config.js'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useTheme } from "next-themes";
 
 const Hero = () => {
   const cookies = new Cookies();
   let router = useRouter();
+
+  const { theme, setTheme } = useTheme();
+  
+  function showAlert(){
+    toast.error('Server Down! Hang on', {
+      position: "top-center",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: theme,
+      });
+  }
 
   async function demoLogin() {
     const username = "demo_user";
     const password = "noobie";
     console.log("logging try");
 
-    const response = await fetch("http://localhost:5000/users/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
-    });
+    try{
+      const response = await fetch(`${config.serverUrl}/users/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
 
-    const data = await response.json();
-    if (response.ok) {
-      console.log("logged in success");
+      const data = await response.json();
+      if (response.ok) {
+        console.log("logged in success");
+  
+        cookies.set("accessToken", data.accessToken);
+        cookies.set("refreshToken", data.refreshToken);
+        cookies.set("userName", "demo_user");
+  
+        router.push("/loggedin");
+      } else {
+        console.log("demo log in FAIL");
+      }
 
-      cookies.set("accessToken", data.accessToken);
-      cookies.set("refreshToken", data.refreshToken);
-      cookies.set("userName", "demo_user");
-
-      router.push("/loggedin");
-    } else {
-      console.log("log in FAIL");
-      console.error(data.message);
+    } catch{
+      showAlert();
     }
   }
 
+ 
+
   return (
     <>
+      <ToastContainer
+        position="top-center"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
+
       <section
         id="home"
         className="relative z-10 overflow-hidden pt-[120px] pb-16 md:pt-[150px] md:pb-[120px] xl:pt-[180px] xl:pb-[160px] 2xl:pt-[210px] 2xl:pb-[200px]"

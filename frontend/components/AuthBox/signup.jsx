@@ -1,6 +1,7 @@
 import React from "react"
 import { useRouter } from 'next/navigation';
 import Cookies from "universal-cookie"
+import config from '../../next.config.js'
 
 
 import { ToastContainer, toast } from 'react-toastify';
@@ -75,7 +76,7 @@ export default function Signup(props) {
         const username = formData.username;
         const password = formData.password;
 
-        const response = await fetch('http://localhost:5000/users/signup', {
+        const response = await fetch(`${config.serverUrl}/users/signup`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password, email })
