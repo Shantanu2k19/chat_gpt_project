@@ -1,6 +1,9 @@
 export default function header(prop) {
+  // console.log("isVoiceChatEnabled --", prop.isVoiceChatEnabled);
+  // console.log("isVoiceChatEnabled2 --", prop.speakingState);
+  
   return (
-    <div className="header" >
+    <div className="header">
       <div className="header-link">
         <a
           href="#"
@@ -16,12 +19,20 @@ export default function header(prop) {
         </a>
       </div>
 
-      <div className="statusInfo">sdsd{prop.status}</div>
-
-      <div className="header-dot">
-        <div className="dot" style={{ backgroundColor:prop.isMicEnabled?"rgb(16, 219, 16)":"gray"}}></div>
+      <div className="statusInfo">
+        {!prop.isVoiceChatEnabled
+          ? "Interactive Disabled..."
+          : prop.speakingState}
       </div>
 
+      <div className="header-dot">
+        <div
+          className="dot"
+          style={{
+            backgroundColor: prop.isVoiceChatEnabled ? "rgb(16, 219, 16)" : "gray",
+          }}
+        ></div>
+      </div>
     </div>
   );
 }

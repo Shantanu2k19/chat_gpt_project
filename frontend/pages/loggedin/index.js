@@ -515,6 +515,22 @@ micState : 1- idle, 2-listening, 3-speaking
 
   //********************   FOR HANDLING VoiceChatEnabled ENABLE/DISABLE   ********************
   
+  const [speakingState, setSpeakingState] = React.useState();
+
+  React.useEffect(()=>{
+    console.log("currentMicState :::",currentMicState)
+    switch(currentMicState)
+    {
+      case(1): setSpeakingState("Idle...");
+                return;
+      case(2): setSpeakingState("Listening question...");
+                return;
+      case(3): setSpeakingState("Speaking answer...");
+                return;
+      default: setSpeakingState("Hmm, some error!...");
+                return;
+    }
+  },[currentMicState])
 
   function setMicProp() {
 
@@ -583,7 +599,6 @@ micState : 1- idle, 2-listening, 3-speaking
     listen({ lang });
     setCurrentMicState(2);
   }
-
 
 
   //********************   ASK QUESTION AND ADD TO HISTORY TAB AREA   ********************
@@ -786,16 +801,16 @@ micState : 1- idle, 2-listening, 3-speaking
                     className="iconVoiceChange"
                     src={
                       isDarkEnabled
-                        ? "/images/loggedin/voice-chat-block_l.png"
-                        : "/images/loggedin/voice-chat-block_l.png"
+                      ? "/images/loggedin/voice-chat_d.png"
+                      : "/images/loggedin/voice-chat_l.png"
                     }
                   ></img>
                   <img
                     className="iconVoiceChange"
                     src={
                       isDarkEnabled
-                        ? "/images/loggedin/voice-chat_l.png"
-                        : "/images/loggedin/voice-chat_l.png"
+                      ? "/images/loggedin/voice-chat-block_d.png"
+                      : "/images/loggedin/voice-chat-block_l.png"
                     }
                   ></img>
                 </div>
@@ -808,15 +823,14 @@ micState : 1- idle, 2-listening, 3-speaking
                 />
               </div>
             </label>
+            <div className="info-text">Interactive mode {isVoiceChatEnabled ? "Enabled" : "Disabled"}</div>
           </div>
 
           <div style={{ flexGrow: "1" }}></div>
-
           {screenWidth > 620 && (
             <div className="threeDiv2" style={{ height: "20px" }}>
               <div className="left-div2">
-                {" "}
-                {isVoiceChatEnabled ? "Mic Enabled..." : "Mic Disabled..."}{" "}
+                { !isVoiceChatEnabled ? "Interactive Disabled..." : speakingState }
               </div>
               <div
                 className="dot"
@@ -966,7 +980,11 @@ micState : 1- idle, 2-listening, 3-speaking
       <div className="content">
         {/* HEADER  */}
         <MyComponent>
-          <Header switchFn={toggleSidebar} isMicEnabled={isVoiceChatEnabled} />
+          <Header 
+            switchFn={toggleSidebar} 
+            isVoiceChatEnabled={isVoiceChatEnabled} 
+            speakingState = {speakingState}
+        />
         </MyComponent>
 
         {/* chat area  */}
@@ -1085,10 +1103,10 @@ micState : 1- idle, 2-listening, 3-speaking
                 alt="tapToSpeak"
                 src={
                   isDarkEnabled
-                    ? "/images/loggedin/mic.png"
-                    : "/images/loggedin/mic_l.png"
+                    ? "/images/loggedin/mic_thin_d.png"
+                    : "/images/loggedin/mic_thin_l.png"
                 }
-                width="27px"
+                width="28px"
               />
             </button>
 
