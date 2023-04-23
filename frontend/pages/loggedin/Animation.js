@@ -42,7 +42,7 @@ export default function Animation(prop){
           setSpeakingAnim(false);
           
       handleAnimation(prop.currentMicState);
-      console.log(prop.currentMicState)
+      console.log("starting : ",prop.currentMicState)
     },[prop.currentMicState])
   
    
@@ -105,6 +105,7 @@ export default function Animation(prop){
           <div id="antenna"
             style={{
                 height : speakingAnim? "20px":"0px",
+                display: prop.voiceEnabled?"block":"none"
             }}
             >
           <div id="beam"

@@ -384,6 +384,7 @@ body {
   /* background-color: #ffee00c4; */
   /* border: 2px solid orange; */
   height: 60px;
+  cursor: pointer;
 }
 
 .form-textbox {

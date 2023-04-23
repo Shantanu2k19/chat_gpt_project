@@ -346,7 +346,7 @@ export default function LandingPage() {
   };
 
   React.useEffect(() => {
-    getPrefs();
+    if(cookies.get("userName")!="demo_user")getPrefs();
   }, []);
 
   //SET PREFERENCE OF USER
@@ -387,7 +387,19 @@ export default function LandingPage() {
     setBugPopEnabled(false);
     setStnPopup(false);
   }
-  
+
+//********************   STATES FOR SYNCING   ********************
+  const [isVoiceChatEnabled, setisVoiceChatEnabled] = useState(false);
+  const [currentMicState,setCurrentMicState] = useState(1);
+
+/*
+
+micState : 1- idle, 2-listening, 3-speaking
+
+
+
+*/
+
 
 //********************   FOR HANDLING TEXT TO SPEECH   ********************
   const [pitch, setPitch] = useState(1);
@@ -407,17 +419,12 @@ export default function LandingPage() {
   });
   const voice = voices[voiceIndex] || 3;
 
-  function cancelSpeaking(){
-    console.log("cancelling");
-    cancel();
-    setCurrentMicState(1);
-  }
-
-  function speakAnswer(speakingText) {
-    const text = speakingText;
-    speak({ text, voice, rate, pitch });
-    return;
-  }
+  // function speakAnswer(speakingText) {
+  //   const text = speakingText;
+  //   speak({ text, voice, rate, pitch });
+  //   console.log("speaking answer");
+  //   return;
+  // }
 
   const audioRef = useRef();
 
@@ -426,32 +433,6 @@ export default function LandingPage() {
     isGoogleVoice
       ? audioRef.current.play()
       : speak({ text, voice, rate, pitch });
-  }
-
-
-
-  //********************   FOR HANDLING VoiceChatEnabled ENABLE/DISABLE   ********************
-  const [isVoiceChatEnabled, setisVoiceChatEnabled] = useState(true);
-  const [currentMicState,setCurrentMicState] = useState(1);
-
-  function setMicProp() {
-
-    if(isVoiceChatEnabled)
-    {
-      //turn off voice chat 
-      setisVoiceChatEnabled(false);
-      cancel();
-      stop
-      return;
-    }
-
-    //turn on voice chat 
-    if(!supported)
-    {
-      showAlert("Your browser does not support mic!! :(", 1);
-      return;
-    }
-    setisVoiceChatEnabled(true);
   }
 
 
@@ -468,21 +449,16 @@ export default function LandingPage() {
   const mic_button = useRef(null)
 
   const onEnd2 = () => {
+
+    if(!isVoiceChatEnabled) return;
+
     setCurrentMicState(1);
     console.log("question :", inputRef.current.value);
-
-    if(isVoiceChatEnabled)
-    {
-      //ask the question 
-      buttonRef.current.click();
-    }
+    buttonRef.current.click();
   };
 
   const onResult = (result) => {
-    
-    // setValue(result);
     inputRef.current.value=result;
-    // console.log(result);
   };
 
   const changeLang = (event) => {
@@ -502,17 +478,27 @@ export default function LandingPage() {
     onError,
   });
 
-  const toggleAudio = listening
-    ? 
-      stop
-    : () => 
-      {
-        inputRef.current.value = "";
-        setCurrentMicState(2);
-        setBlocked(false);
-        console.log("listening...");
-        listen({ lang });
-      };
+  // const toggleAudio = listening
+  //   ? 
+  //     stop
+  //   : () => 
+  //     {
+  //       inputRef.current.value = "";
+  //       setCurrentMicState(2);
+  //       setBlocked(false);
+  //       console.log("listening...");
+  //       listen({ lang });
+  //     };
+
+  function toggleAudio(){
+    if(!isVoiceChatEnabled)
+    {
+      setCurrentMicState(2);
+      setBlocked(false);
+      console.log("listening...");
+      listen({ lang });
+    }
+  }
 
 
 
@@ -522,6 +508,81 @@ export default function LandingPage() {
 
 
 
+
+
+
+
+
+  //********************   FOR HANDLING VoiceChatEnabled ENABLE/DISABLE   ********************
+  
+
+  function setMicProp() {
+
+    if(isVoiceChatEnabled)
+    {
+      //turn off voice chat 
+      setisVoiceChatEnabled(false);
+      cancel();
+      stop;
+      showAlert("Interactive mode Off.",0);
+      return;
+    }
+
+    //turn on voice chat 
+    if(!supported)
+    {
+      showAlert("Your browser does not support mic!! :(", 1);
+      return;
+    }
+    setisVoiceChatEnabled(true);
+    showAlert("Interactive mode On! Click on mic to start.",0)
+  }
+
+  function turnOffVoice(){
+    setisVoiceChatEnabled(false);
+    cancel();
+    stop;
+    setCurrentMicState(1);
+    console.log("done");
+  }
+
+  function speakAnswer(speakingText){
+    if(!isVoiceChatEnabled)
+    {
+      turnOffVoice();
+      return;
+    }
+
+    setCurrentMicState(3);
+    const text = speakingText;
+    speak({ text, voice, rate, pitch });
+    console.log("speaking answer");
+  }
+
+  function cancelSpeaking(){
+    console.log("cancelling");
+    cancel();
+    setCurrentMicState(1);
+    stop;
+    setisVoiceChatEnabled(false);
+  }
+
+  function listenQuestion(){
+    if(!isVoiceChatEnabled)
+    {
+      setBlocked(false);
+      console.log("listening...");
+      listen({ lang });
+      setCurrentMicState(1);
+      return;
+    }
+
+    //voice enabled
+    setBlocked(false);
+    console.log("listening...");
+    listen({ lang });
+    setCurrentMicState(2);
+  }
 
 
 
@@ -566,9 +627,12 @@ export default function LandingPage() {
       // console.log(json.answer);
       const ans = json.answer;
       setnewQuestions((prevItem) => [...prevItem, question, ans]);
-      console.log("ayoooo, ",ans)
-      setCurrentMicState(3);
-      speakAnswer(ans);
+      //console.log("ayoooo, ",ans)
+      
+      if(isVoiceChatEnabled)
+      {
+        speakAnswer(ans);
+      } 
 
     } else {
       console.log("cant get answer");
@@ -1012,7 +1076,7 @@ export default function LandingPage() {
             <button 
               disabled={blocked} 
               type="button" 
-              onClick={toggleAudio} 
+              onClick={listenQuestion} 
               className="send-icon" 
               style={{margin: "0px", animation: listening?"pulsate 1s infinite ease-out":"none"}}
               ref={mic_button}
