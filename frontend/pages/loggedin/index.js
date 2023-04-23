@@ -685,6 +685,7 @@ micState : 1- idle, 2-listening, 3-speaking
 
       {/* SIDEBAR  */}
       <>
+        <title>Neural Talk</title>
         <div
           className="globalDiv"
           style={bugPopEnabled ? { top: "120px" } : { top: "-100px" }}

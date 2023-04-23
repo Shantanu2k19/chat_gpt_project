@@ -15,7 +15,7 @@ import { useTheme } from "next-themes";
 
 export default function RightBox(){
     const { theme, setTheme } = useTheme();
-    console.log(theme)
+    // console.log(theme)
     const gtheme = theme==="dark"?"filled_black":"outline"
     let router= useRouter()
     const cookies = new Cookies();
@@ -100,7 +100,7 @@ export default function RightBox(){
     let backg = theme==="light"? "rgba(241,242,246, 0.3)":"rgba(41, 39, 39, 0.3)";
     let boxSh = theme==="light"?"0 5px 30px #dadee8":"0 5px 30px black";
 
-    console.log(backg, boxSh);
+    // console.log(backg, boxSh);
 
     const loginStyle = {
         backgroundColor: backg,

@@ -105,7 +105,7 @@ export default function Signup(props) {
             <form className="form" onSubmit={handleSubmit} id="signupForm">
                 <div className="form-top-toggle">
                     <span className="form-switcher-disable" onClick={props.handleClick} >Login</span>
-                    <span className="form-switcher-enable">Sign up</span>
+                    <button className="form-switcher-enable">Sign up</button>
                 </div>
                 <div className="form-inner-content">
                 <input
