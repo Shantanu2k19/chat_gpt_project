@@ -118,7 +118,7 @@ export default function RightBox(){
             { theme: gtheme, size:"large", width:"300px"}
         )
         
-        // google.accounts.id.prompt();
+        google.accounts.id.prompt();
     }, [theme]);
 
 
