@@ -269,6 +269,7 @@ body {
 
   /* background-color: rgba(94, 94, 116, 0.377); */
   background-color: var(--contentBG);
+  
 }
 
 
@@ -388,7 +389,10 @@ body {
   justify-content: flex-start;
   /* border: 2px solid white; */
   /* width: 70%; */
-  flex-grow:1;
+  /* flex-grow:1;  important */
+  width:70%;
+  margin-left: 95px;
+  margin-right: 40px;
 }
 
 .animation-content{
@@ -599,11 +603,12 @@ body {
   justify-content: space-between;
   align-items: center;
   height: 100%;
-  margin: 0 4px;
+  margin: 0 1px;
 }
 
 .iconVoiceChange{
   height: 20px;
+  width: 19.1px;
 }
 
 .iconkk {
