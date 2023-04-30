@@ -212,7 +212,7 @@ body {
 .header {
   display: flex;
   height: 30px;
-  border: 2px solid blue;
+  /* border: 2px solid blue; */
   min-width: 100%;
   position: fixed;
   background: #343540;
@@ -375,6 +375,7 @@ body {
   margin: 0px 8px 0px 8px;
   align-items: center;
   /* border: 2px solid greenyellow; */
+  justify-content: center;
 }
 
 .question-content {
@@ -389,10 +390,8 @@ body {
   justify-content: flex-start;
   /* border: 2px solid white; */
   /* width: 70%; */
-  /* flex-grow:1;  important */
-  width:70%;
-  margin-left: 95px;
-  margin-right: 40px;
+   flex-grow:1;
+  max-width: 1000px;
 }
 
 .animation-content{
@@ -603,12 +602,12 @@ body {
   justify-content: space-between;
   align-items: center;
   height: 100%;
-  margin: 0 1px;
+  margin: 0 4px;
 }
 
 .iconVoiceChange{
   height: 20px;
-  width: 19.1px;
+  width: 19px;
 }
 
 .iconkk {
@@ -653,7 +652,7 @@ body {
 }
 
 .bugInsideDiv {
-  border: 2px solid green;
+/*  border: 2px solid green;*/
   display: flex;
   flex-direction: column;
   justify-content: center;

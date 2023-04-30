@@ -345,7 +345,11 @@ router.post("/question_to_gpt", authenticateToken, async (req, res) => {
     answer = answer.replace(/\n/g, "<br>");
     // console.log(answer);
 
-    let retVal = addChatInDatabase(req.usernam, question, answer);
+    let retVal = 0;
+    if (req.usernam === "demo_user") {
+      retVal = 1;
+    }
+    else retVal = addChatInDatabase(req.usernam, question, answer);
 
     if (retVal === 0) {
       console.log("user chat not saved");
