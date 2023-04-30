@@ -17,7 +17,7 @@ const nextConfig = {
     });
     return config;
   },
-  serverUrl: 'http://localhost:5000'
+  serverUrl: 'https://neuraltalkbackend.onrender.com'
 };
 
 

@@ -7,6 +7,7 @@ import "../../styles/authBox.css";
 import jwt from 'jwt-decode'
 import Cookies from "universal-cookie"
 import { useRouter } from 'next/navigation';
+import config from '../../next.config.js'
 
 
 import { ToastContainer, toast } from 'react-toastify';
@@ -71,7 +72,7 @@ export default function RightBox(){
 
         console.log(username);
 
-        const gResponse = await fetch('http://localhost:5000/users/signupWithGoogle', {
+        const gResponse = await fetch(`${config.serverUrl}/users/signupWithGoogle`,{
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, email })

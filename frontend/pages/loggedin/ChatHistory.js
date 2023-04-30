@@ -1,5 +1,6 @@
 import React from "react";
 import Cookies from "universal-cookie";
+import config from '../../next.config.js'
 
 export default function ChatHistory(prop) {
   // console.log("chat_history entered");
@@ -16,7 +17,7 @@ export default function ChatHistory(prop) {
       const reftoken = cookies.get("refreshToken");
 
       const response = await fetch(
-        "http://localhost:5000/users/getChatHistory",
+        `${config.serverUrl}/users/getChatHistory`, 
         {
           method: "POST",
           headers: {
