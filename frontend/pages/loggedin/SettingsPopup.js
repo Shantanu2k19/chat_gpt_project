@@ -3,7 +3,7 @@ import "../../styles/settingsTog.css";
 import { useRef } from "react";
 import ToggleSwitch from "./ToggleSwitch";
 
-export default function settings(prop) {
+export default function Settings(prop) {
   const rateRef = useRef(null);
   const pitchRef = useRef(null);
   const voiceRef = useRef(null);
@@ -43,7 +43,7 @@ export default function settings(prop) {
 
           {!prop.supported && (
             <p>
-              Oh no, it looks like your browser doesn't support Speech
+              Oh no, it looks like your browser does not support Speech
               Synthesis.
             </p>
           )}
