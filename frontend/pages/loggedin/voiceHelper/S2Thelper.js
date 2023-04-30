@@ -91,12 +91,12 @@ const useSpeechRecognition = (props = {}) => {
     }
   }, []);
 
-  return {
+  return [
     listen,
     listening,
     stop,
     supported,
-  };
+  ];
 };
 
 export default useSpeechRecognition;

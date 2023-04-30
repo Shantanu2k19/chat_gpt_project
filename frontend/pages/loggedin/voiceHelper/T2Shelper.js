@@ -60,11 +60,11 @@ export default function useSpeechSynthesis(props){
       window.speechSynthesis.cancel();
     };
   
-    return {
+    return [
       supported,
       speak,
       speaking,
       cancel,
       voices,
-    };
+    ];
 };

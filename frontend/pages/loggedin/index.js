@@ -418,7 +418,10 @@ micState : 1- idle, 2-listening, 3-speaking
   const { speak, cancel, speaking, supported, voices } = useSpeechSynthesis({
     onEnd,
   });
-  const voice = voices[voiceIndex] || 3;
+  
+  let voice;
+  if(voices) voice= voices[voiceIndex] || 3;
+  voice = 3;
 
   // function speakAnswer(speakingText) {
   //   const text = speakingText;
