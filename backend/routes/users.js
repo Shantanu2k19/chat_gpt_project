@@ -571,4 +571,20 @@ router.post("/dataapi", authenticateToken, (req, res) => {
   return res.json(data);
 });
 
+
+//APIs for testing hosted backend
+router.get("/", (req, res) => {
+  console.log("____a-API_____");
+  console.log("authinticated");
+  const data = "hello root";
+  return res.json(data);
+});
+
+router.get("/hello", (req, res) => {
+  console.log("____a-API_____");
+  console.log("abc");
+  const data = "hi";
+  return res.json(data);
+});
+
 module.exports = router;
