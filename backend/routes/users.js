@@ -262,7 +262,7 @@ router.post("/signupWithGoogle", async (req, res) => {
   let password = Math.random();
   try {
     const preferences = {
-      gnable: flase,
+      gnable: false,
       voice: 3,
       rate: 1,
       pitch: 1,
