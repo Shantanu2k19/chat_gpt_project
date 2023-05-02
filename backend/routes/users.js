@@ -361,7 +361,7 @@ router.post("/question_to_gpt", authenticateToken, async (req, res) => {
     // console.log(answer);
   } catch (error) {
     console.log("api to ask question failed ");
-    console.log(error);
+    //console.log(error);
     return res
       .status(500)
       .json({ error: "An error occurred while processing your request." });
