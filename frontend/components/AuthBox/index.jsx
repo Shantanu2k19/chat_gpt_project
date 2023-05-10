@@ -69,6 +69,7 @@ export default function RightBox(){
         />
 
         <hr className="line-overkill"/>
+        <br />
         
         <Login
             handleClick={toggleForm}

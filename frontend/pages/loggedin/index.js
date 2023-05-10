@@ -684,6 +684,8 @@ micState : 1- idle, 2-listening, 3-speaking
   return (
     <div className="home">
     
+    {/* Overlay and Alerts  */}
+      <>
       {isMobile && 
         <ToastContainer
           position="top-center"
@@ -725,6 +727,7 @@ micState : 1- idle, 2-listening, 3-speaking
           {" "}
         </div>
       )}
+      </>
 
       {/* SIDEBAR  */}
       <>
@@ -1173,6 +1176,7 @@ micState : 1- idle, 2-listening, 3-speaking
             <Animation 
             voiceEnabled={isVoiceChatEnabled}
             currentMicState={currentMicState}
+            isMobile = {isMobile}
             />
           </div>
         </div>

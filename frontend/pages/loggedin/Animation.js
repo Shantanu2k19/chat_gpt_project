@@ -70,7 +70,7 @@ export default function Animation(prop){
   
     return (
       <>
-        <div className="container">
+        <div className="container" style={{ zoom: prop.isMobile?"0.6":"" }}>
           <div id="chatbot">
   
             {/* center div  */}

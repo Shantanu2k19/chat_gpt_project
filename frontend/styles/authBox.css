@@ -3,7 +3,7 @@ a:hover {
 }
 
 .chatgpt-image{
-  border-radius: 10px;
+  border-radius: 5px;
 }
 
 .line-overkill {
@@ -225,14 +225,17 @@ a:hover {
 @keyframes glowing-button-85 {
   0% {
     background-position: 0 0;
+    border-radius: 10px;
   }
 
   50% {
     background-position: 400% 0;
+    border-radius: 10px;
   }
 
   100% {
     background-position: 0 0;
+    border-radius: 10px;
   }
 }
 
