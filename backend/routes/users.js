@@ -236,6 +236,7 @@ router.post("/signupWithGoogle", async (req, res) => {
     }
 
     //login user
+    username = mail.username;
     console.log("user id exist, logging in");
     const forJWTsign = { username };
     console.log("generating access token");
@@ -247,7 +248,7 @@ router.post("/signupWithGoogle", async (req, res) => {
 
     return res
       .status(200)
-      .send({ accessToken: accessToken, refreshToken: refreshToken });
+      .send({ accessToken: accessToken, refreshToken: refreshToken , uname: username});
   }
 
   //find for duplicate user
@@ -493,7 +494,7 @@ router.post("/get_prefs", authenticateToken, async (req, res) => {
     };
     return res.status(200).json(data);
   } else {
-    console.log("some error occured!");
+    console.log("Cannot get preference!");
     return res.status(403).send({ message: "user's chat not found" });
   }
 });

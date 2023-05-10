@@ -6,7 +6,6 @@ import ScrollToTop from "@/components/ScrollToTop";
 import "../styles/index.css";
 
 export default function RootLayout({ children }) {
-
   return (
     <html suppressHydrationWarning lang="en">
       <head />

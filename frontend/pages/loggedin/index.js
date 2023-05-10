@@ -418,7 +418,6 @@ micState : 1- idle, 2-listening, 3-speaking
   const { speak, cancel, speaking, supported, voices } = useSpeechSynthesis({
     onEnd,
   });
-  
   let voice;
   if(voices) voice= voices[voiceIndex] || 3;
   voice = 3;
@@ -642,6 +641,15 @@ micState : 1- idle, 2-listening, 3-speaking
 
     const json = await response.json();
 
+    const serverErrorResponses = [
+      "Sorry, the server is unavailable at the moment. Please try again later.",
+      "Unable to establish a connection with the server right now. Please retry later.",
+      "The server is currently unreachable. You may want to attempt connecting again later.",
+      "Connection to the server is not possible at this time. Please try again later.",
+      "We're experiencing difficulties connecting to the server. Please try later.",
+      "Apologies, but the server is not accessible right now. Please try again later.",
+    ];
+    
     if (response.ok) {
       // console.log(json.answer);
       const ans = json.answer;
@@ -654,6 +662,9 @@ micState : 1- idle, 2-listening, 3-speaking
       } 
 
     } else {
+      var randomNumber = Math.floor(Math.random() * 6);
+      const ans = serverErrorResponses[randomNumber];
+      setnewQuestions((prevItem) => [...prevItem, question, ans]);
       console.log("cant get answer");
     }
     setTempQuestion(false);
