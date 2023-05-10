@@ -6,6 +6,7 @@ import config from '../../next.config.js'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useTheme } from "next-themes";
+import React from "react"
 
 const Hero = () => {
   const cookies = new Cookies();
@@ -56,22 +57,59 @@ const Hero = () => {
     }
   }
 
- 
+  const [isMobile, setIsMobile] = React.useState(false);
+  const [screenWidth, setScreenWidth] = React.useState(0);
+  
+  React.useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  React.useEffect(() => {
+    setScreenWidth(window.innerWidth);
+
+    if (screenWidth <= 454) {
+      setIsMobile(true);
+    } else {
+      setIsMobile(false);
+    }
+  }, [screenWidth]);
 
   return (
     <>
-      <ToastContainer
-        position="top-center"
-        autoClose={1000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable
-        pauseOnHover
-        theme="dark"
-      />
+      {isMobile && 
+        <ToastContainer
+          position="top-center"
+          autoClose={1000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss={false}
+          draggable
+          pauseOnHover
+          theme="dark"
+          style={{ maxWidth:'80%', left:"10%", top:"1em"}}
+        />
+      }
+
+      {!isMobile && 
+        <ToastContainer
+          position="top-center"
+          autoClose={1000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss={false}
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
+      }
 
       <section
         id="home"

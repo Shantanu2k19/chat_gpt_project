@@ -76,7 +76,6 @@ export default function RightBox(){
             theme = {theme}
             themeColor = {isDark}
         />
-        <button onClick={showAlert}>errfrf</button>
         <Signup
             handleClick={toggleForm}
             isLogin = {isLogin}

@@ -227,6 +227,8 @@ export default function LandingPage() {
   //sidebar using react
   const [sidebarOpen, setSideBarOpen] = React.useState(false);
   const [screenWidth, setScreenWidth] = React.useState(0);
+  const [isMobile, setIsMobile] = React.useState(false);
+
   useEffect(() => {
   const handleResize = () => {
     setScreenWidth(window.innerWidth);
@@ -245,6 +247,13 @@ export default function LandingPage() {
     } else {
       setSideBarOpen(true);
     }
+
+    if (screenWidth <= 454) {
+      setIsMobile(true);
+    } else {
+      setIsMobile(false);
+    }
+
   }, [screenWidth]);
 
   const toggleSidebar = () => {
@@ -674,18 +683,37 @@ micState : 1- idle, 2-listening, 3-speaking
   //********************   RETURN DIV   ********************
   return (
     <div className="home">
-      <ToastContainer
-        position="top-center"
-        autoClose={1000}
-        hideProgressBar={true}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable
-        pauseOnHover
-        theme={theme}
+    
+      {isMobile && 
+        <ToastContainer
+          position="top-center"
+          autoClose={1000}
+          hideProgressBar={true}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss={false}
+          draggable
+          pauseOnHover
+          theme={theme}
+          style={{ maxWidth:'80%', left:"10%", top:"1em"}}
+        />
+      }
+
+      {!isMobile && 
+          <ToastContainer
+          position="top-center"
+          autoClose={1000}
+          hideProgressBar={true}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss={false}
+          draggable
+          pauseOnHover
+          theme={theme}
       />
+      }
 
       {bugPopEnabled && (
         <div className="overlay2" onClick={closePopups}>

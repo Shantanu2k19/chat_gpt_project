@@ -21,19 +21,6 @@ const Footer = () => {
   }
   return (
     <>
-      <ToastContainer
-        position="top-center"
-        autoClose={1000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable
-        pauseOnHover
-        theme="dark"
-      //  style={{maxWidth:'90%', border:"2px solid white"}}
-      />
 
       <footer
         className="wow fadeInUp relative z-10 bg-primary bg-opacity-5 pt-16 md:pt-20 lg:pt-24"
