@@ -21,7 +21,7 @@ export default function header(prop) {
 
       <div className="statusInfo">
         {!prop.isVoiceChatEnabled
-          ? "Interactive Disabled..."
+          ? "Tap 💭 to enable Interactive Mode..."
           : prop.speakingState}
       </div>
 

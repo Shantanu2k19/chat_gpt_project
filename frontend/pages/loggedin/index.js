@@ -424,19 +424,17 @@ micState : 1- idle, 2-listening, 3-speaking
     mic_button.current.click();
   };
 
-  const { speak, cancel, speaking, supported, voices } = useSpeechSynthesis({
+  const tempVar = useSpeechSynthesis({
     onEnd,
   });
-  let voice;
-  if(voices) voice= voices[voiceIndex] || 3;
-  voice = 3;
 
-  // function speakAnswer(speakingText) {
-  //   const text = speakingText;
-  //   speak({ text, voice, rate, pitch });
-  //   console.log("speaking answer");
-  //   return;
-  // }
+  const supported = tempVar[0];
+  const speak = tempVar[1];
+  const speaking = tempVar[2];
+  const cancel = tempVar[3];
+  const voices = tempVar[4];
+
+  const voice = voices[voiceIndex] || 3;
 
   const audioRef = useRef();
 
@@ -479,16 +477,22 @@ micState : 1- idle, 2-listening, 3-speaking
 
   const onError = (event) => {
     if (event.error === "not-allowed") {
-      showAlert("Some error occured while accessing mic!",1);
+      showAlert("Please allow Mic access and reload!",1);
       setBlocked(true);
     }
   };
 
-  const { listen, listening, stop, supportedS2T } = useSpeechRecognition({
+  const tempVar2 = useSpeechRecognition({
     onResult,
     onEnd2,
     onError,
   });
+
+  const listen = tempVar2[0];
+  const listening = tempVar2[1];
+  const stop = tempVar2[2];
+  const supportedS2T = tempVar2[3];
+
 
   // const toggleAudio = listening
   //   ? 
@@ -585,14 +589,6 @@ micState : 1- idle, 2-listening, 3-speaking
     const text = speakingText;
     speak({ text, voice, rate, pitch });
     console.log("speaking answer");
-  }
-
-  function cancelSpeaking(){
-    console.log("cancelling");
-    cancel();
-    setCurrentMicState(1);
-    stop;
-    setisVoiceChatEnabled(false);
   }
 
   function listenQuestion(){
@@ -836,7 +832,7 @@ micState : 1- idle, 2-listening, 3-speaking
           </div>
 
           {/* switch mode  */}
-          <div className="sidebar--content2">
+          {/* <div className="sidebar--content2">
             <br />
 
             <label className="toggle-wrapper" htmlFor="toggle2">
@@ -871,13 +867,13 @@ micState : 1- idle, 2-listening, 3-speaking
               </div>
             </label>
             <div className="info-text">Interactive mode {isVoiceChatEnabled ? "Enabled" : "Disabled"}</div>
-          </div>
+          </div> */}
 
           <div style={{ flexGrow: "1" }}></div>
           {screenWidth > 620 && (
-            <div className="threeDiv2" style={{ height: "20px" }}>
+            <div className="threeDiv2" style={{ height: "20px"}}>
               <div className="left-div2">
-                { !isVoiceChatEnabled ? "Interactive Disabled..." : speakingState }
+                { !isVoiceChatEnabled ? "Tap 💭 to enable Interactive Mode..." : speakingState }
               </div>
               <div
                 className="dot"
@@ -887,6 +883,8 @@ micState : 1- idle, 2-listening, 3-speaking
               ></div>
             </div>
           )}
+
+          <br/>
 
           <hr style={{ width: "90%", color: "rgba(255, 255, 255, 0.226)" }} />
 
@@ -1037,7 +1035,7 @@ micState : 1- idle, 2-listening, 3-speaking
         {/* chat area  */}
         <div
           className="chat-area"
-          style={screenWidth <= 620 ? { paddingTop: "28px" } : {}}
+          style={screenWidth <= 620 ? { paddingTop: "45px" } : {paddingTop: "10px"}}
         >
           <div
             className="chat-area-child"
@@ -1134,7 +1132,7 @@ micState : 1- idle, 2-listening, 3-speaking
                   className="ques--input" 
                   name="ques"
                   ref={inputRef}
-                  // placeholder="Use mic for voice commands..."
+                  placeholder="Ask a question..."
               />              
             </form>
 
@@ -1153,7 +1151,7 @@ micState : 1- idle, 2-listening, 3-speaking
                     ? "/images/loggedin/mic_thin_d.png"
                     : "/images/loggedin/mic_thin_l.png"
                 }
-                width="28px"
+                width="24px"
               />
             </button>
 
@@ -1165,14 +1163,14 @@ micState : 1- idle, 2-listening, 3-speaking
                     ? "/images/loggedin/send.png"
                     : "/images/loggedin/send_l.png"
                 }
-                width="30px"
+                width="24px"
               />
             </button>
             {/* <div className="send-icon">
               <img alt="send" src="/images/loggedin/mic.png" width="14px" />
             </div> */}
           </div>
-          <div className="animation-content" onClick={cancelSpeaking}>
+          <div className="animation-content" onClick={setMicProp}>
             <Animation 
             voiceEnabled={isVoiceChatEnabled}
             currentMicState={currentMicState}

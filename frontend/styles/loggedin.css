@@ -153,6 +153,7 @@ body {
   padding-left: 15px;
   font-size: 0.8em;
   padding-top:5px;
+  margin-right: 2px;
 }
 
 .right-div3 {
@@ -297,8 +298,6 @@ body {
   overflow-y: scroll;
   padding-right: 17px;
   box-sizing: content-box;
-
-  padding-top: 15px;
 }
 
 .chatBoxItem {
@@ -425,18 +424,18 @@ body {
   color: var(--foregroundSB);
   border: none;
   outline: none;
-  font-size: 1.2em;
+  font-size: 1.0em;
   /* border: 2px solid green; */
-  margin-left: 20px;
+  margin-left: 10px;
 }
 
 
 .send-icon {
   /* border: 1px solid red; */
-  width: 45px;
-  height: 45px;
+  width: 40px;
+  height: 40px;
   text-align: center;
-  margin: 15px 15px 15px 5px;
+  margin: 15px 8px 15px 5px;
   border-radius: 10px;
   cursor: pointer;
   appearance: none;
