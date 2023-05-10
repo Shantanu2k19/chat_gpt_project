@@ -41,9 +41,21 @@ export default function RightBox(){
           theme: theme,
           });
         }
-        else
+        else if(mode==2)
         {
-        toast.warn(mssg, {
+        toast.info(mssg, {
+            position: "top-center",
+            autoClose: 20000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: theme,
+            });
+        }
+        else{
+        toast.error(mssg, {
             position: "top-center",
             autoClose: 1000,
             hideProgressBar: false,
@@ -56,6 +68,10 @@ export default function RightBox(){
         }
     }
 
+    function dismissToast(){
+        toast.dismiss();
+    }
+
     return(
     <div className='rounded-md bg-primary bg-opacity-5 py-10 px-6 dark:bg-dark sm:p-[60%]' style={{padding:"3%", border:"1px solid rgba(29, 33, 68, 0.1)"}}>
         <div className="googleButton">
@@ -66,6 +82,7 @@ export default function RightBox(){
         <GoogleLogin 
             showAlert = {showAlert}
             theme = {theme}
+            dismissToast = {dismissToast}
         />
 
         <hr className="line-overkill"/>
@@ -76,11 +93,15 @@ export default function RightBox(){
             isLogin = {isLogin}
             theme = {theme}
             themeColor = {isDark}
+            dismissToast = {dismissToast}
+            showAlert = {showAlert}
         />
         <Signup
             handleClick={toggleForm}
             isLogin = {isLogin}
             themeColor = {isDark}
+            dismissToast = {dismissToast}
+            showAlert = {showAlert}
         />
     </div>
     )

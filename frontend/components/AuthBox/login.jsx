@@ -21,37 +21,6 @@ export default function Login(props) {
         password: "",
     })
 
-    function showAlert(mssg, mode){
-        console.log("alert");
-
-        if(mode==1)
-        {
-        toast.success(mssg, {
-          position: "top-center",
-          autoClose: 1000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: theme,
-          });
-        }
-        else
-        {
-        toast.warn(mssg, {
-            position: "top-center",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: theme,
-            });
-        }
-    }
-
     function handleChange(event) {
         const { name, value } = event.target
         setFormData(prevFormData => ({
@@ -64,8 +33,10 @@ export default function Login(props) {
         event.preventDefault();
         const username = formData.username;
         const password = formData.password;
-        console.log("logging try")
 
+        props.showAlert("Verifying...", 2);
+
+        try{
         const response = await fetch(`${config.serverUrl}/users/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -75,9 +46,8 @@ export default function Login(props) {
           const data = await response.json();
           if (response.ok) {
             console.log("logged in success");
-            showAlert("Success", 1);
-            // console.log(data.accessToken);
-            // console.log(data.refreshToken);
+            props.dismissToast();
+            props.showAlert("Success", 1);
 
             cookies.set("accessToken", data.accessToken);
             cookies.set("refreshToken", data.refreshToken);
@@ -86,9 +56,15 @@ export default function Login(props) {
             router.push('/loggedin')
           } else {
             console.log("log in FAIL");
-            console.error(data);
-            showAlert(data.message, 2);
+            props.dismissToast();
+            props.showAlert(data.message, 3);
           }
+        }
+        catch{
+            props.dismissToast();
+            props.showAlert("Cannot connect to server!", 3);
+        }
+
     };
 
     return (

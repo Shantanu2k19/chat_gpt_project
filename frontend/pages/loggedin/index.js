@@ -552,7 +552,7 @@ micState : 1- idle, 2-listening, 3-speaking
 
     if(isVoiceChatEnabled)
     {
-      //turn off voice chat 
+      setCurrentMicState(1);
       setisVoiceChatEnabled(false);
       cancel();
       stop;
@@ -671,6 +671,7 @@ micState : 1- idle, 2-listening, 3-speaking
       const ans = serverErrorResponses[randomNumber];
       setnewQuestions((prevItem) => [...prevItem, question, ans]);
       console.log("cant get answer");
+      turnOffVoice();
     }
     setTempQuestion(false);
   };

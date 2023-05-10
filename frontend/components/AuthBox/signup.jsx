@@ -32,43 +32,12 @@ export default function Signup(props) {
         }))
     }
 
-    function showAlert(mssg, mode){
-        console.log("alert");
-
-        if(mode==1)
-        {
-        toast.success(mssg, {
-          position: "top-center",
-          autoClose: 1000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: theme,
-          });
-        }
-        else
-        {
-        toast.warn(mssg, {
-            position: "top-center",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: theme,
-            });
-        }
-    }
-
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         if (formData.password !== formData.passwordconfirm) {
             console.log("passwords do not match !!");
-            showAlert("passwords do not match !", 2);
+            props.showAlert("passwords do not match !", 2);
             return;
         }
 
@@ -76,6 +45,9 @@ export default function Signup(props) {
         const username = formData.username;
         const password = formData.password;
 
+        props.showAlert("Signing up...", 2);
+
+        try{
         const response = await fetch(`${config.serverUrl}/users/signup`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -87,7 +59,8 @@ export default function Signup(props) {
           if (response.ok) {
             console.log("signup success");
             // console.log(data.accessToken);
-            showAlert("Success", 1);
+            props.dismissToast();
+            props.showAlert("Success", 1);
 
             cookies.set("accessToken", data.accessToken);
             cookies.set("refreshToken", data.refreshToken);
@@ -97,8 +70,14 @@ export default function Signup(props) {
           }  else {
             console.log("signup FAIL");
             // console.error(data.message);
-            showAlert(data.message, 2);
+            props.dismissToast();
+            props.showAlert(data.message, 3);
           }
+        }
+        catch{
+            props.dismissToast();
+            props.showAlert("Cannot connect to server!", 3);
+        }
     };
 
     return (
