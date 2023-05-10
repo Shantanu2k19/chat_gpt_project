@@ -116,6 +116,8 @@ export default function Signup(props) {
                     name="username"
                     onChange={handleChange}
                     value={formData.username}
+                    style={{color: props.themeColor? "white":"rgba(29, 33, 68, 0.8)", 
+                    borderBottom: props.themeColor? "2px solid white": "2px solid rgba(29, 33, 68, 0.3)"}}
                 />
                 <input
                     type="email"
@@ -124,6 +126,8 @@ export default function Signup(props) {
                     name="email"
                     onChange={handleChange}
                     value={formData.email}
+                    style={{color: props.themeColor? "white":"rgba(29, 33, 68, 0.8)", 
+                    borderBottom: props.themeColor? "2px solid white": "2px solid rgba(29, 33, 68, 0.3)"}}
                 />
                 <input
                     type="password"
@@ -132,6 +136,8 @@ export default function Signup(props) {
                     name="password"
                     onChange={handleChange}
                     value={formData.password}
+                    style={{color: props.themeColor? "white":"rgba(29, 33, 68, 0.8)", 
+                    borderBottom: props.themeColor? "2px solid white": "2px solid rgba(29, 33, 68, 0.3)"}}
                 />
                 <input
                     type="password"
@@ -140,6 +146,8 @@ export default function Signup(props) {
                     name="passwordconfirm"
                     onChange={handleChange}
                     value={formData.passwordconfirm}
+                    style={{color: props.themeColor? "white":"rgba(29, 33, 68, 0.8)", 
+                    borderBottom: props.themeColor? "2px solid white": "2px solid rgba(29, 33, 68, 0.3)"}}
                 />
                 <br/>
                 </div>

@@ -106,7 +106,8 @@ export default function Login(props) {
                     name="username"
                     onChange={handleChange}
                     value={formData.username}
-                    // style={{borderBottom:"2px solid red"}}
+                    style={{color: props.themeColor? "white":"rgba(29, 33, 68, 0.8)", 
+                    borderBottom: props.themeColor? "2px solid white": "2px solid rgba(29, 33, 68, 0.3)"}}
                 />
                 <input
                     type="password"
@@ -115,6 +116,8 @@ export default function Login(props) {
                     name="password"
                     onChange={handleChange}
                     value={formData.password}
+                    style={{color: props.themeColor? "white":"rgba(29, 33, 68, 0.8)", 
+                    borderBottom: props.themeColor? "2px solid white": "2px solid rgba(29, 33, 68, 0.3)"}}
                 />
                 <br/>                
                 </div>

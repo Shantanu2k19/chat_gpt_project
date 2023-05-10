@@ -2,6 +2,10 @@ a:hover {
   cursor: pointer;
 }
 
+.chatgpt-image{
+  border-radius: 10px;
+}
+
 .line-overkill {
   /* width: 80%; */
   opacity: 0.2;
@@ -52,10 +56,8 @@ a:hover {
   font-weight: 100;
 
   border: none;
-  border-bottom: 2px solid white;
   margin-bottom: 20px;
   background-color: transparent;
-  color: white;
   transition: 0.2s;
 }
 

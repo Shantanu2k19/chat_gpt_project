@@ -11,7 +11,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useTheme } from "next-themes";
 
 export default function RightBox(){    
-  const { theme, setTheme } = useTheme();
+    const { theme, setTheme } = useTheme();
+
+    const [isDark, setIsDark] = React.useState(true);
+    React.useEffect(()=>{
+        setIsDark(theme=="dark"?true:false);
+    },[theme])
+
     const[isLogin, setIsLogin] = React.useState(false)
     
     function toggleForm(){
@@ -51,7 +57,7 @@ export default function RightBox(){
     }
 
     return(
-    <div className='rounded-md bg-primary bg-opacity-5 py-10 px-6 dark:bg-dark sm:p-[60%]' style={{padding:"3%"}}>
+    <div className='rounded-md bg-primary bg-opacity-5 py-10 px-6 dark:bg-dark sm:p-[60%]' style={{padding:"3%", border:"1px solid rgba(29, 33, 68, 0.1)"}}>
         <div className="googleButton">
             <div id="signInDiv"></div>
         </div>
@@ -68,10 +74,13 @@ export default function RightBox(){
             handleClick={toggleForm}
             isLogin = {isLogin}
             theme = {theme}
+            themeColor = {isDark}
         />
+        <button onClick={showAlert}>errfrf</button>
         <Signup
             handleClick={toggleForm}
             isLogin = {isLogin}
+            themeColor = {isDark}
         />
     </div>
     )

@@ -16,6 +16,7 @@ const AboutSectionTwo = () => {
                 src="/images/about/about-image-2.jpg"
                 alt="about image"
                 fill
+                className="chatgpt-image"
               />
             </div>
           </div>

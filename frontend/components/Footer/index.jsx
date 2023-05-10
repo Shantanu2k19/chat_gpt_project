@@ -6,7 +6,7 @@ const Footer = () => {
   const { theme, setTheme } = useTheme();
   
   function showAlert(e){
-    console.log("alert", theme);
+    //console.log("alert", theme);
     e.preventDefault()
     toast.info('Coming soon!', {
       position: "top-center",
@@ -32,6 +32,7 @@ const Footer = () => {
         draggable
         pauseOnHover
         theme="dark"
+      //  style={{maxWidth:'90%', border:"2px solid white"}}
       />
 
       <footer
