@@ -616,7 +616,7 @@ micState : 1- idle, 2-listening, 3-speaking
   const [tempQuestionVal, setTempQuestionVal] = React.useState(false);
   const [confirmDelete, setConfirmDelete] = React.useState(false);
 
-  const handleSubmit = async (e) => {
+  const questionAsked = async (e) => {
     e.preventDefault();
     setTempQuestionVal(e.target.ques.value);
     const question = e.target.ques.value;
@@ -1125,7 +1125,7 @@ micState : 1- idle, 2-listening, 3-speaking
           <div className="question-content">
             <form
               className="form-textbox"
-              onSubmit={handleSubmit}
+              onSubmit={questionAsked}
               id="question_form"
             >
                 <input 

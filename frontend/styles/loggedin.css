@@ -21,6 +21,8 @@ body {
   font-family: "Lato", sans-serif;
   background-color: var(--backgroundSB);
   color: white;
+  height:100%;
+  overflow: hidden;
 }
 
 .home {
