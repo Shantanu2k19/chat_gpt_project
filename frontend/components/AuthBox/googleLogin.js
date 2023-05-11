@@ -74,7 +74,7 @@ export default function GoogLogin(prop) {
   React.useEffect(() => {
     google.accounts.id.initialize({
       client_id:
-        "293258871762-clmknpcjj0cv69slpdiognh5c041e89u.apps.googleusercontent.com",
+      `${config.googleKey}`,
       callback: handleCallbackResponse,
     });
 
