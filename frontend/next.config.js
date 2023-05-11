@@ -17,8 +17,8 @@ const nextConfig = {
     });
     return config;
   },
-  serverUrl: 'https://neural-talk-backend.onrender.com'
-  // serverUrl: 'http://localhost:5000'
+  // serverUrl: 'https://neural-talk-backend.onrender.com'
+  serverUrl: 'http://localhost:5000'
 };
 
 

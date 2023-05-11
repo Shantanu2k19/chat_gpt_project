@@ -146,7 +146,7 @@ const Footer = () => {
         <div className="bg-primary/10 py-8">
           <div className="container">
             <p className="text-center text-base text-body-color dark:text-white">
-              MERN project
+              A collaborative project for applied learning of the MERN stack.  <br/>Contributions are welcomed <a href="https://github.com/Shantanu2k19/chat_gpt_project"><u>here</u></a>.
             </p>
           </div>
         </div>
