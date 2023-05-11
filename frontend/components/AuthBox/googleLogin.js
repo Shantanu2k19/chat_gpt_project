@@ -81,7 +81,7 @@ export default function GoogLogin(prop) {
     google.accounts.id.renderButton(document.getElementById("signInDiv"), {
       theme: gtheme,
       size: "large",
-      width: "300px",
+      width: "250px",
     });
 
     google.accounts.id.prompt();

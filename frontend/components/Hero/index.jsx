@@ -2,29 +2,56 @@
 import Link from "next/link";
 import Cookies from "universal-cookie";
 import { useRouter } from "next/navigation";
-import config from '../../next.config.js'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import config from "../../next.config.js";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useTheme } from "next-themes";
-import React from "react"
+import React from "react";
+import axios from "axios";
 
 const Hero = () => {
   const cookies = new Cookies();
   let router = useRouter();
 
   const { theme, setTheme } = useTheme();
-  
-  function showAlert(){
-    toast.error('Server Down! Hang on', {
-      position: "top-center",
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: theme,
+
+  function showAlert(mssg, mode) {
+    console.log("alert");
+
+    if (mode == 1) {
+      toast.success(mssg, {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: theme,
       });
+    } else if (mode == 2) {
+      toast.info(mssg, {
+        position: "top-center",
+        autoClose: 20000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: theme,
+      });
+    } else {
+      toast.error(mssg, {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: theme,
+      });
+    }
   }
 
   async function demoLogin() {
@@ -32,7 +59,9 @@ const Hero = () => {
     const password = "noobie";
     console.log("logging try");
 
-    try{
+    showAlert("Connecting to server...", 2);
+
+    try {
       const response = await fetch(`${config.serverUrl}/users/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -42,24 +71,28 @@ const Hero = () => {
       const data = await response.json();
       if (response.ok) {
         console.log("logged in success");
-  
+        toast.dismiss();
+        showAlert("Success", 1);
+
         cookies.set("accessToken", data.accessToken);
         cookies.set("refreshToken", data.refreshToken);
         cookies.set("userName", "demo_user");
-  
+
         router.push("/loggedin");
       } else {
         console.log("demo log in FAIL");
+        toast.dismiss();
+        showAlert(data.message, 3);
       }
-
-    } catch{
-      showAlert();
+    } catch {
+      toast.dismiss();
+      showAlert("Cannot connect to server!", 3);
     }
   }
 
   const [isMobile, setIsMobile] = React.useState(false);
   const [screenWidth, setScreenWidth] = React.useState(0);
-  
+
   React.useEffect(() => {
     const handleResize = () => {
       setScreenWidth(window.innerWidth);
@@ -78,9 +111,36 @@ const Hero = () => {
     }
   }, [screenWidth]);
 
+
+  //wakeup backend : for render server SLOW BITCH
+  React.useEffect( ()=>{
+    if (cookies.get("wakeup") !== undefined)
+    {
+      console.log("no cvookie")
+      try {
+        const response = fetch(`${config.serverUrl}/users`, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
+
+        if (response.ok) {
+        console.log("Server awake");
+        cookies.set("wakeup", "awake");
+        }
+        else console.log("Cannot connect to server!");
+  
+      } catch {
+        console.log("Cannot connect to server!");
+      }
+    }
+    console.log("found")
+    
+  },[])
+
+
   return (
     <>
-      {isMobile && 
+      {isMobile && (
         <ToastContainer
           position="top-center"
           autoClose={1000}
@@ -92,11 +152,11 @@ const Hero = () => {
           draggable
           pauseOnHover
           theme="dark"
-          style={{ maxWidth:'80%', left:"10%", top:"1em"}}
+          style={{ maxWidth: "80%", left: "10%", top: "1em" }}
         />
-      }
+      )}
 
-      {!isMobile && 
+      {!isMobile && (
         <ToastContainer
           position="top-center"
           autoClose={1000}
@@ -109,7 +169,7 @@ const Hero = () => {
           pauseOnHover
           theme="dark"
         />
-      }
+      )}
 
       <section
         id="home"
@@ -123,16 +183,23 @@ const Hero = () => {
                 data-wow-delay=".2s"
               >
                 <h1 className="mb-5 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
-                  Chatting with an AI assistant is cool, How about talking with it?
+                  Chatting with an AI assistant is cool, How about talking with
+                  it?
                   <br></br>
-                  <strong>Introducing <span className="headingStyling">Neural Talk</span> </strong>
+                  <strong>
+                    Introducing{" "}
+                    <span className="headingStyling">Neural Talk</span>{" "}
+                  </strong>
                 </h1>
                 <p className="mb-12 text-base font-medium !leading-relaxed text-body-color dark:text-white dark:opacity-90 sm:text-lg md:text-xl">
                   <br />
                   <br />
-                  Welcome to our cutting-edge AI chat website, 
-                  where you can interact with our intelligent virtual assistant
-                   using your voice! Our innovative platform leverages the latest advancements in natural language processing and machine learning to provide you with a seamless and intuitive chat experience that feels just like talking to a human.
+                  Welcome to our cutting-edge AI chat website, where you can
+                  interact with our intelligent virtual assistant using your
+                  voice! Our innovative platform leverages the latest
+                  advancements in natural language processing and machine
+                  learning to provide you with a seamless and intuitive chat
+                  experience that feels just like talking to a human.
                 </p>
                 <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
                   <Link

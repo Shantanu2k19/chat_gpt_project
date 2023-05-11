@@ -9,7 +9,7 @@ const AboutSectionTwo = () => {
           
           <div className="w-full px-4 lg:w-1/2 ">
             <div
-              className="wow fadeInUp relative mx-auto mb-12 aspect-[25/24] max-w-[500px] text-center lg:m-0"
+              className="wow fadeInUp relative mx-auto mb-12 aspect-[25/24] max-w-[500px] text-center "
               data-wow-delay=".15s"
             >
               <Image
